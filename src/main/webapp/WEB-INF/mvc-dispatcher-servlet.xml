@@ -18,7 +18,7 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.sprin
    
    <tx:annotation-driven transaction-manager="transactionManager" />
    
-   <bean
+   <!-- <bean
      class="org.springframework.web.servlet.view.InternalResourceViewResolver">
      <property name="prefix">
        <value>/WEB-INF/views/</value>
@@ -26,6 +26,24 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.sprin
      <property name="suffix">
        <value>.jsp</value>
      </property>
-   </bean>
+   </bean> -->
+   
+   <bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass">
+			<value>
+				org.springframework.web.servlet.view.tiles2.TilesView
+			</value>
+		</property>
+	</bean>
  
+ 	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles.xml</value>
+			</list>
+		</property>
+	</bean>
+	
 </beans>

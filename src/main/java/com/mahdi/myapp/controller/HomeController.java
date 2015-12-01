@@ -30,7 +30,30 @@ public class HomeController {
 		ModelAndView mv = new ModelAndView("homePage");
 		mv.addObject("title", "This is my Home Page.");
 		return mv;
-	}	
+	}
+	
+	
+	@RequestMapping(value={"admin"}, method = RequestMethod.GET)
+	public ModelAndView adminHomePage(){
+		
+		ModelAndView mv = new ModelAndView("adminPage");
+		mv.addObject("title", "This is my Home Page.");
+		return mv;
+	}
+	
+	@RequestMapping(value={"doctor"}, method = RequestMethod.GET)
+	public ModelAndView doctorHomePage(){
+		ModelAndView mv = new ModelAndView("doctorPage");
+		mv.addObject("title", "This is my Home Page.");
+		return mv;
+	}
+	
+	@RequestMapping(value={"user"}, method = RequestMethod.GET)
+	public ModelAndView userHomePage(){
+		ModelAndView mv = new ModelAndView("userPage");
+		mv.addObject("title", "This is my Home Page.");
+		return mv;
+	}
 	
 	
 	@RequestMapping(value={"register"}, method = RequestMethod.GET)

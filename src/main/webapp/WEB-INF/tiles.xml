@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    
+    <definition name="admin.definition" template="/WEB-INF/views/usertemplate/adminlayout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/usertemplate/adminheader.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/views/usertemplate/footer.jsp" />
+    </definition> 
+    
+    <definition name="doctor.definition" template="/WEB-INF/views/usertemplate/doctorlayout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/usertemplate/doctorheader.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/views/usertemplate/footer.jsp" />
+    </definition>     
+    
+    <definition name="user.definition" template="/WEB-INF/views/usertemplate/userlayout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/usertemplate/userheader.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/views/usertemplate/footer.jsp" />
+    </definition> 
+    
+    
+    
+    <definition name="homePage" extends="user.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
+    </definition>
+    
+    
+    <definition name="loginPage" extends="user.definition">
+        <put-attribute name="title" value="Login Page" />
+        <put-attribute name="body" value="/WEB-INF/views/loginPage.jsp" />
+    </definition>
+    
+    
+    <definition name="adminPage" extends="admin.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
+    </definition>
+    
+    
+    <definition name="doctorPage" extends="doctor.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
+    </definition>
+    
+    <definition name="userPage" extends="user.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
+    </definition>
+    
+    
+</tiles-definitions>

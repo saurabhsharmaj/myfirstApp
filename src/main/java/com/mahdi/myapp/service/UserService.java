@@ -23,4 +23,8 @@ public class UserService implements IUserService {
 		return updateUser(u);
 	}
 
+	public UserProfile getProfile(int id) {
+		return dao.getProfile(id);
+	}
+
 }

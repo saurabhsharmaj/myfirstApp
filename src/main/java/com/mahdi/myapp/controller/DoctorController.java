@@ -9,16 +9,16 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mahdi.myapp.service.IUserService;
 
 @Controller
-public class UserController {
+public class DoctorController {
 
 	@Autowired
 	IUserService userService;
-	
-	@RequestMapping(value={"user"}, method = RequestMethod.GET)
-	public ModelAndView userHomePage(){
-		ModelAndView mv = new ModelAndView("userPage");
+		
+
+	@RequestMapping(value={"doctor"}, method = RequestMethod.GET)
+	public ModelAndView doctorHomePage(){
+		ModelAndView mv = new ModelAndView("doctorPage");
 		mv.addObject("title", "This is my Home Page.");
 		return mv;
 	}
-	
 }

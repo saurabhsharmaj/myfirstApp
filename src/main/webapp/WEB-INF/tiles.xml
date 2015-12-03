@@ -26,14 +26,26 @@
     </definition> 
     
     
+    <definition name="default.definition" template="/WEB-INF/views/usertemplate/userlayout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/usertemplate/header.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/views/usertemplate/footer.jsp" />
+    </definition>
     
-    <definition name="homePage" extends="user.definition">
+    
+    <definition name="homePage" extends="default.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
     </definition>
     
+    <definition name="registrationPage" extends="default.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/registrationPage.jsp" />
+    </definition>
     
-    <definition name="loginPage" extends="user.definition">
+        
+    <definition name="loginPage" extends="default.definition">
         <put-attribute name="title" value="Login Page" />
         <put-attribute name="body" value="/WEB-INF/views/loginPage.jsp" />
     </definition>
@@ -53,7 +65,11 @@
     <definition name="userPage" extends="user.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
-    </definition>
+    </definition>    
     
+    <definition name="errorPage">
+        <put-attribute name="title" value="Error" />
+        <put-attribute name="body" value="/WEB-INF/views/errorPage.jsp" />
+    </definition>
     
 </tiles-definitions>

@@ -2,19 +2,11 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Registration Page</title>
-</head>
-<jsp:include page="header.jsp"/>
-<body>
-
 <div class="container container-table">
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4 col-sm-1">
-	<h2>Register User</h2>
-<c:url var="addAction" value="/user/signup" ></c:url>
+	<h2>Sign Up</h2>
+<c:url var="addAction" value="/registerUser" ></c:url>
 
 <form:form action="${addAction}" commandName="user">
 <table>
@@ -161,5 +153,3 @@
 </div>
 </div>
 </div>
-</body>
-</html>

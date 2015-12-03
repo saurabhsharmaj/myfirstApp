@@ -4,9 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-
+@Table(name="user_roles")
 public class UserRole {
 
 	@Id
@@ -23,6 +24,10 @@ public class UserRole {
 	
 	private Integer enabled;
 
+	public UserRole(){
+		
+	}
+	
 	public UserRole(int id, String code) {
 		this.id = id;
 		this.code = code;

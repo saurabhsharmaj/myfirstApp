@@ -14,8 +14,8 @@
        <intercept-url pattern="/logout" access="isAnonymous()" />
        <intercept-url pattern="/resource/**" access="isAnonymous()" />
        
-   	   <intercept-url pattern="/doctor" access="hasRole('ROLE_DOCTOR','ROLE_ADMIN')"/>
-   	   <intercept-url pattern="/user" access="hasRole('ROLE_USER','ROLE_ADMIN')"/>
+   	   <intercept-url pattern="/doctor" access="hasAnyRole('ROLE_DOCTOR','ROLE_ADMIN')"/>
+   	   <intercept-url pattern="/user" access="hasAnyRole('ROLE_USER','ROLE_ADMIN')"/>
        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />      
  
        <access-denied-handler error-page="/403" />

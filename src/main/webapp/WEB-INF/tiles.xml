@@ -50,24 +50,30 @@
         <put-attribute name="body" value="/WEB-INF/views/loginPage.jsp" />
     </definition>
     
-    
+    <!-- Admin Pages -->
     <definition name="adminPage" extends="admin.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
     </definition>
     
+    <definition name="profilePage" extends="admin.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/profilePage.jsp" />
+    </definition>   
     
+    <!-- Doctor Pages -->
     <definition name="doctorPage" extends="doctor.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
     </definition>
     
+    <!-- User Pages -->
     <definition name="userPage" extends="user.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
     </definition>    
     
-    <definition name="errorPage">
+    <definition name="errorPage" template="/WEB-INF/views/usertemplate/errorlayout.jsp">
         <put-attribute name="title" value="Error" />
         <put-attribute name="body" value="/WEB-INF/views/errorPage.jsp" />
     </definition>

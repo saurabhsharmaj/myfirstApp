@@ -41,4 +41,8 @@ public class UserRoleService implements IUserRoleService {
 		return userRoleDao.getRowByName(columnName, value);
 	}
 	
+	
+	public List<UserRole> getRoleExceptAdmin() throws DocException{
+		return userRoleDao.getRoleExceptAdmin();
+	}
 }

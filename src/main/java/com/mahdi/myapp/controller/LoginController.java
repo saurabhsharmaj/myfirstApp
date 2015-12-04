@@ -40,19 +40,19 @@ public class LoginController {
 	public String userInfo(Model model, Principal principal, HttpSession session) throws DocException {
 		User activeUser = (User) ((Authentication) principal).getPrincipal();
 		model.addAttribute("title", "User Info"); 
-		model.addAttribute("message",
-				"User Info - This is protected page!. Hello " + activeUser.getUsername());
+		model.addAttribute("message","User Info - This is protected page!. Hello " + activeUser.getUsername());
+		
 		UserProfile userprofile = userService.getRowByName("username", activeUser.getUsername());
 		model.addAttribute("user", userprofile);
 		model.addAttribute("userRoles", userRoleService.getList());
 		model.addAttribute("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
 		session.setAttribute("userprofile", userprofile);
 		if(activeUser.getAuthorities().contains(new GrantedAuthorityImpl(DocConstant.ROLE_ADMIN))){
-			return "forward:/admin";
+			return "forward:/admin/";
 		} else if(activeUser.getAuthorities().contains(new GrantedAuthorityImpl(DocConstant.ROLE_DOCTOR))){
-			return "forward:/doctor";
+			return "forward:/doctor/";
 		} else if(activeUser.getAuthorities().contains(new GrantedAuthorityImpl(DocConstant.ROLE_USER))){
-			return "forward:/user";
+			return "forward:/user/";
 		} else {
 			return "forward:/403";
 		}

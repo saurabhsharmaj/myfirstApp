@@ -12,7 +12,7 @@ CREATE  TABLE users (
 	username VARCHAR(45) NOT NULL ,
 	password VARCHAR(45) NOT NULL ,
 	role TINYINT NOT NULL DEFAULT 1,
-	enabled TINYINT NOT NULL DEFAULT 1 ,
+	enabled TINYINT DEFAULT 1 ,
 	PRIMARY KEY (id));
 
 CREATE TABLE user_roles (

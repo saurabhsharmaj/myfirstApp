@@ -56,7 +56,7 @@
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
     </definition>
     
-    <definition name="profilePage" extends="admin.definition">
+    <definition name="adminProfilePage" extends="admin.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/profilePage.jsp" />
     </definition>   
@@ -67,15 +67,30 @@
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
     </definition>
     
+    <definition name="doctorProfilePage" extends="doctor.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/profilePage.jsp" />
+    </definition>
+    
     <!-- User Pages -->
     <definition name="userPage" extends="user.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
-    </definition>    
+    </definition> 
+    
+    <definition name="userProfilePage" extends="user.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/profilePage.jsp" />
+    </definition>   
     
     <definition name="errorPage" template="/WEB-INF/views/usertemplate/errorlayout.jsp">
         <put-attribute name="title" value="Error" />
         <put-attribute name="body" value="/WEB-INF/views/errorPage.jsp" />
+    </definition>
+    
+    <definition name="searchDoctorPage" extends="default.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/searchDoctorPage.jsp" />
     </definition>
     
 </tiles-definitions>

@@ -13,6 +13,7 @@ import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
 
 @Controller
+@RequestMapping("admin")
 public class AdminController {
 
 	@Autowired
@@ -22,7 +23,7 @@ public class AdminController {
 	IUserRoleService userRoleService;
 	
 	
-	@RequestMapping(value={"admin"}, method = RequestMethod.GET)
+	@RequestMapping(value={"/"}, method = RequestMethod.GET)
 	public ModelAndView adminHomePage(){
 		
 		ModelAndView mv = new ModelAndView("adminPage");
@@ -33,7 +34,7 @@ public class AdminController {
 	
 	@RequestMapping(value={"myprofile"}, method = RequestMethod.GET)
 	public ModelAndView getProfile(HttpSession session){
-		ModelAndView mv = new ModelAndView("profilePage");
+		ModelAndView mv = new ModelAndView("adminProfilePage");
 		mv.addObject("userRoles", userRoleService.getList());
 		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
 		mv.addObject("userproflie",session.getAttribute("userprofile"));

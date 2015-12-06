@@ -45,7 +45,6 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 			throw new DocException(HttpStatus.FAILED_DEPENDENCY, ex);
 		}
 	
-	}	
-		
+	}
 
 }

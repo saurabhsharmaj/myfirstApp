@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mahdi.myapp.dao.AppointmentDao;
 import com.mahdi.myapp.dao.UserDao;
 import com.mahdi.myapp.exception.DocException;
+import com.mahdi.myapp.model.Appointment;
 import com.mahdi.myapp.model.UserProfile;
 
 @Service
@@ -16,6 +18,9 @@ public class UserService implements IUserService {
 		
 	@Autowired
 	UserDao userDao;
+	
+	@Autowired
+	AppointmentDao appointmentDao;
 	
 	public int insertRow(UserProfile t) throws DocException {
 		return userDao.insertRow(t);
@@ -54,6 +59,14 @@ public class UserService implements IUserService {
 
 	public List<UserProfile> findUser(String keyword) {
 		return userDao.findUser(keyword);
+	}
+
+	public Integer saveAppointment(UserProfile user, UserProfile doctor) throws DocException {		
+		return appointmentDao.saveAppointment(new Appointment());
+	}
+
+	public List<Appointment> getAppointmentListByUserId(Integer userId) throws DocException {
+		return appointmentDao.getAppointmentListByUserId(userId);
 	}
 	
 }

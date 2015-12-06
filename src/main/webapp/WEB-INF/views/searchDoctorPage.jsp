@@ -84,24 +84,23 @@ $('document').ready(function(){
 		   		<div class="list-item">
 			   		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">&nbsp;</div>							
 						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-border">
-							<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"
+							<div class="col-lg-4 col-md-1 col-sm-12 col-xs-12"
 								style="padding: 0px 5px 0px 5px;">
 								<a href="${pageContext.request.contextPath}/doctorDetail/${doctor.id }">						
 									  	<img src="${pageContext.request.contextPath}/resources/profilepic/${doctor.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
-								</a><br> <br> <i>Name:</i>${doctor.username}
-								<i>Contact No.:</i>${doctor.contact}
+								</a>
+								<i>Contact No.:</i><b>${doctor.contact}</b>
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-left"
 								style="padding: 3px;">
-								<p>${doctor.fullname}</p>
+								<p>${doctor.username}</p>
 								<div class="active-stars-yellow space"></div>
 								<p style="font-size: 11px;">${doctor.expirence}</p>
 							</div>
 							
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"
 								style="padding: 5px 5px;">
-								<a href="#">Link 1</a>&nbsp;&nbsp;<a href="#">Link 1</a>&nbsp;&nbsp;<a
-									href="#">Link 1</a>
+								<a href="${pageContext.request.contextPath}/doctorDetail/${doctor.id }">View Doctor</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/user/saveAppointment/${doctor.id }">Get Appointment</a>
 							</div>
 						</div>	   			
 		   		</div>

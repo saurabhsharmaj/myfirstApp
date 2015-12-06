@@ -24,6 +24,15 @@ description varchar(500),
 isInternal bit(1), 
 enabled TINYINT NOT NULL DEFAULT 1 );
 
+create table appointment_doctor(
+id int(11) not null AUTO_INCREMENT,
+userId int(11),
+doctorId int(11),
+appointmentDate timestamp,
+status int default 1,
+primary key(id)
+);
+
 INSERT INTO users(fullname, specialty, age,expirence, email, contact, username,password,role,enabled)
 VALUES ('Mahdi Hassahan',null,25,4,'mahdi@gmail.com','9999999999','mahdi','123456',1, true);
 INSERT INTO users(fullname, specialty, age,expirence, email, contact, username,password,role,enabled)

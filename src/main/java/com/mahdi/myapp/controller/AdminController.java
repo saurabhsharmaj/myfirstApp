@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.model.UserStatusEnum;
@@ -39,6 +40,22 @@ public class AdminController {
 		mv.addObject("userRoles", userRoleService.getList());
 		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
 		mv.addObject("userproflie",session.getAttribute(DocConstant.USERPROFILE));
+		return mv;
+		
+	}
+	
+	@RequestMapping(value={"searchUser"}, method = RequestMethod.POST)
+	public ModelAndView searchUser(HttpSession session, @RequestParam("keyword") String keyword){
+		System.out.println(keyword);
+		ModelAndView mv = new ModelAndView("searchUserPage");		
+		mv.addObject("searchResults", userService.findUser(keyword));
+		return mv;
+	}
+	
+	@RequestMapping(value={"listUsers"}, method = RequestMethod.GET)
+	public ModelAndView listUsers(HttpSession session){
+		ModelAndView mv = new ModelAndView("manageUserPage");
+		mv.addObject("userRoles", userService.getList());
 		return mv;
 		
 	}

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mahdi.myapp.model.UserStatusEnum;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
+import com.mahdi.myapp.util.DocConstant;
 
 @Controller
 @RequestMapping("admin")
@@ -37,7 +38,7 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("adminProfilePage");
 		mv.addObject("userRoles", userRoleService.getList());
 		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
-		mv.addObject("userproflie",session.getAttribute("userprofile"));
+		mv.addObject("userproflie",session.getAttribute(DocConstant.USERPROFILE));
 		return mv;
 		
 	}

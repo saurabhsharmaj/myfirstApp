@@ -51,5 +51,9 @@ public class UserService implements IUserService {
 	public UserProfile getRowByName(String columnName, String value) {
 		return userDao.getRowByName(columnName, value);
 	}
+
+	public List<UserProfile> findUser(String keyword) {
+		return userDao.findUser(keyword);
+	}
 	
 }

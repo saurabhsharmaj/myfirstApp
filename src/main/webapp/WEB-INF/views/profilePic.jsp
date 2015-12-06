@@ -25,7 +25,7 @@ $( document ).ready(function() {
 <form name="profilePicForm" id="profilePicForm" action="saveProfilePic" method="post" enctype="multipart/form-data">
 	
 		<img
-		src="${pageContext.request.contextPath}/resources/profilepic/${userProfile.id}.jpg"
+		src="${pageContext.request.contextPath}/resources/profilepic/${doctor.profilePicUrl}"
 		class="img-circle" alt="profile"
 		style="border: 1px solid grey;" width="130" height="130" id="profilePicImage">
 	

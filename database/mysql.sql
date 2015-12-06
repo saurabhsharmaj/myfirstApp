@@ -12,7 +12,8 @@ CREATE  TABLE users (
 	username VARCHAR(45) NOT NULL ,
 	password VARCHAR(45) NOT NULL ,
 	role TINYINT NOT NULL DEFAULT 1,
-	enabled TINYINT DEFAULT 1 ,
+	profilePicUrl varchar(10) DEFAULT 'profilePic.jpg',
+	enabled TINYINT DEFAULT 1,
 	PRIMARY KEY (id));
 
 CREATE TABLE user_roles (
@@ -37,3 +38,5 @@ INSERT INTO user_roles (code,name,description, isInternal,enabled)
 VALUES ('ROLE_DOCTOR','Doctor','Doctor',0,1);
 INSERT INTO user_roles (code,name,description, isInternal,enabled)
 VALUES ('ROLE_USER','user','User',0,1);
+
+alter table users add column profilePicUrl varchar(20) DEFAULT 'profilePic.jpg';

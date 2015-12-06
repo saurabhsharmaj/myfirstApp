@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mahdi.myapp.model.UserProfile;
+import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
 
 @Controller
@@ -26,6 +28,9 @@ public class FileUploadController implements ServletContextAware {
 	
 	private ServletContext servletContext;
 
+	@Autowired
+	IUserService userService;
+	
 	@RequestMapping(value = "saveProfilePic", method = RequestMethod.POST)
 	public String saveProfilePic(
 			HttpSession session,
@@ -42,7 +47,9 @@ public class FileUploadController implements ServletContextAware {
 			}
 
 			try {
-				saveImage(userprofile.getId(), image);				
+				saveImage(userprofile.getId(), image);
+				userprofile.setProfilePicUrl(userprofile.getId()+".jpg");
+				userService.updateRow(userprofile);
 			} catch (IOException e) {
 				return "redirect:myprofile";
 			} catch (Exception e) {

@@ -1,10 +1,11 @@
 package com.mahdi.myapp.exception;
 
-import org.hibernate.HibernateException;
 import org.springframework.http.HttpStatus;
 
 public class DocException extends RuntimeException {
 
+	private static final long serialVersionUID = -7095311298757576361L;
+	
 	HttpStatus status;
 	Exception ex;
 	
@@ -17,6 +18,7 @@ public class DocException extends RuntimeException {
 	}
 
 	public DocException(HttpStatus status, Exception ex) {
+		super(status.getReasonPhrase(), ex);
 		this.status = status;
 		this.ex = ex;		
 	}

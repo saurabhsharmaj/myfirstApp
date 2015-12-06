@@ -72,6 +72,12 @@
         <put-attribute name="body" value="/WEB-INF/views/profilePage.jsp" />
     </definition>
     
+    <definition name="viewDoctorProfilePage" extends="default.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/viewprofilePage.jsp" />
+    </definition>
+    
+    
     <!-- User Pages -->
     <definition name="userPage" extends="user.definition">
         <put-attribute name="title" value="Home Page" />
@@ -88,7 +94,12 @@
         <put-attribute name="body" value="/WEB-INF/views/errorPage.jsp" />
     </definition>
     
-    <definition name="searchDoctorPage" extends="default.definition">
+    <definition name="searchDoctorPageWithLogin" extends="user.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/searchDoctorPage.jsp" />
+    </definition>
+    
+    <definition name="searchDoctorPageWithLogout" extends="default.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/searchDoctorPage.jsp" />
     </definition>

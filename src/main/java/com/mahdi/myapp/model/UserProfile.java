@@ -6,8 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 @Entity
 @Table(name="users")
+@Where(clause="enabled = '1'")
 public class UserProfile {
 
 	@Id
@@ -31,6 +34,8 @@ public class UserProfile {
 	private String password ; 
 	
 	private String role ; 
+	
+	private String profilePicUrl;
 	
 	private Integer enabled ;
 
@@ -121,6 +126,15 @@ public class UserProfile {
 	public void setEnabled(Integer enabled) {
 		this.enabled = enabled;
 	}
+
+	public String getProfilePicUrl() {
+		return profilePicUrl;
+	}
+
+	public void setProfilePicUrl(String profilePicUrl) {
+		this.profilePicUrl = profilePicUrl;
+	}
+	
 	
 	
 }

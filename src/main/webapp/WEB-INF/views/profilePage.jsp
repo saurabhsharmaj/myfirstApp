@@ -34,10 +34,14 @@ $( document ).ready(function() {
 	
 </script>
 
+<div class="container container-table">
+    <div class="row vertical-center-row">
+        <div class="text-center col-md-4 col-md-offset-4 col-sm-1">
+        
 <form name="profilePicForm" id="profilePicForm" action="${pageContext.request.contextPath}/saveProfilePic" method="post" enctype="multipart/form-data">
 	
 		<img
-		src="${pageContext.request.contextPath}/resources/profilepic/${userproflie.id}.jpg"
+		src="${pageContext.request.contextPath}/resources/profilepic/${userprofile.profilePicUrl}"
 		class="img-circle" alt="profile"
 		style="border: 1px solid grey;" width="130" height="130" id="profilePicImage">
 	
@@ -199,3 +203,6 @@ $( document ).ready(function() {
 	</tr>
 </table>	
 </form:form>
+</div>
+</div>
+</div>

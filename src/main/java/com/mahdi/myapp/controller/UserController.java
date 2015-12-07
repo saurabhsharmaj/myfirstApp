@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.model.UserProfile;
@@ -40,6 +41,20 @@ public class UserController {
 		mv.addObject("userproflie",session.getAttribute(DocConstant.USERPROFILE));
 		return mv;
 		
+	}
+	
+	@RequestMapping(value={"searchDoctor"}, method = RequestMethod.POST)
+	public ModelAndView searchDoctor(HttpSession session, @RequestParam("keyword") String keyword){
+		System.out.println(keyword);
+		ModelAndView mv =  null;
+		UserProfile userProfile = (UserProfile)session.getAttribute("userprofile");
+		if(userProfile != null ){			
+			mv = new ModelAndView("searchDoctorPageWithLogin");
+		} else {
+			mv = new ModelAndView("searchDoctorPageWithLogout");
+		}
+		mv.addObject("searchResults", userService.findUser(keyword));
+		return mv;
 	}
 	
 

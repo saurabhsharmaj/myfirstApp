@@ -4,12 +4,15 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -23,6 +26,8 @@ import com.mahdi.myapp.util.DocConstant;
 @Controller
 public class LoginController {
 
+	private final Logger log = LoggerFactory.getLogger(LoginController.class);
+	
 	@Autowired
 	IUserService userService;
 	
@@ -35,6 +40,14 @@ public class LoginController {
 		model.addAttribute("message", "Enter your username/password:");		
 		return "loginPage";
 	}	
+	
+	
+	@RequestMapping(value = "login/{error}", method = RequestMethod.GET )
+	public String invalidCrendentialPage(@PathVariable String error, Model model) {
+		model.addAttribute("title", "Login");
+		model.addAttribute("error_message", error);		
+		return "loginPage";
+	}
 	
 	@RequestMapping(value = "userInfo", method = RequestMethod.GET)
 	public String userInfo(Model model, Principal principal, HttpSession session) throws DocException {

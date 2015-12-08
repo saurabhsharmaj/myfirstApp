@@ -13,15 +13,15 @@
         </thead>
         <tbody>      
 			<c:choose>
-			 <c:when test="${fn:length(patientList) > 0}">			 	
-				<c:forEach items="${patientList}" var="patient">
+			 <c:when test="${fn:length(appointmentList) > 0}">			 	
+				<c:forEach items="${appointmentList}" var="appointment">
 			   		<div class="list-item">
 				   		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">&nbsp;</div>							
 							<tr>
-					        	<td>${patient.id }</td>
-					        	<td>${patient.usersByPatientId.username}</td>
-					        	<td>${patient.appointmentDate }</td>
-					        	<td>${patient.status }</td>
+					        	<td>${appointment.id }</td>
+					        	<td>${appointment.usersByPatientId.username}</td>
+					        	<td>${appointment.appointmentDate }</td>
+					        	<td>${appointment.status }</td>
 					        </tr>	
 			   		</div>		   		
 		   		</c:forEach> 

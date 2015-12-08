@@ -43,7 +43,7 @@ public class UserService implements IUserService {
 	}
 
 	public void saveUser(UserProfile u) throws DocException {
-		if(u.getId() == null){
+		if(u.getId() == 0){
 			u.setEnabled(1);
 			insertRow(u);
 		}else{
@@ -57,7 +57,7 @@ public class UserService implements IUserService {
 		return userDao.getRowByName(columnName, value);
 	}
 
-	public List<UserProfile> findUser(String keyword) {
+	public List<UserProfile> findUser(String keyword) throws DocException {
 		return userDao.findUser(keyword);
 	}
 
@@ -65,8 +65,12 @@ public class UserService implements IUserService {
 		return appointmentDao.saveAppointment(new Appointment());
 	}
 
-	public List<Appointment> getAppointmentListByUserId(Integer userId) throws DocException {
-		return appointmentDao.getAppointmentListByUserId(userId);
+	public List<Appointment> getAppointmentList(Integer userId, boolean isDoctor) throws DocException {
+		return appointmentDao.getAppointmentList(userId, isDoctor);
+	}
+
+	public List<Appointment> findAppointment(String keyword, boolean isDoctor) throws DocException {
+		return appointmentDao.findAppointment(keyword, isDoctor);
 	}
 	
 }

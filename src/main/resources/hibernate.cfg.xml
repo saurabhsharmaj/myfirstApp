@@ -13,6 +13,7 @@
         <property name="hibernate.validator.apply_to_ddl">${${hibernate.show_sql}</property>
         <property name="hibernate.connection.pool_size">${connection.pool_size}</property>
         <mapping class="com.mahdi.myapp.model.UserProfile"/> 
-        <mapping class="com.mahdi.myapp.model.UserRole"/>     
+        <mapping class="com.mahdi.myapp.model.UserRole"/>  
+        <mapping class="com.mahdi.myapp.model.Appointment"/>    
     </session-factory>
 </hibernate-configuration>

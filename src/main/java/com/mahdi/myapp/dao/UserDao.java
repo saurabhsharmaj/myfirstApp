@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.UserProfile;
+import com.mahdi.myapp.util.DocConstant;
 
 @Repository
 public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
@@ -27,7 +28,7 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 			@SuppressWarnings("unchecked")
 			DetachedCriteria deCriteria = DetachedCriteria.forClass(typeParameterClass);
 			Criteria criteria = deCriteria.getExecutableCriteria(session);
-			criteria.add(Restrictions.eq("role", String.valueOf(2)));
+			criteria.add(Restrictions.eq("u.code", DocConstant.ROLE_DOCTOR));
 			criteria.add(
 					   Restrictions.disjunction()
 					      .add(Restrictions.like("fullname", "%"+keyword+"%"))
@@ -36,7 +37,7 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 					      .add(Restrictions.like("contact", "%"+keyword+"%"))
 					);
 			
-			
+			criteria.createAlias("userRoles", "u");
 			List<UserProfile> list = criteria.list();
 			return (List<UserProfile>) list;
 		} catch (HibernateException ex) {

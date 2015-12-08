@@ -50,4 +50,14 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.sprin
 	    <property name="maxUploadSize" value="268435456"/> <!-- 256 megs -->
 	</bean>
 	
+	<bean id="simpleMappingExceptionResolver" class="com.mahdi.myapp.exception.DocExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="com.mahdi.myapp.exception.DocException">
+                    error
+                </prop>
+            </props>
+        </property>
+        <property name="defaultErrorView" value="error"/>
+    </bean>
 </beans>

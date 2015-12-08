@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
+import com.mahdi.myapp.util.DocUtils;
 
 @Controller
 public class FileUploadController implements ServletContextAware {
@@ -36,7 +37,7 @@ public class FileUploadController implements ServletContextAware {
 			HttpSession session,
 			@RequestParam(value = "profilePic", required = false) MultipartFile image) {
 		
-		UserProfile userprofile = (UserProfile) session.getAttribute("userprofile");
+		UserProfile userprofile = DocUtils.getLoggedInUserProfile(session);
 		
 		if (!image.isEmpty()) {
 			try {
@@ -57,11 +58,11 @@ public class FileUploadController implements ServletContextAware {
 			}
 		}
 		
-		if(userprofile.getRole().equals("1")){			
+		if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_ADMIN)){			
 			return "redirect:admin/myprofile";
-		} else if(userprofile.getRole().equals("2")){			
+		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_DOCTOR)){			
 			return "redirect:doctor/myprofile";
-		} else if(userprofile.getRole().equals("3")){			
+		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_USER)){			
 			return "redirect:user/myprofile";
 		} else {
 			return "errorPage";

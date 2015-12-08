@@ -70,12 +70,12 @@ $( document ).ready(function() {
 	
 	<tr style="display:none;">
 		<td>
-			<form:label path="role">
+			<form:label path="userRoles">
 				<spring:message text="role"/>
 			</form:label>
 		</td>
 		<td>
-			<form:select id ="role" path="role" cssClass="form-control" required="true" onchange="displayField();">
+			<form:select id ="role" path="userRoles" cssClass="form-control" required="true" onchange="displayField();">
 		        <form:option value="">--Select--</form:option>
 		        <form:options items="${userRoles}" itemLabel="code" itemValue="id" />
 		    </form:select>

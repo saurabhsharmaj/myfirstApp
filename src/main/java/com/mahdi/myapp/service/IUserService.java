@@ -8,9 +8,12 @@ import com.mahdi.myapp.model.UserProfile;
 
 public interface IUserService extends IService<UserProfile> {
 
-	List<UserProfile> findUser(String keyword);	
+	List<UserProfile> findUser(String keyword) throws DocException;	
 
 	public Integer saveAppointment(UserProfile user, UserProfile doctor) throws DocException;
 	
-	List<Appointment> getAppointmentListByUserId(Integer userId) throws DocException;
+	List<Appointment> getAppointmentList(Integer userId, boolean isDoctor) throws DocException;
+
+	List<Appointment>  findAppointment(String keyword, boolean b) throws DocException;
+
 }

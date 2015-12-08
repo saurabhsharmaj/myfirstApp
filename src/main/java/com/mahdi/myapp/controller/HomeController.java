@@ -3,6 +3,7 @@ package com.mahdi.myapp.controller;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,27 +20,28 @@ import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
+import com.mahdi.myapp.util.DocUtils;
 
 @Controller
 public class HomeController {
 
+	private final Logger log = LoggerFactory.getLogger(HomeController.class);
+	
 	@Autowired
 	IUserService userService;
 	
 	@Autowired
 	IUserRoleService userRoleService;
 	
-	private final Logger log = LoggerFactory.getLogger(HomeController.class);
-	
 	@RequestMapping(value={"/","home"}, method = RequestMethod.GET)
-	public ModelAndView homePage(){		
+	public ModelAndView homePage() throws DocumentException{		
 		ModelAndView mv = new ModelAndView("homePage");
-		mv.addObject("title", "This is my Home Page.");
+		mv.addObject("title", "This is my Home Page.");		
 		return mv;
 	}
 	
 	@RequestMapping(value={"register"}, method = RequestMethod.GET)
-	public ModelAndView register(){
+	public ModelAndView register() throws DocException{
 		ModelAndView mv = new ModelAndView("registrationPage");		
 		mv.addObject("user", new UserProfile());
 		mv.addObject("userRoles", userRoleService.getRoleExceptAdmin());
@@ -60,10 +62,10 @@ public class HomeController {
 	
 	
 	@RequestMapping(value={"searchDoctor"}, method = RequestMethod.POST)
-	public ModelAndView searchDoctor(HttpSession session, @RequestParam("keyword") String keyword){
+	public ModelAndView searchDoctor(HttpSession session, @RequestParam("keyword") String keyword) throws DocException{
 		System.out.println(keyword);
 		ModelAndView mv =  null;
-		UserProfile userProfile = (UserProfile)session.getAttribute("userprofile");
+		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session);
 		if(userProfile != null ){			
 			mv = new ModelAndView("searchDoctorPageWithLogin");
 		} else {
@@ -74,8 +76,15 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value={"doctorDetail/{id}"}, method = RequestMethod.GET)
-	public ModelAndView getDoctorProfile(@PathVariable Integer id){		
-		ModelAndView mv = new ModelAndView("viewDoctorProfilePage");
+	public ModelAndView getDoctorProfile(@PathVariable Integer id, HttpSession session) throws DocException{		
+		ModelAndView mv = null;
+		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session);
+		if(userProfile != null ){			
+			mv = new ModelAndView("viewDoctorProfilePageWithLogin");
+		} else {
+			mv = new ModelAndView("viewDoctorProfilePageWithLogout");
+		}
+		
 		mv.addObject("profile", userService.getRowById(id));
 		return mv;
 	}
@@ -93,11 +102,11 @@ public class HomeController {
 		userService.insertRow(savedProfile);	
 		session.setAttribute(DocConstant.USERPROFILE, savedProfile);
 		
-		if(userprofile.getRole().equals("1")){			
+		if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_ADMIN)){			
 			return "redirect:admin/myprofile";
-		} else if(userprofile.getRole().equals("2")){			
+		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_DOCTOR)){			
 			return "redirect:doctor/myprofile";
-		} else if(userprofile.getRole().equals("3")){			
+		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_USER)){			
 			return "redirect:user/myprofile";
 		} else {
 			return "errorPage";

@@ -43,7 +43,7 @@ public class PatientController {
 		ModelAndView mv = new ModelAndView("userProfilePage");
 		mv.addObject("userRoles", userRoleService.getList());
 		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
-		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session);
+		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session,userService);
 		mv.addObject("userproflie",userProfile);
 		return mv;
 
@@ -68,9 +68,9 @@ public class PatientController {
 	public ModelAndView saveAppointment(@PathVariable Integer id, HttpSession session) throws DocException{	
 		ModelAndView mv = new ModelAndView("appointmentSuccessPage");
 		
-		UserProfile user = DocUtils.getLoggedInUserProfile(session);
+		UserProfile user = DocUtils.getLoggedInUserProfile(session,userService);
 		UserProfile doctor= userService.getRowById(id);
-		Integer appointId = 1;//userService.saveAppointment(user, doctor);
+		Integer appointId = userService.saveAppointment(user, doctor);
 		mv.addObject("doctor", doctor);
 		mv.addObject("appointId",appointId);
 		return mv;		
@@ -78,7 +78,7 @@ public class PatientController {
 
 	@RequestMapping(value={"appointmentlist"}, method = RequestMethod.GET)
 	public ModelAndView appointmentlist(HttpSession session) throws DocException{
-		UserProfile user = DocUtils.getLoggedInUserProfile(session);
+		UserProfile user = DocUtils.getLoggedInUserProfile(session,userService);
 		ModelAndView mv = new ModelAndView("appointmentListPage");
 		mv.addObject("appointmentList", userService.getAppointmentList(user.getId(), false));
 		return mv;

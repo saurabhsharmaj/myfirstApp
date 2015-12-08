@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.User;
 
+import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IUserService;
 
 public class DocUtils {
-	@Autowired
-	static IUserService userService;
 
-	public static UserProfile getLoggedInUserProfile(HttpSession session ){
+	public static UserProfile getLoggedInUserProfile(HttpSession session, IUserService userService) throws DocException{
+		try{
 		UserProfile userProfile = (UserProfile)session.getAttribute(DocConstant.USERPROFILE);
 		if(null ==userProfile && (SecurityContextImpl)session.getAttribute("SPRING_SECURITY_CONTEXT") != null){
 			User activeUser = (User) ((SecurityContextImpl)session.getAttribute("SPRING_SECURITY_CONTEXT")).getAuthentication().getPrincipal();
@@ -21,5 +21,8 @@ public class DocUtils {
 			session.setAttribute(DocConstant.USERPROFILE, userProfile);
 		}
 		return userProfile;
+		}catch(Exception ex){
+			throw new DocException(ex.getMessage());
+		}
 	}
 }

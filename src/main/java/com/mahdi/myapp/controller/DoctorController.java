@@ -43,7 +43,7 @@ public class DoctorController {
 		ModelAndView mv = new ModelAndView("doctorProfilePage");
 		mv.addObject("userRoles", userRoleService.getList());
 		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
-		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session));
+		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
 		return mv;
 		
 	}
@@ -59,7 +59,7 @@ public class DoctorController {
 	
 	@RequestMapping(value={"appointmentlist"}, method = RequestMethod.GET)
 	public ModelAndView appointmentlist(HttpSession session) throws DocException{
-		UserProfile user = DocUtils.getLoggedInUserProfile(session);
+		UserProfile user = DocUtils.getLoggedInUserProfile(session,userService);
 		ModelAndView mv = new ModelAndView("appointmentListDoctorPage");
 		mv.addObject("appointmentList", userService.getAppointmentList(user.getId(), true));
 		return mv;

@@ -1,5 +1,7 @@
 package com.mahdi.myapp.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
+import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.model.UserStatusEnum;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
@@ -45,7 +48,7 @@ public class AdminController {
 		ModelAndView mv = new ModelAndView("adminProfilePage");
 		mv.addObject("userRoles", userRoleService.getList());
 		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
-		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session));
+		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
 		return mv;
 		
 	}
@@ -61,7 +64,9 @@ public class AdminController {
 	@RequestMapping(value={"listUsers"}, method = RequestMethod.GET)
 	public ModelAndView listUsers(HttpSession session) throws DocException{
 		ModelAndView mv = new ModelAndView("manageUserPage");
-		mv.addObject("userRoles", userService.getList());
+		List<UserProfile> users = userService.getList();
+		users.remove(DocUtils.getLoggedInUserProfile(session,userService));
+		mv.addObject("userList",users);
 		return mv;
 		
 	}

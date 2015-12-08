@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
@@ -35,9 +36,9 @@ public class FileUploadController implements ServletContextAware {
 	@RequestMapping(value = "saveProfilePic", method = RequestMethod.POST)
 	public String saveProfilePic(
 			HttpSession session,
-			@RequestParam(value = "profilePic", required = false) MultipartFile image) {
+			@RequestParam(value = "profilePic", required = false) MultipartFile image) throws DocException {
 		
-		UserProfile userprofile = DocUtils.getLoggedInUserProfile(session);
+		UserProfile userprofile = DocUtils.getLoggedInUserProfile(session,userService);
 		
 		if (!image.isEmpty()) {
 			try {

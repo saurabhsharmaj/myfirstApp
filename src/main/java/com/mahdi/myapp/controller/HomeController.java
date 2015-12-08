@@ -65,7 +65,7 @@ public class HomeController {
 	public ModelAndView searchDoctor(HttpSession session, @RequestParam("keyword") String keyword) throws DocException{
 		System.out.println(keyword);
 		ModelAndView mv =  null;
-		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session);
+		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session,userService);
 		if(userProfile != null ){			
 			mv = new ModelAndView("searchDoctorPageWithLogin");
 		} else {
@@ -78,7 +78,7 @@ public class HomeController {
 	@RequestMapping(value={"doctorDetail/{id}"}, method = RequestMethod.GET)
 	public ModelAndView getDoctorProfile(@PathVariable Integer id, HttpSession session) throws DocException{		
 		ModelAndView mv = null;
-		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session);
+		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session,userService);
 		if(userProfile != null ){			
 			mv = new ModelAndView("viewDoctorProfilePageWithLogin");
 		} else {

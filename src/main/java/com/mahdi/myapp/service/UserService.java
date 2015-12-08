@@ -1,5 +1,6 @@
 package com.mahdi.myapp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.mahdi.myapp.dao.UserDao;
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.Appointment;
 import com.mahdi.myapp.model.UserProfile;
+import com.mahdi.myapp.util.DocConstant;
 
 @Service
 @Transactional
@@ -62,7 +64,7 @@ public class UserService implements IUserService {
 	}
 
 	public Integer saveAppointment(UserProfile user, UserProfile doctor) throws DocException {		
-		return appointmentDao.saveAppointment(new Appointment());
+		return appointmentDao.saveAppointment(new Appointment(doctor,user,new Date(),DocConstant.NEW_REQUEST));
 	}
 
 	public List<Appointment> getAppointmentList(Integer userId, boolean isDoctor) throws DocException {

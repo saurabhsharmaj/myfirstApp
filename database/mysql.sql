@@ -59,7 +59,7 @@ ALTER TABLE appointment ADD CONSTRAINT appointment_doctor FOREIGN KEY appointmen
 -- Reference:  users_user_roles (table: users)
 
 
-ALTER TABLE users ADD CONSTRAINT users_user_roles FOREIGN KEY users_user_roles (role)
+ALTER TABLE users ADD CONSTRAINT users_user_roles FOREIGN KEY  users(role)
     REFERENCES user_roles (id);
 
 -- Intest for User_Roles

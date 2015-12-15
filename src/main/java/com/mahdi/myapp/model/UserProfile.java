@@ -90,7 +90,7 @@ public class UserProfile implements java.io.Serializable {
 		this.userRoles = userRoles;
 	}
 
-	@Column(name = "fullname", nullable = false, length = 50)
+	@Column(name = "fullname", nullable = true, length = 50)
 	public String getFullname() {
 		return this.fullname;
 	}

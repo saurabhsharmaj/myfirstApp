@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,11 +52,30 @@ public class HomeController {
 	}
 	
 	
+	@RequestMapping(value={"registerDoctor"}, method = RequestMethod.GET)
+	public ModelAndView registerDoc() throws DocException{
+		ModelAndView mv = new ModelAndView("registrationDocPage");	
+		UserProfile profile = new UserProfile();		
+		mv.addObject("user", profile);		
+//		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
+		return mv;
+	}
+	
+	
+	@RequestMapping(value={"registerDoctor"}, method = RequestMethod.POST)
+	public String saveDoctor(@ModelAttribute UserProfile userProfile) throws DocException{
+		userProfile.setEnabled(1);
+		userProfile.setUserRoles(userRoleService.getRowById(2));
+		userService.insertRow(userProfile);
+		return "redirect:/login";
+	}
+	
+	
 	
 	@RequestMapping(value= "registerUser", method = RequestMethod.POST)
-	public String registerUser(@ModelAttribute("user") UserProfile u) throws DocException{
-		u.setEnabled(1);//TODO: Fix Later
-		userService.insertRow(u);		
+	public String registerUser(@ModelAttribute UserProfile userProfile,BindingResult result) throws DocException{
+		/*u.setEnabled(1);//TODO: Fix Later
+		userService.insertRow(u);*/		
 		return "redirect:/login";
 
 

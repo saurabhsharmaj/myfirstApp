@@ -39,6 +39,14 @@
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
     </definition>
     
+    
+    
+    <definition name="registrationDocPage" extends="default.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/registrationDocPage.jsp" />
+    </definition>
+    
+    
     <definition name="registrationPage" extends="default.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/registrationPage.jsp" />

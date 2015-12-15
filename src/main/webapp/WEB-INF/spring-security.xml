@@ -8,6 +8,7 @@
  
    <http use-expressions="true">
    
+   	   <intercept-url pattern="/getAppointment/**" access="isAnonymous()" /> 	
    	   <intercept-url pattern="/" access="isAnonymous()" />
        <intercept-url pattern="/home" access="isAnonymous()" />
        <intercept-url pattern="/login" access="isAnonymous()" />
@@ -28,6 +29,11 @@
        <logout logout-url="/logout" logout-success-url="/logoutSuccessful"
            delete-cookies="JSESSIONID" invalidate-session="true" />
  
+ 		<session-management invalid-session-url="/logout">
+	    	<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+		</session-management>
+		
+	
    </http>
  
    <authentication-manager>
@@ -48,7 +54,9 @@
 		  authorities-by-username-query=
 		    "select username, code from users, user_roles where users.role = user_roles.id and users.username =?  " />
        </authentication-provider>
- 
+ 		
    </authentication-manager>
+   
+ 	
  
 </beans:beans>

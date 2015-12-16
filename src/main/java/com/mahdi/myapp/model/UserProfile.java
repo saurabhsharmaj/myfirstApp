@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,7 +24,7 @@ import javax.persistence.Table;
 @Table(name = "users", catalog = "myfirstapp")
 public class UserProfile implements java.io.Serializable {
 
-	private int id;
+	private Integer id;
 	private UserRole userRoles;
 	private String fullname;
 	private String specialty;
@@ -70,13 +72,13 @@ public class UserProfile implements java.io.Serializable {
 
 
 	@Id
-
 	@Column(name = "id", unique = true, nullable = false)
-	public int getId() {
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

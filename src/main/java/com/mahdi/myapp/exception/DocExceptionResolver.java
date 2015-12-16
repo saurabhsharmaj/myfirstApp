@@ -18,6 +18,7 @@ public class DocExceptionResolver extends SimpleMappingExceptionResolver impleme
 			HttpServletResponse response, Object handler, Exception ex) {
 		String viewName=determineViewName(ex, request);
 		log.debug(viewName+" :",ex);
+		ex.printStackTrace();
 		System.out.println("viewName:"+viewName);
 		if (viewName!=null) {
 			Integer statusCode = super.determineStatusCode(request, viewName);

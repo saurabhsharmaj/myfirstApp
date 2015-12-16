@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -56,16 +55,13 @@ public class HomeController {
 	public ModelAndView registerDoc() throws DocException{
 		ModelAndView mv = new ModelAndView("registrationDocPage");	
 		UserProfile profile = new UserProfile();		
-		mv.addObject("user", profile);		
-//		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
+		mv.addObject("user", profile);
 		return mv;
 	}
 	
 	
 	@RequestMapping(value={"registerDoctor"}, method = RequestMethod.POST)
-	public String saveDoctor(@ModelAttribute UserProfile userProfile) throws DocException{
-		userProfile.setEnabled(1);
-		userProfile.setUserRoles(userRoleService.getRowById(2));
+	public String saveDoctor(@ModelAttribute UserProfile userProfile) throws DocException{		
 		userService.insertRow(userProfile);
 		return "redirect:/login";
 	}

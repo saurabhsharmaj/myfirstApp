@@ -7,7 +7,10 @@
 		<div class="text-center col-md-4 col-md-offset-4 col-sm-1">
 			<h2>Doctor Registration Page</h2>			
 			<c:url var="addAction" value="/registerDoctor" ></c:url>
-			<form:form action="${addAction}" commandName="user" method="post">
+			<form:form action="${addAction}" commandName="user" method="post">			
+			<form:hidden name="enabled" path="enabled" value="1"/>
+			<form:hidden name="profilePicUrl" path="profilePicUrl" value="profilePic.jpg"/>
+			<form:hidden name="userRoles" path="userRoles.id" value="2"/>
 			<table>		
 				<tr>
 					<td>

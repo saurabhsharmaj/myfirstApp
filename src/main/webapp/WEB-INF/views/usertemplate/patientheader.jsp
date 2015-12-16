@@ -10,7 +10,9 @@
 		</div>
        <a class="blog-nav-item" href="${pageContext.request.contextPath}/user/appointmentlist">My Appointments</a>      
        <a class="blog-nav-item" href="${pageContext.request.contextPath}/user/myprofile">my profile</a>
+       <ul class="nav navbar-nav navbar-right">
        user,<a class="blog-nav-item" href="${pageContext.request.contextPath}/logout">logout</a>
+       </ul>
      </nav>
    </div>
  </div>

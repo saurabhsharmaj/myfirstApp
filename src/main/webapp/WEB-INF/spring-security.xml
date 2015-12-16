@@ -29,9 +29,9 @@
        <logout logout-url="/logout" logout-success-url="/logoutSuccessful"
            delete-cookies="JSESSIONID" invalidate-session="true" />
  
- 		<session-management invalid-session-url="/logout">
+ 		<!-- <session-management invalid-session-url="/logout">
 	    	<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
-		</session-management>
+		</session-management> -->
 		
 	
    </http>

@@ -9,7 +9,7 @@
 			<c:url var="addAction" value="/registerDoctor" ></c:url>
 			<form:form action="${addAction}" commandName="user" method="post">			
 			<form:hidden name="enabled" path="enabled" value="1"/>
-			<form:hidden name="profilePicUrl" path="profilePicUrl" value="profilePic.jpg"/>
+			<form:hidden name="profilePicUrl" path="profilePicUrl" value="doctorProfilePic.jpg"/>
 			<form:hidden name="userRoles" path="userRoles.id" value="2"/>
 			<table>		
 				<tr>

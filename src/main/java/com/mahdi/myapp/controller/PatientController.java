@@ -76,6 +76,15 @@ public class PatientController {
 		return mv;		
 	}
 
+	@RequestMapping(value={"getAppointment/{doctorId}"}, method = RequestMethod.GET)
+	public ModelAndView getAppointment(@PathVariable Integer doctorId) throws DocException{	
+		ModelAndView mv = new ModelAndView("getPatientAppointmentPage");		
+		UserProfile doctor= userService.getRowById(doctorId);
+		mv.addObject("user", new UserProfile());
+		mv.addObject("doctor", doctor);	
+		return mv;		
+	}
+	
 	@RequestMapping(value={"appointmentlist"}, method = RequestMethod.GET)
 	public ModelAndView appointmentlist(HttpSession session) throws DocException{
 		UserProfile user = DocUtils.getLoggedInUserProfile(session,userService);

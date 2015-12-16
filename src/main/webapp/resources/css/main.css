@@ -217,3 +217,8 @@ h6, .h6 {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+.btn-booking{
+	background: #428BCA;
+    color: white;
+}

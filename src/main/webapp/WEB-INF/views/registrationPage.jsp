@@ -8,6 +8,9 @@
 	<h2>Registration Page</h2>
 <c:url var="addAction" value="/registerUser" ></c:url>
 <form:form action="${addAction}" commandName="user" method="post">
+			<form:hidden name="enabled" path="enabled" value="1"/>
+			<form:hidden name="profilePicUrl" path="profilePicUrl" value="profilePic.jpg"/>
+			<form:hidden name="userRoles" path="userRoles.id" value="3"/>
 <table>		
 	<tr>
 		<td>

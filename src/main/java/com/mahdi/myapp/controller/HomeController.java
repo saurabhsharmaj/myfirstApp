@@ -70,8 +70,7 @@ public class HomeController {
 	
 	@RequestMapping(value= "registerUser", method = RequestMethod.POST)
 	public String registerUser(@ModelAttribute UserProfile userProfile,BindingResult result) throws DocException{
-		/*u.setEnabled(1);//TODO: Fix Later
-		userService.insertRow(u);*/		
+		userService.insertRow(userProfile);		
 		return "redirect:/login";
 
 
@@ -131,5 +130,14 @@ public class HomeController {
 
 	}
 	
+	
+	@RequestMapping(value={"getAppointment/{doctorId}"}, method = RequestMethod.GET)
+	public ModelAndView getAppointment(@PathVariable Integer doctorId) throws DocException{	
+		ModelAndView mv = new ModelAndView("getAppointmentPage");		
+		UserProfile doctor= userService.getRowById(doctorId);
+		mv.addObject("user", new UserProfile());
+		mv.addObject("doctor", doctor);	
+		return mv;		
+	}
 	
 }

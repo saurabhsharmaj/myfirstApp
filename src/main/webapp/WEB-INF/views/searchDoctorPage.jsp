@@ -101,7 +101,12 @@ $('document').ready(function(){
 							
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"
 								style="padding: 5px 5px;">
-								<a href="${pageContext.request.contextPath}/doctorDetail/${doctor.id }">View Doctor</a>&nbsp;&nbsp;<a href="${pageContext.request.contextPath}/user/saveAppointment/${doctor.id }">Get Appointment</a>
+								<a class="-button-quartary -small bookOnlineLink btn-small btn btn-booking" rel="nofollow" data-test="search-book-online-button" target="_top" href="getAppointment/${doctor.id }"  title="Book Online">
+						            Book Online 
+						          </a>
+						          &nbsp;
+								<a href="${pageContext.request.contextPath}/doctorDetail/${doctor.id }">View Doctor</a>
+								
 							</div>
 						</div>	   			
 		   		</div>

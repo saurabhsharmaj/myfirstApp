@@ -33,14 +33,25 @@
         <put-attribute name="footer" value="/WEB-INF/views/usertemplate/footer.jsp" />
     </definition>
     
+    <definition name="default.customheader.definition" template="/WEB-INF/views/usertemplate/patientlayout.jsp">
+        <put-attribute name="title" value="" />        
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/views/usertemplate/footer.jsp" />
+    </definition>
+    
     
     <definition name="homePage" extends="default.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
     </definition>
+   
+    <definition name="getAppointmentPage" extends="default.customheader.definition">
+        <put-attribute name="title" value="Get Appointment" />
+        <put-attribute name="header" value="/WEB-INF/views/usertemplate/book-appointmentheader.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/views/getAppointmentPage.jsp" />
+    </definition>
     
-    
-    
+     
     <definition name="registrationDocPage" extends="default.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/registrationDocPage.jsp" />
@@ -124,6 +135,11 @@
         <put-attribute name="body" value="/WEB-INF/views/viewprofilePage.jsp" />
     </definition>
     
+    
+     <definition name="getPatientAppointmentPage" extends="patient.definition">
+        <put-attribute name="title" value="Get Appointment" />
+        <put-attribute name="body" value="/WEB-INF/views/getAppointmentPage.jsp" />
+    </definition>
     
     <definition name="errorPage" template="/WEB-INF/views/usertemplate/errorlayout.jsp">
         <put-attribute name="title" value="Error" />

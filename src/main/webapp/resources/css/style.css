@@ -1,6 +1,6 @@
 @font-face {
     font-family: myFirstFont;
-    src: url(../fonts/Avenir-Medium.otf);
+    src: url(../fonts/Avenir-Medium.ttf);
 }
 body{ font-family:myFirstFont!important; padding-bottom:60px!important;}
 
@@ -59,7 +59,7 @@ h3{margin:0px!important;}
 
 @font-face {
     font-family: myFirstFont1;
-    src: url(../fonts/Avenir-Light.otf);
+    src: url(../fonts/Avenir-Medium.ttf);
 }
 
 label{ font-family:myFirstFont1!important;}

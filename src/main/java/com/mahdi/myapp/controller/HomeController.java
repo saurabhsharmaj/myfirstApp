@@ -98,6 +98,7 @@ public class HomeController {
 		} else {
 			mv = new ModelAndView("searchDoctorPageWithLogout");
 		}
+		mv.addObject("user", userProfile);
 		mv.addObject("searchResults", userService.findUser(keyword));
 		return mv;
 	}
@@ -151,24 +152,38 @@ public class HomeController {
 		mv.addObject("doctor", doctor);	
 		return mv;		
 	}
-	
-
-	
+		
 	@RequestMapping(value={"signin/{doctorId}"}, method = RequestMethod.POST)
 	public String saveAppointmentWithDoctor(@PathVariable Integer doctorId ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
-	
-		if(userService.validate(userProfile)){
+		UserProfile profile = userService.validate(userProfile);
+		if( profile != null ){
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 			UserDetails user = new User(userProfile.getUsername(), userProfile.getPassword() , authorities);
 			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			session.setAttribute(DocConstant.USERPROFILE, userProfile);
+			session.setAttribute(DocConstant.USERPROFILE, profile);
 			model.addAttribute("user", user);
 			model.addAttribute("doctor", userService.getRowById(doctorId));
 			return "forward:/user/viewDoctorAppointment";
 		}
 		//userService.insertRow(userProfile);
 		return "redirect:/login";
+	}
+	
+	@RequestMapping(value={"newRegistration/{doctorId}"}, method = RequestMethod.POST)
+	public String saveAppointmentWithDoctorForNewUser(@PathVariable Integer doctorId ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
+		
+			int id = userService.insertRow(userProfile);
+			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+			UserDetails user = new User(userProfile.getUsername(), userProfile.getPassword() , authorities);
+			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			session.setAttribute(DocConstant.USERPROFILE, userService.getRowById(id));
+			model.addAttribute("user", user);
+			model.addAttribute("doctor", userService.getRowById(doctorId));
+			return "forward:/user/viewDoctorAppointment";
+		
 	}
 }

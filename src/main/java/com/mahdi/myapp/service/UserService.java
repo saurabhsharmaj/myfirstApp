@@ -75,12 +75,12 @@ public class UserService implements IUserService {
 		return appointmentDao.findAppointment(keyword, isDoctor);
 	}
 
-	public boolean validate(UserProfile userProfile) throws DocException {
+	public UserProfile validate(UserProfile userProfile) throws DocException {
 		UserProfile profile  =  userDao.validate(userProfile);
 		if(profile == null ){
 			throw new DocException("Invalid crendentials");
 		} else {
-			return true;
+			return profile;
 		}
 	}
 	

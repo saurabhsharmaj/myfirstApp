@@ -6,35 +6,26 @@
 <c:url var="addAction" value="/updateProfile" ></c:url>
 <script type="text/javascript">
 $( document ).ready(function() {
-	  /* var roleType = $('#role').val();	  
-	  if(roleType ==2){
-		  $('#specialty').show();
-		  $('#expirence').show();
-		  
-	  } else {
-		  $('#specialty').hide();
-		  $('#expirence').hide();
-	  }
-	  
-	  if(roleType ==1){
-		  $('#enabledRow').show();
-	  } else {
-		  $('#enabledRow').hide();
-	  } */
-	  
-	 $('input[type=file]').change(function() { 
-	    // select the form and submit
-	    $('#profilePicForm').submit(); 
-	}); 
-	
-	 $("#profilePicImage").click(function () {
-	    $("#profilePic").trigger('click');
-	}); 
+	 	  
+	init(); 
 });
+
+function init(){
+	
+	 $('input[type=file]').change(function() { 
+		    // select the form and submit
+		    $('#profilePicForm').submit(); 
+		}); 
+		
+	 $(".profilePicImage").click(function () {		 
+	    $("#profilePic").trigger('click');
+	});
+		 
+}
 	
 </script>
 
-<div class="container container-table">
+<div class="container container-table" onload="init();">
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4 col-sm-1">
         
@@ -42,7 +33,7 @@ $( document ).ready(function() {
 	
 		<img
 		src="${pageContext.request.contextPath}/resources/profilepic/${userprofile.profilePicUrl}"
-		class="img-circle" alt="profile"
+		class="profilePicImage img-circle" alt="profile"
 		style="border: 1px solid grey;" width="130" height="130" id="profilePicImage">
 	
   

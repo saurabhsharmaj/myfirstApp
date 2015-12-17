@@ -61,6 +61,7 @@ public class PatientController {
 		} else {
 			mv = new ModelAndView("searchDoctorPageWithLogout");
 		}
+		mv.addObject("user", userProfile);
 		mv.addObject("searchResults", userService.findUser(keyword));
 		return mv;
 	}
@@ -97,11 +98,17 @@ public class PatientController {
 	}
 
 	
-	@RequestMapping(value={"viewDoctorAppointment"}, method = RequestMethod.POST)
+	@RequestMapping(value={"viewDoctorAppointment"}, method = {RequestMethod.GET,RequestMethod.POST})
 	public String viewDoctorAppointment() throws DocException{
 		
 		return "viewDoctorAppointmentPage";		
 	}
 
+	@RequestMapping(value={"getAppointment/{doctorId}/{userId}"}, method = RequestMethod.GET)
+	public String getAppointment(@PathVariable Integer doctorId, @PathVariable Integer userId, Model model) throws DocException{	
+		model.addAttribute("user", userService.getRowById(userId));
+		model.addAttribute("doctor", userService.getRowById(doctorId));
+		return "viewDoctorAppointmentPage";		
+	}
 
 }

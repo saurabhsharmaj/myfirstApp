@@ -2,7 +2,7 @@
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4 col-sm-1">
 			<h3>View your Dr.  ${doctor.username}</h3>
-			<img src="${pageContext.request.contextPath}/resources/profilepic/${profile.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
+			<img src="${pageContext.request.contextPath}/resources/profilepic/${doctor.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
 			<div class="col-2">FullName: ${doctor.fullname}</div>
 			<div class="col-2">specialty: ${doctor.specialty}</div>
 			<div class="col-2">age: ${doctor.age}</div>

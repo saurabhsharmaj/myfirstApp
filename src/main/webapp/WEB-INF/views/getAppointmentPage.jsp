@@ -36,7 +36,7 @@ function displayRegistrationForm(){
 		     
 		     <div id="registration">
 		     	<h2>Registration Page</h2>
-				<c:url var="addAction" value="/registerUser" ></c:url>
+				<c:url var="addAction" value=" ${pageContext.request.contextPath}/newRegistration/${doctor.id}" ></c:url>
 			<form:form action="${addAction}" commandName="user" method="post">
 			<form:hidden name="enabled" path="enabled" value="1"/>
 			<form:hidden name="profilePicUrl" path="profilePicUrl" value="profilePic.jpg"/>
@@ -86,7 +86,6 @@ function displayRegistrationForm(){
 			</table>	
 			</form:form>
 		     </div>
-		     
 		     <div id="signin">
 		   <form class="form-signin" action ="${pageContext.request.contextPath}/signin/${doctor.id}" method="post">
 		    <h2 class="form-signin-heading">Please sign in</h2>	

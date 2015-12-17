@@ -13,7 +13,7 @@
        <ul class="nav navbar-nav navbar-right">
        	<img
 		src="${pageContext.request.contextPath}/resources/profilepic/${userprofile.profilePicUrl}"
-		class="img-circle" alt="profile"
+		class="profilePicImage img-circle" alt="profile"
 		style="border: 1px solid grey;" width="50" height="50" id="profilePicImage">
         ${userprofile.username},<a class="blog-nav-item" href="${pageContext.request.contextPath}/logout">logout</a>
        </ul>

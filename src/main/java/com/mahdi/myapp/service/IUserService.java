@@ -16,4 +16,6 @@ public interface IUserService extends IService<UserProfile> {
 
 	List<Appointment>  findAppointment(String keyword, boolean b) throws DocException;
 
+	boolean validate(UserProfile userProfile) throws DocException;
+
 }

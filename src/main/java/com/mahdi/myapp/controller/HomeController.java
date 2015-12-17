@@ -1,5 +1,8 @@
 package com.mahdi.myapp.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
@@ -7,7 +10,15 @@ import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -91,7 +102,8 @@ public class HomeController {
 		return mv;
 	}
 	
-	@RequestMapping(value={"doctorDetail/{id}"}, method = RequestMethod.GET)
+	@RequestMapping(value={"doctorDetail/{id}"}, method = {RequestMethod.GET, RequestMethod.POST})
+	
 	public ModelAndView getDoctorProfile(@PathVariable Integer id, HttpSession session) throws DocException{		
 		ModelAndView mv = null;
 		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session,userService);
@@ -140,4 +152,23 @@ public class HomeController {
 		return mv;		
 	}
 	
+
+	
+	@RequestMapping(value={"signin/{doctorId}"}, method = RequestMethod.POST)
+	public String saveAppointmentWithDoctor(@PathVariable Integer doctorId ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
+	
+		if(userService.validate(userProfile)){
+			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+			UserDetails user = new User(userProfile.getUsername(), userProfile.getPassword() , authorities);
+			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			session.setAttribute(DocConstant.USERPROFILE, userProfile);
+			model.addAttribute("user", user);
+			model.addAttribute("doctor", userService.getRowById(doctorId));
+			return "forward:/user/viewDoctorAppointment";
+		}
+		//userService.insertRow(userProfile);
+		return "redirect:/login";
+	}
 }

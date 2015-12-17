@@ -1,7 +1,7 @@
 <div class="container container-table">
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4 col-sm-1">
-			<h3>View your Doctor</h3>
+			<h3>##View your Doctor [${profile}] }</h3>
 			<img src="${pageContext.request.contextPath}/resources/profilepic/${profile.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
 			<div class="col-2">FullName: ${profile.fullname}</div>
 			<div class="col-2">specialty: ${profile.specialty}</div>

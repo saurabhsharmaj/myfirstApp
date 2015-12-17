@@ -88,7 +88,7 @@ function displayRegistrationForm(){
 		     </div>
 		     
 		     <div id="signin">
-		     	<form class="form-signin" action ="${pageContext.request.contextPath}/j_spring_security_check" method="post">
+		   <form class="form-signin" action ="${pageContext.request.contextPath}/signin/${doctor.id}" method="post">
 		    <h2 class="form-signin-heading">Please sign in</h2>	
 		    <h3 style="color: red;">${error_message}</h3>	    
 		    <label for="username" class="sr-only">Username</label>

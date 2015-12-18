@@ -75,10 +75,15 @@
         <put-attribute name="body" value="/WEB-INF/views/adminHomePage.jsp" />
     </definition>
     
-    <definition name="adminProfilePage" extends="admin.definition">
+    <definition name="adminViewProfilePage" extends="doctor.definition">
         <put-attribute name="title" value="Home Page" />
-        <put-attribute name="body" value="/WEB-INF/views/profilePage.jsp" />
-    </definition>
+        <put-attribute name="body" value="/WEB-INF/views/adminViewProfilePage.jsp" />
+    </definition>  
+    
+    <definition name="adminProfilePage" extends="doctor.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/adminProfilePage.jsp" />
+    </definition>  
     
     <definition name="manageUserPage" extends="admin.definition">
         <put-attribute name="title" value="Home Page" />
@@ -98,9 +103,14 @@
         <put-attribute name="body" value="/WEB-INF/views/doctorHomePage.jsp" />
     </definition>
     
+    <definition name="doctorViewProfilePage" extends="doctor.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/doctorViewProfilePage.jsp" />
+    </definition>  
+    
     <definition name="doctorProfilePage" extends="doctor.definition">
         <put-attribute name="title" value="Home Page" />
-        <put-attribute name="body" value="/WEB-INF/views/profilePage.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/doctorProfilePage.jsp" />
     </definition>    
     
      <definition name="appointmentListDoctorPage" extends="doctor.definition">

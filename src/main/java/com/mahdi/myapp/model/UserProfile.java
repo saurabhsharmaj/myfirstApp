@@ -36,6 +36,8 @@ public class UserProfile implements java.io.Serializable {
 	private String password;
 	private String profilePicUrl;
 	private int enabled;
+	private String summary;
+	
 
 	private Set<Appointment> appointmentsForDoctorId = new HashSet<Appointment>(0);
 	private Set<Appointment> appointmentsForPatientId = new HashSet<Appointment>(0);
@@ -52,7 +54,7 @@ public class UserProfile implements java.io.Serializable {
 	}
 
 	public UserProfile(int id, UserRole userRoles, String fullname, String specialty, Integer age, Float expirence,
-			String email, String contact, String username, String password, String profilePicUrl, Byte enabled,
+			String email, String contact, String username, String password, String profilePicUrl, Byte enabled, String summary,
 			Set<Appointment> appointmentsForDoctorId, Set<Appointment> appointmentsForPatientId) {
 		this.id = id;
 		this.userRoles = userRoles;
@@ -66,6 +68,7 @@ public class UserProfile implements java.io.Serializable {
 		this.password = password;
 		this.profilePicUrl = profilePicUrl;
 		this.enabled = enabled;
+		this.summary = summary;
 		this.appointmentsForDoctorId = appointmentsForDoctorId;
 		this.appointmentsForPatientId = appointmentsForPatientId;
 	}
@@ -171,6 +174,15 @@ public class UserProfile implements java.io.Serializable {
 
 	public void setProfilePicUrl(String profilePicUrl) {
 		this.profilePicUrl = profilePicUrl;
+	}
+
+	@Column(name = "summary", length = 4000)
+	public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
 	}
 
 	@Column(name = "enabled")

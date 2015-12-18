@@ -1,5 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!--  This page display when patient search for any doctor. -->
 	
 
@@ -12,6 +14,11 @@ $(document).ready(function() {
     $('#example').DataTable({
     		"lengthMenu": [[1, 3, 5, -1], [1, 3, 5, "All"]]	
     		,"iDisplayLength":3
+    		,"bFilter": false,
+    		"bSearchable":false,
+    		"bInfo":false
+    		,"bLengthChange":false
+    		//,"sPaginationType": "full_numbers"
     });
 } );
 </script>
@@ -20,7 +27,17 @@ $(document).ready(function() {
 	   <c:choose>
 		   <c:when test="${fn:length(searchResults) > 0}">
 		   <div class="fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"></div>
-		   
+			<form:form id ="searchDoctorForm" action="searchDoctor" style="padding: 20px;">
+	       	 	<div class="input-group">
+		  				<input name="keyword" type="text" class="form-control input-lg" placeholder="Search your Doctor" aria-describedby="basic-addon2">
+	
+						<span class="input-group-addon" id="basic-addon2">
+							<a href="#" onclick="document.getElementById('searchDoctorForm').submit();">Search</a>				
+						</span>				
+						
+				</div>
+  			</form:form>
+  				
 		   <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
 		   <thead>
 		        <tr>

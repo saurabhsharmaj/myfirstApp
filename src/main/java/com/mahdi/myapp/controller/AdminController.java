@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,14 +45,73 @@ public class AdminController {
 	}
 	
 	
+	
 	@RequestMapping(value={"myprofile"}, method = RequestMethod.GET)
 	public ModelAndView getProfile(HttpSession session) throws DocException{
+		ModelAndView mv = new ModelAndView("adminViewProfilePage");
+		mv.addObject("userRoles", userRoleService.getList());
+		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
+		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
+		return mv;
+		
+	}
+	
+	@RequestMapping(value={"editViewProfile"}, method = RequestMethod.GET)
+	public ModelAndView editViewProfile(HttpSession session) throws DocException{
 		ModelAndView mv = new ModelAndView("adminProfilePage");
 		mv.addObject("userRoles", userRoleService.getList());
 		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
 		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
 		return mv;
 		
+	}
+	
+	@RequestMapping(value= "updateProfile", method = RequestMethod.POST)
+	public String updateUser(HttpSession session, @ModelAttribute("user") UserProfile userprofile) throws DocException{
+		UserProfile savedProfile = userService.getRowById(userprofile.getId());
+		
+		if(StringUtils.isNotEmpty(userprofile.getFullname())){
+			savedProfile.setFullname(userprofile.getFullname());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getSpecialty())){
+			savedProfile.setSpecialty(userprofile.getSpecialty());
+		}
+		
+		if(savedProfile.getAge() != userprofile.getAge()){
+			savedProfile.setAge(userprofile.getAge());
+		}
+		
+		if(savedProfile.getExpirence() != userprofile.getExpirence()){
+			savedProfile.setExpirence(userprofile.getExpirence());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getEmail())){
+			savedProfile.setEmail(userprofile.getEmail());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getContact())){
+			savedProfile.setContact(userprofile.getContact());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getUsername())){
+			savedProfile.setUsername(userprofile.getUsername());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getPassword())){
+			savedProfile.setPassword(userprofile.getPassword());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getSummary())){
+			savedProfile.setSummary(userprofile.getSummary());
+		}
+		
+		userService.insertRow(savedProfile);	
+		session.setAttribute(DocConstant.USERPROFILE, savedProfile);		
+				
+		return "redirect:admin/myprofile";
+		
+
 	}
 	
 	@RequestMapping(value={"searchUser"}, method = RequestMethod.POST)

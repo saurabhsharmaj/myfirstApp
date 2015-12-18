@@ -128,18 +128,50 @@ public class HomeController {
 			savedProfile.setFullname(userprofile.getFullname());
 		}
 		
+		if(StringUtils.isNotEmpty(userprofile.getSpecialty())){
+			savedProfile.setSpecialty(userprofile.getSpecialty());
+		}
+		
+		if(savedProfile.getAge() != userprofile.getAge()){
+			savedProfile.setAge(userprofile.getAge());
+		}
+		
+		if(savedProfile.getExpirence() != userprofile.getExpirence()){
+			savedProfile.setExpirence(userprofile.getExpirence());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getEmail())){
+			savedProfile.setEmail(userprofile.getEmail());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getContact())){
+			savedProfile.setContact(userprofile.getContact());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getUsername())){
+			savedProfile.setUsername(userprofile.getUsername());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getPassword())){
+			savedProfile.setPassword(userprofile.getPassword());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getSummary())){
+			savedProfile.setSummary(userprofile.getSummary());
+		}
+		
 		userService.insertRow(savedProfile);	
 		session.setAttribute(DocConstant.USERPROFILE, savedProfile);
 		
-		if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_ADMIN)){			
+		/*if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_ADMIN)){			
 			return "redirect:admin/myprofile";
-		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_DOCTOR)){			
+		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_DOCTOR)){*/			
 			return "redirect:doctor/myprofile";
-		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_USER)){			
+		/*} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_USER)){			
 			return "redirect:user/myprofile";
 		} else {
 			return "errorPage";
-		}
+		}*/
 
 	}
 	

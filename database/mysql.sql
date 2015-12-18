@@ -40,6 +40,7 @@ CREATE TABLE users (
 	password VARCHAR(45) NOT NULL ,	
 	profilePicUrl varchar(20) DEFAULT 'profilePic.jpg',
 	enabled TINYINT DEFAULT 1,
+	summary TEXT,
     CONSTRAINT users_pk PRIMARY KEY (id)
 );
 
@@ -74,3 +75,4 @@ INSERT INTO `myfirstapp`.`users` (`id`, `fullname`, `role`, `specialty`, `age`, 
 INSERT INTO `myfirstapp`.`users` (`id`, `fullname`, `role`, `age`, `email`, `contact`, `username`, `password`, `profilePicUrl`, `enabled`) VALUES ('3', 'patient', '3', '35', 'patient', '1234567890', 'patient', 'demo', 'profilePic.jpg', '1');
 
 -- End of file.
+ALTER TABLE `myfirstapp`.`users` ADD COLUMN `summary` TEXT(4000) NULL ;

@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 
-<c:url var="addAction" value="updateProfile" ></c:url>
+<c:url var="addAction" value="/updateProfile" ></c:url>
 <script type="text/javascript">
 $( document ).ready(function() {
 	 	  
@@ -43,7 +43,7 @@ function init(){
 			</div>
 		
 		</form>
-
+		
 		<form:form action="${addAction}" commandName="userproflie">
 		<form:hidden name="enabled" path="enabled" value="1"/>	
 		<form:hidden name="userRoles" path="userRoles.id" value="2"/>
@@ -69,11 +69,11 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						<form:input path="fullname" />
+						${userproflie.fullname}
 					</td> 
 				</tr>	
 		
-					
+				
 	
 				<tr>
 					<td>
@@ -82,7 +82,7 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						<form:input path="age" />
+						${userproflie.age}
 					</td>
 				</tr>	
 	
@@ -95,7 +95,7 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						<form:input path="email" />
+						${userproflie.email}
 					</td>
 				</tr>
 	
@@ -106,7 +106,7 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						<form:input path="contact" />
+						${userproflie.contact}
 					</td>
 				</tr>
 	
@@ -118,21 +118,12 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						<form:input path="username" />
+						${userproflie.username}
 					</td>
 				</tr>
 	
 	
-				<tr>
-					<td>
-						<form:label path="password">
-							<spring:message text="password"/>
-						</form:label>
-					</td>
-					<td>
-						<form:password path="password" />
-					</td>
-				</tr>	
+					
 		
 				<tr>
 					<td>
@@ -141,7 +132,7 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						<form:textarea path="summary" />
+						${userproflie.summary}
 					</td>
 				</tr>
 	
@@ -149,8 +140,7 @@ function init(){
 					<td colspan="2">
 						
 						
-							<input type="submit"
-								value="<spring:message text="Save User"/>" />
+							<a href="${pageContext.request.contextPath}/patient/editViewProfile">Edit Profile</a>
 						
 					</td>
 				</tr>

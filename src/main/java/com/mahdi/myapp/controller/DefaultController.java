@@ -18,9 +18,15 @@ public class DefaultController {
 	@Autowired
 	IUserService userService;
 		
-	@RequestMapping(value={"/403","/error"}, method = RequestMethod.GET)
-	public ModelAndView adminHomePage(){
-		
+	@RequestMapping(value={"/403"}, method = RequestMethod.GET)
+	public ModelAndView unauthenticateAccess(){		
+		ModelAndView mv = new ModelAndView("errorPage");
+		mv.addObject("error_message", "You don't have permission.");
+		return mv;
+	}
+	
+	@RequestMapping(value={"/error"}, method = RequestMethod.GET)
+	public ModelAndView adminHomePage(){		
 		ModelAndView mv = new ModelAndView("errorPage");
 		mv.addObject("error_message", "Internal Server error.");
 		return mv;

@@ -15,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.UserProfile;
-import com.mahdi.myapp.model.UserStatusEnum;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
@@ -35,16 +34,13 @@ public class DoctorController {
 	
 	@RequestMapping(value={"/"}, method = RequestMethod.GET)
 	public ModelAndView doctorHomePage(){
-		ModelAndView mv = new ModelAndView("doctorPage");
-		mv.addObject("title", "This is my Home Page.");
+		ModelAndView mv = new ModelAndView("doctorPage");		
 		return mv;
 	}
 	
 	@RequestMapping(value={"myprofile"}, method = RequestMethod.GET)
 	public ModelAndView getProfile(HttpSession session) throws DocException{
-		ModelAndView mv = new ModelAndView("doctorViewProfilePage");
-		mv.addObject("userRoles", userRoleService.getList());
-		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
+		ModelAndView mv = new ModelAndView("doctorViewProfilePage");		
 		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
 		return mv;
 		
@@ -52,9 +48,7 @@ public class DoctorController {
 	
 	@RequestMapping(value={"editViewProfile"}, method = RequestMethod.GET)
 	public ModelAndView editViewProfile(HttpSession session) throws DocException{
-		ModelAndView mv = new ModelAndView("doctorProfilePage");
-		mv.addObject("userRoles", userRoleService.getList());
-		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
+		ModelAndView mv = new ModelAndView("doctorProfilePage");		
 		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
 		return mv;
 		
@@ -103,14 +97,13 @@ public class DoctorController {
 		userService.insertRow(savedProfile);	
 		session.setAttribute(DocConstant.USERPROFILE, savedProfile);		
 				
-		return "redirect:doctor/myprofile";
+		return "redirect:/doctor/myprofile";
 		
 
 	}
 	
 	@RequestMapping(value={"searchPatient"}, method = RequestMethod.POST)
-	public ModelAndView searchDoctor(HttpSession session, @RequestParam("keyword") String keyword) throws DocException{
-		System.out.println(keyword);
+	public ModelAndView searchPatient(HttpSession session, @RequestParam("keyword") String keyword) throws DocException{
 		ModelAndView mv = new ModelAndView("searchPatientPage");		
 		mv.addObject("patientList", userService.findAppointment(keyword, true));
 		return mv;

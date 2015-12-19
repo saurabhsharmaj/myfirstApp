@@ -9,7 +9,7 @@
 			<div class="col-2">expirence: ${doctor.expirence}</div>
 			<div class="col-2">contact: ${doctor.contact}</div>			
 			
-			<a href="${pageContext.request.contextPath}/user/saveAppointment/${doctor.id }" class="btn btn-default">Get Appointment</a>&nbsp;<a class="btn btn-default" href="#" onclick="window.history.go(-1); return false;">back</a>
+			<a href="${pageContext.request.contextPath}/patient/saveAppointment/${doctor.id }" class="btn btn-default">Get Appointment</a>&nbsp;<a class="btn btn-default" href="#" onclick="window.history.go(-1); return false;">back</a>
 		</div>
 	</div>
 </div>

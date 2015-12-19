@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
 
-<c:url var="addAction" value="/updateProfile" ></c:url>
+<c:url var="addAction" value="updateProfile" ></c:url>
 <script type="text/javascript">
 $( document ).ready(function() {
 	 	  
@@ -30,7 +30,7 @@ function init(){
         <div class="text-center col-md-4 col-md-offset-4 col-sm-1">
         <!-- form for Profile Picture -->
 		<form name="profilePicForm" id="profilePicForm" action="${pageContext.request.contextPath}/saveProfilePic" method="post" enctype="multipart/form-data">
-			
+			<h4>Edit Profile: </h4>
 				<img
 				src="${pageContext.request.contextPath}/resources/profilepic/${userprofile.profilePicUrl}"
 				class="profilePicImage img-circle" alt="profile"

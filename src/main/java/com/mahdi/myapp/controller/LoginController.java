@@ -37,7 +37,6 @@ public class LoginController {
 	@RequestMapping(value = "login", method = RequestMethod.GET )
 	public String loginPage(Model model) {
 		model.addAttribute("title", "Login");
-		model.addAttribute("message", "Enter your username/password:");		
 		return "loginPage";
 	}	
 	
@@ -64,8 +63,8 @@ public class LoginController {
 			return "forward:/admin/";
 		} else if(activeUser.getAuthorities().contains(new GrantedAuthorityImpl(DocConstant.ROLE_DOCTOR))){
 			return "forward:/doctor/";
-		} else if(activeUser.getAuthorities().contains(new GrantedAuthorityImpl(DocConstant.ROLE_USER))){
-			return "forward:/user/";
+		} else if(activeUser.getAuthorities().contains(new GrantedAuthorityImpl(DocConstant.ROLE_PATIENT))){
+			return "forward:/patient/";
 		} else {
 			return "forward:/403";
 		}

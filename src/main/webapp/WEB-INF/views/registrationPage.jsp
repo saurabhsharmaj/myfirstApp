@@ -6,7 +6,7 @@
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4 col-sm-1">
 	<h2>Registration Page</h2>
-<c:url var="addAction" value="/registerUser" ></c:url>
+<c:url var="addAction" value="/registerPatient" ></c:url>
 <form:form action="${addAction}" commandName="user" method="post">
 			<form:hidden name="enabled" path="enabled" value="1"/>
 			<form:hidden name="profilePicUrl" path="profilePicUrl" value="profilePic.jpg"/>

@@ -75,12 +75,12 @@
         <put-attribute name="body" value="/WEB-INF/views/adminHomePage.jsp" />
     </definition>
     
-    <definition name="adminViewProfilePage" extends="doctor.definition">
+    <definition name="adminViewProfilePage" extends="admin.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/adminViewProfilePage.jsp" />
     </definition>  
     
-    <definition name="adminProfilePage" extends="doctor.definition">
+    <definition name="adminProfilePage" extends="admin.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/adminProfilePage.jsp" />
     </definition>  
@@ -125,15 +125,20 @@
     
     
     <!-- User Pages -->
-    <definition name="userPage" extends="patient.definition">
+    <definition name="patientPage" extends="patient.definition">
         <put-attribute name="title" value="Home Page" />
         <put-attribute name="body" value="/WEB-INF/views/homePage.jsp" />
-    </definition> 
+    </definition>      
     
-    <definition name="userProfilePage" extends="patient.definition">
+    <definition name="patientViewProfilePage" extends="patient.definition">
         <put-attribute name="title" value="Home Page" />
-        <put-attribute name="body" value="/WEB-INF/views/profilePage.jsp" />
-    </definition>   
+        <put-attribute name="body" value="/WEB-INF/views/patientViewProfilePage.jsp" />
+    </definition>  
+    
+    <definition name="patientProfilePage" extends="patient.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/patientProfilePage.jsp" />
+    </definition> 
     
     <definition name="viewDoctorProfilePageWithLogin" extends="patient.definition">
         <put-attribute name="title" value="Home Page" />

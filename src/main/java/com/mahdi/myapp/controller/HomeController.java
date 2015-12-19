@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
 import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,8 +46,7 @@ public class HomeController {
 	
 	@RequestMapping(value={"/","home"}, method = RequestMethod.GET)
 	public ModelAndView homePage() throws DocumentException{		
-		ModelAndView mv = new ModelAndView("homePage");
-		mv.addObject("title", "This is my Home Page.");		
+		ModelAndView mv = new ModelAndView("homePage");			
 		return mv;
 	}
 	
@@ -56,8 +54,6 @@ public class HomeController {
 	public ModelAndView register() throws DocException{
 		ModelAndView mv = new ModelAndView("registrationPage");		
 		mv.addObject("user", new UserProfile());
-		mv.addObject("userRoles", userRoleService.getRoleExceptAdmin());
-//		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
 		return mv;
 	}
 	
@@ -68,8 +64,7 @@ public class HomeController {
 		UserProfile profile = new UserProfile();		
 		mv.addObject("user", profile);
 		return mv;
-	}
-	
+	}	
 	
 	@RequestMapping(value={"registerDoctor"}, method = RequestMethod.POST)
 	public String saveDoctor(@ModelAttribute UserProfile userProfile) throws DocException{		
@@ -79,12 +74,10 @@ public class HomeController {
 	
 	
 	
-	@RequestMapping(value= "registerUser", method = RequestMethod.POST)
-	public String registerUser(@ModelAttribute UserProfile userProfile,BindingResult result) throws DocException{
+	@RequestMapping(value= "registerPatient", method = RequestMethod.POST)
+	public String registerPatient(@ModelAttribute UserProfile userProfile,BindingResult result) throws DocException{
 		userService.insertRow(userProfile);		
 		return "redirect:/login";
-
-
 	}
 	
 	
@@ -103,8 +96,7 @@ public class HomeController {
 		return mv;
 	}
 	
-	@RequestMapping(value={"doctorDetail/{id}"}, method = {RequestMethod.GET, RequestMethod.POST})
-	
+	@RequestMapping(value={"doctorDetail/{id}"}, method = {RequestMethod.GET, RequestMethod.POST})	
 	public ModelAndView getDoctorProfile(@PathVariable Integer id, HttpSession session) throws DocException{		
 		ModelAndView mv = null;
 		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session,userService);
@@ -116,64 +108,7 @@ public class HomeController {
 		
 		mv.addObject("profile", userService.getRowById(id));
 		return mv;
-	}
-	
-	
-	
-	@RequestMapping(value= "updateProfile", method = RequestMethod.POST)
-	public String updateUser(HttpSession session, @ModelAttribute("user") UserProfile userprofile) throws DocException{
-		UserProfile savedProfile = userService.getRowById(userprofile.getId());
-		
-		if(StringUtils.isNotEmpty(userprofile.getFullname())){
-			savedProfile.setFullname(userprofile.getFullname());
-		}
-		
-		if(StringUtils.isNotEmpty(userprofile.getSpecialty())){
-			savedProfile.setSpecialty(userprofile.getSpecialty());
-		}
-		
-		if(savedProfile.getAge() != userprofile.getAge()){
-			savedProfile.setAge(userprofile.getAge());
-		}
-		
-		if(savedProfile.getExpirence() != userprofile.getExpirence()){
-			savedProfile.setExpirence(userprofile.getExpirence());
-		}
-		
-		if(StringUtils.isNotEmpty(userprofile.getEmail())){
-			savedProfile.setEmail(userprofile.getEmail());
-		}
-		
-		if(StringUtils.isNotEmpty(userprofile.getContact())){
-			savedProfile.setContact(userprofile.getContact());
-		}
-		
-		if(StringUtils.isNotEmpty(userprofile.getUsername())){
-			savedProfile.setUsername(userprofile.getUsername());
-		}
-		
-		if(StringUtils.isNotEmpty(userprofile.getPassword())){
-			savedProfile.setPassword(userprofile.getPassword());
-		}
-		
-		if(StringUtils.isNotEmpty(userprofile.getSummary())){
-			savedProfile.setSummary(userprofile.getSummary());
-		}
-		
-		userService.insertRow(savedProfile);	
-		session.setAttribute(DocConstant.USERPROFILE, savedProfile);
-		
-		/*if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_ADMIN)){			
-			return "redirect:admin/myprofile";
-		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_DOCTOR)){*/			
-			return "redirect:doctor/myprofile";
-		/*} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_USER)){			
-			return "redirect:user/myprofile";
-		} else {
-			return "errorPage";
-		}*/
-
-	}
+	}	
 	
 	
 	@RequestMapping(value={"getAppointment/{doctorId}"}, method = RequestMethod.GET)
@@ -186,36 +121,36 @@ public class HomeController {
 	}
 		
 	@RequestMapping(value={"signin/{doctorId}"}, method = RequestMethod.POST)
-	public String saveAppointmentWithDoctor(@PathVariable Integer doctorId ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
+	public String saveAppointmentWithDoctorForExistingPatients(@PathVariable Integer doctorId ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
 		UserProfile profile = userService.validate(userProfile);
 		if( profile != null ){
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+			authorities.add(new SimpleGrantedAuthority(DocConstant.ROLE_PATIENT));
 			UserDetails user = new User(userProfile.getUsername(), userProfile.getPassword() , authorities);
 			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			session.setAttribute(DocConstant.USERPROFILE, profile);
 			model.addAttribute("user", user);
 			model.addAttribute("doctor", userService.getRowById(doctorId));
-			return "forward:/user/viewDoctorAppointment";
+			return "forward:/patient/viewDoctorAppointment";
 		}
 		//userService.insertRow(userProfile);
 		return "redirect:/login";
 	}
 	
 	@RequestMapping(value={"newRegistration/{doctorId}"}, method = RequestMethod.POST)
-	public String saveAppointmentWithDoctorForNewUser(@PathVariable Integer doctorId ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
+	public String saveAppointmentWithDoctorForNewPatient(@PathVariable Integer doctorId ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
 		
 			int id = userService.insertRow(userProfile);
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-			authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+			authorities.add(new SimpleGrantedAuthority(DocConstant.ROLE_PATIENT));
 			UserDetails user = new User(userProfile.getUsername(), userProfile.getPassword() , authorities);
 			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			session.setAttribute(DocConstant.USERPROFILE, userService.getRowById(id));
 			model.addAttribute("user", user);
 			model.addAttribute("doctor", userService.getRowById(doctorId));
-			return "forward:/user/viewDoctorAppointment";
+			return "forward:/patient/viewDoctorAppointment";
 		
 	}
 }

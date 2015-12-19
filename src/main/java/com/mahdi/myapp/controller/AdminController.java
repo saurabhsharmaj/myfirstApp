@@ -17,7 +17,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.UserProfile;
-import com.mahdi.myapp.model.UserStatusEnum;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
@@ -37,20 +36,16 @@ public class AdminController {
 	
 	
 	@RequestMapping(value={"/"}, method = RequestMethod.GET)
-	public ModelAndView adminHomePage(){
-		
+	public ModelAndView adminHomePage(){		
 		ModelAndView mv = new ModelAndView("adminPage");
-		mv.addObject("title", "This is my Home Page.");
 		return mv;
 	}
 	
 	
 	
 	@RequestMapping(value={"myprofile"}, method = RequestMethod.GET)
-	public ModelAndView getProfile(HttpSession session) throws DocException{
-		ModelAndView mv = new ModelAndView("adminViewProfilePage");
-		mv.addObject("userRoles", userRoleService.getList());
-		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
+	public ModelAndView getMyProfile(HttpSession session) throws DocException{
+		ModelAndView mv = new ModelAndView("adminViewProfilePage");		
 		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
 		return mv;
 		
@@ -58,16 +53,14 @@ public class AdminController {
 	
 	@RequestMapping(value={"editViewProfile"}, method = RequestMethod.GET)
 	public ModelAndView editViewProfile(HttpSession session) throws DocException{
-		ModelAndView mv = new ModelAndView("adminProfilePage");
-		mv.addObject("userRoles", userRoleService.getList());
-		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
+		ModelAndView mv = new ModelAndView("adminProfilePage");		
 		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
 		return mv;
 		
 	}
 	
 	@RequestMapping(value= "updateProfile", method = RequestMethod.POST)
-	public String updateUser(HttpSession session, @ModelAttribute("user") UserProfile userprofile) throws DocException{
+	public String updateProfile(HttpSession session, @ModelAttribute("user") UserProfile userprofile) throws DocException{
 		UserProfile savedProfile = userService.getRowById(userprofile.getId());
 		
 		if(StringUtils.isNotEmpty(userprofile.getFullname())){
@@ -109,7 +102,7 @@ public class AdminController {
 		userService.insertRow(savedProfile);	
 		session.setAttribute(DocConstant.USERPROFILE, savedProfile);		
 				
-		return "redirect:admin/myprofile";
+		return "redirect:/admin/myprofile";
 		
 
 	}
@@ -128,7 +121,6 @@ public class AdminController {
 		List<UserProfile> users = userService.getList();
 		users.remove(DocUtils.getLoggedInUserProfile(session,userService));
 		mv.addObject("userList",users);
-		return mv;
-		
+		return mv;		
 	}
 }

@@ -38,7 +38,7 @@ CREATE TABLE users (
 	contact varchar(15), 
 	username VARCHAR(45) NOT NULL ,
 	password VARCHAR(45) NOT NULL ,	
-	profilePicUrl varchar(20) DEFAULT 'profilePic.jpg',
+	profilePicUrl varchar(20) DEFAULT 'patientProfilePic.jpg',
 	enabled TINYINT DEFAULT 1,
 	summary TEXT,
     CONSTRAINT users_pk PRIMARY KEY (id)
@@ -66,13 +66,14 @@ ALTER TABLE users ADD CONSTRAINT users_user_roles FOREIGN KEY  users(role)
 -- Intest for User_Roles
 INSERT INTO `myfirstapp`.`user_roles` (`id`, `code`, `name`, `description`, `isInternal`, `enabled`) VALUES ('1', 'ROLE_ADMIN', 'Administrator', 'Administrator', 1, '1');
 INSERT INTO `myfirstapp`.`user_roles` (`id`, `code`, `name`, `description`, `enabled`) VALUES ('2', 'ROLE_DOCTOR', 'Doctor', 'Doctor', '1');
-INSERT INTO `myfirstapp`.`user_roles` (`id`, `code`, `name`, `description`, `enabled`) VALUES ('3', 'ROLE_USER', 'Patient', 'Patient', '1');
+INSERT INTO `myfirstapp`.`user_roles` (`id`, `code`, `name`, `description`, `enabled`) VALUES ('3', 'ROLE_PATIENT', 'Patient', 'Patient', '1');
 
 
 -- Insert for Users
-INSERT INTO `myfirstapp`.`users` (`id`, `fullname`, `role`, `email`, `contact`, `username`, `password`, `profilePicUrl`, `enabled`) VALUES ('1', 'administrator', '1', 'admin@gmail.com', '1234567890', 'admin', 'demo', 'profilePic.jpg', '1');
-INSERT INTO `myfirstapp`.`users` (`id`, `fullname`, `role`, `specialty`, `age`, `expirence`, `email`, `contact`, `username`, `password`, `profilePicUrl`, `enabled`) VALUES ('2', 'doctor', '2', 'ortho', '25', '5', 'doctor@gmail.com', '1234567890', 'doctor', 'demo', 'profilePic.jpg', '1');
-INSERT INTO `myfirstapp`.`users` (`id`, `fullname`, `role`, `age`, `email`, `contact`, `username`, `password`, `profilePicUrl`, `enabled`) VALUES ('3', 'patient', '3', '35', 'patient', '1234567890', 'patient', 'demo', 'profilePic.jpg', '1');
+INSERT INTO `myfirstapp`.`users` (`id`, `fullname`, `role`, `email`, `contact`, `username`, `password`, `profilePicUrl`, `enabled`) VALUES ('1', 'administrator', '1', 'admin@gmail.com', '1234567890', 'admin', 'demo', 'patientProfilePic.jpg', '1');
+INSERT INTO `myfirstapp`.`users` (`id`, `fullname`, `role`, `specialty`, `age`, `expirence`, `email`, `contact`, `username`, `password`, `profilePicUrl`, `enabled`) VALUES ('2', 'doctor', '2', 'ortho', '25', '5', 'doctor@gmail.com', '1234567890', 'doctor', 'demo', 'doctorProfilePic.jpg', '1');
+INSERT INTO `myfirstapp`.`users` (`id`, `fullname`, `role`, `age`, `email`, `contact`, `username`, `password`, `profilePicUrl`, `enabled`) VALUES ('3', 'patient', '3', '35', 'patient', '1234567890', 'patient', 'demo', 'patientProfilePic.jpg', '1');
 
 -- End of file.
 ALTER TABLE `myfirstapp`.`users` ADD COLUMN `summary` TEXT(4000) NULL ;
+UPDATE `myfirstapp`.`user_roles` SET `code`='ROLE_PATIENT' WHERE `id`='3';

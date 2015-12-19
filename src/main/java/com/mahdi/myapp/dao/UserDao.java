@@ -54,7 +54,7 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 			@SuppressWarnings("unchecked")
 			DetachedCriteria deCriteria = DetachedCriteria.forClass(typeParameterClass);
 			Criteria criteria = deCriteria.getExecutableCriteria(session);
-			criteria.add(Restrictions.eq("u.code", DocConstant.ROLE_USER));
+			criteria.add(Restrictions.eq("u.code", DocConstant.ROLE_PATIENT));
 			criteria.add(Restrictions.eq("username", userProfile.getUsername()).ignoreCase());
 			criteria.add(Restrictions.eq("password", userProfile.getPassword()));
 			criteria.createAlias("userRoles", "u");

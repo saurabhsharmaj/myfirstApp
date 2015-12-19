@@ -2,6 +2,7 @@ package com.mahdi.myapp.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +17,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.UserProfile;
-import com.mahdi.myapp.model.UserStatusEnum;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
+import com.mahdi.myapp.util.DocConstant;
 import com.mahdi.myapp.util.DocUtils;
 
 @Controller
-@RequestMapping("user")
+@RequestMapping("patient")
 public class PatientController {
 
 	private final Logger log = LoggerFactory.getLogger(PatientController.class);
@@ -35,19 +36,66 @@ public class PatientController {
 
 	@RequestMapping(value={"/"}, method = RequestMethod.GET)
 	public ModelAndView userHomePage(){
-		ModelAndView mv = new ModelAndView("userPage");
-		mv.addObject("title", "This is my Home Page.");
+		ModelAndView mv = new ModelAndView("patientPage");
 		return mv;
 	}
 
 	@RequestMapping(value={"myprofile"}, method = RequestMethod.GET)
 	public ModelAndView getProfile(HttpSession session) throws DocException{
-		ModelAndView mv = new ModelAndView("userProfilePage");
-		mv.addObject("userRoles", userRoleService.getList());
-		mv.addObject("status", new UserStatusEnum[]{UserStatusEnum.ACTIVE, UserStatusEnum.DEACTIVE});
+		ModelAndView mv = new ModelAndView("patientViewProfilePage");			
 		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session,userService);
 		mv.addObject("userproflie",userProfile);
 		return mv;
+
+	}
+	
+	
+	@RequestMapping(value={"editViewProfile"}, method = RequestMethod.GET)
+	public ModelAndView editViewProfile(HttpSession session) throws DocException{
+		ModelAndView mv = new ModelAndView("patientProfilePage");
+		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
+		return mv;
+		
+	}
+	
+	@RequestMapping(value= "updateProfile", method = RequestMethod.POST)
+	public String updateUser(HttpSession session, @ModelAttribute("user") UserProfile userprofile) throws DocException{
+		UserProfile savedProfile = userService.getRowById(userprofile.getId());
+		
+		if(StringUtils.isNotEmpty(userprofile.getFullname())){
+			savedProfile.setFullname(userprofile.getFullname());
+		}		
+		
+		if(savedProfile.getAge() != userprofile.getAge()){
+			savedProfile.setAge(userprofile.getAge());
+		}	
+		
+		
+		if(StringUtils.isNotEmpty(userprofile.getEmail())){
+			savedProfile.setEmail(userprofile.getEmail());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getContact())){
+			savedProfile.setContact(userprofile.getContact());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getUsername())){
+			savedProfile.setUsername(userprofile.getUsername());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getPassword())){
+			savedProfile.setPassword(userprofile.getPassword());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getSummary())){
+			savedProfile.setSummary(userprofile.getSummary());
+		}
+		
+		userService.insertRow(savedProfile);	
+		session.setAttribute(DocConstant.USERPROFILE, savedProfile);		
+				
+		return "redirect:/patient/myprofile";
+		
 
 	}
 
@@ -99,8 +147,7 @@ public class PatientController {
 
 	
 	@RequestMapping(value={"viewDoctorAppointment"}, method = {RequestMethod.GET,RequestMethod.POST})
-	public String viewDoctorAppointment() throws DocException{
-		
+	public String viewDoctorAppointment() throws DocException{		
 		return "viewDoctorAppointmentPage";		
 	}
 

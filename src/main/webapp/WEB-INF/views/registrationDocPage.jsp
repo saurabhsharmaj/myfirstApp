@@ -2,12 +2,15 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/getUserValidation.js"></script>
+
+
 <div class="container container-table">
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4 col-sm-1">
 			<h2>Doctor Registration Page</h2>			
 			<c:url var="addAction" value="/registerDoctor" ></c:url>
-			<form:form action="${addAction}" commandName="user" method="post">			
+			<form:form action="${addAction}" commandName="user" method="post" onsubmit="return validateForm();">			
 			<form:hidden name="enabled" path="enabled" value="1"/>
 			<form:hidden name="profilePicUrl" path="profilePicUrl" value="doctorProfilePic.jpg"/>
 			<form:hidden name="userRoles" path="userRoles.id" value="2"/>
@@ -19,7 +22,8 @@
 						</form:label>
 					</td>
 					<td>
-						<form:input path="email" cssClass="form-control" placeholder="Email address" />
+						<form:input path="email" cssClass="form-control" placeholder="Email address"  onblur="validEmail(this.value);"/>
+						<span id="emailMsg" style="color: red;"></span>
 					</td>
 				</tr>	
 				
@@ -30,7 +34,8 @@
 						</form:label>
 					</td>
 					<td>
-						<form:input path="username" cssClass="form-control" placeholder="Username" required="true"/>
+						<form:input path="username" cssClass="form-control" placeholder="Username" required="true" onblur="checkUsername(this.value);"/>
+						<span id="usernameMsg" style="color: red;"></span>
 					</td>
 				</tr>
 				

@@ -22,7 +22,7 @@ public class CommanHelperController {
 	@Autowired
 	IUserService userService;
 	
-	@RequestMapping(value="isEmailExist/{emailId:.+}",method = RequestMethod.GET)
+	/*@RequestMapping(value="isEmailExist/{emailId:.+}",method = RequestMethod.GET)
 	public @ResponseBody DocResponse isEmailExist(@PathVariable String emailId){
 		UserProfile profile = null;//userService.searchByColumn("email",emailId);
 		if(profile ==  null){
@@ -31,5 +31,5 @@ public class CommanHelperController {
 			return new DocResponse(HttpStatus.OK, "Emailid is exist.",null);
 		}
 		
-	}
+	}*/
 }

@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/getUserValidation.js"></script>
 <script>
 
 $( document ).ready(function() {
@@ -37,7 +37,7 @@ function displayRegistrationForm(){
 		     <div id="registration">
 		     	<h2>Registration Page</h2>
 				<c:url var="addAction" value=" ${pageContext.request.contextPath}/newRegistration/${doctor.id}" ></c:url>
-			<form:form action="${addAction}" commandName="user" method="post">
+			<form:form action="${addAction}" commandName="user" method="post" onsubmit="return validateForm();">
 			<form:hidden name="enabled" path="enabled" value="1"/>
 			<form:hidden name="profilePicUrl" path="profilePicUrl" value="profilePic.jpg"/>
 			<form:hidden name="userRoles" path="userRoles.id" value="3"/>
@@ -49,7 +49,8 @@ function displayRegistrationForm(){
 						</form:label>
 					</td>
 					<td>
-						<form:input path="email" cssClass="form-control" placeholder="Email address" />
+						<form:input path="email" cssClass="form-control" placeholder="Email address"  onblur="validEmail(this.value);"/>
+						<span id="emailMsg" style="color: red;"></span>
 					</td>
 				</tr>	
 				
@@ -60,7 +61,8 @@ function displayRegistrationForm(){
 						</form:label>
 					</td>
 					<td>
-						<form:input path="username" cssClass="form-control" placeholder="Username" required="true"/>
+						<form:input path="username" cssClass="form-control" placeholder="Username" required="true" onblur="checkUsername(this.value);"/>
+						<span id="usernameMsg" style="color: red;"></span>
 					</td>
 				</tr>
 				

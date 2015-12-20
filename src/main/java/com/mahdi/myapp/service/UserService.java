@@ -56,7 +56,7 @@ public class UserService implements IUserService {
 	}
 
 	public UserProfile getRowByName(String columnName, String value) {
-		return userDao.getRowByName(columnName, value);
+		return userDao.getRowByColumnName(columnName, value);
 	}
 
 	public List<UserProfile> findUser(String keyword) throws DocException {
@@ -82,6 +82,14 @@ public class UserService implements IUserService {
 		} else {
 			return profile;
 		}
+	}
+
+	public boolean isEmailExist(String emailId) throws DocException {
+		return userDao.getRowByColumnName("email", emailId)==null?false:true;
+	}
+
+	public Boolean isUserNameExist(String username) throws DocException {
+		return userDao.getRowByColumnName("username", username)==null?false:true;
 	}
 	
 }

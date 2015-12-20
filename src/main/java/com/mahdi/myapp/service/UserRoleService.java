@@ -38,7 +38,7 @@ public class UserRoleService implements IUserRoleService {
 	}
 
 	public UserRole getRowByName(String columnName, String value) {		
-		return userRoleDao.getRowByName(columnName, value);
+		return userRoleDao.getRowByColumnName(columnName, value);
 	}
 	
 	

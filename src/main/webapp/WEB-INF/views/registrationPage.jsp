@@ -2,6 +2,14 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 
+<script>
+
+function isEmailIdExist(emailId){
+	//send request to rest controller.
+	alert(emailId);
+}
+
+</script>
 <div class="container container-table">
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4 col-sm-1">
@@ -19,7 +27,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="email" cssClass="form-control" placeholder="Email address" />
+			<form:input path="email" cssClass="form-control" placeholder="Email address" onblur="isEmailIdExist(this.value)" />
 		</td>
 	</tr>	
 	

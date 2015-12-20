@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -16,10 +17,29 @@ import com.mahdi.myapp.util.DocConstant;
 
 @Repository
 public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
-	
+
 	public UserDao() {
 		super(UserProfile.class);
 	}
+
+
+
+	@Override
+	public List<UserProfile> getList() throws DocException {
+		try {
+			Session session = getSession();
+			String hql = "select u from UserProfile u left join u.userRoles ur";
+			Query query = session.createQuery(hql);
+			List<UserProfile> list = query.list();
+			return list;
+		} catch (HibernateException ex) {
+			throw new DocException(HttpStatus.EXPECTATION_FAILED, ex);
+		} catch (Exception ex) {
+			throw new DocException(HttpStatus.FAILED_DEPENDENCY, ex);
+		}
+	}
+
+
 
 	public List<UserProfile> findUser(String keyword)throws DocException {
 
@@ -30,13 +50,13 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 			Criteria criteria = deCriteria.getExecutableCriteria(session);
 			criteria.add(Restrictions.eq("u.code", DocConstant.ROLE_DOCTOR));
 			criteria.add(
-					   Restrictions.disjunction()
-					      .add(Restrictions.like("fullname", "%"+keyword+"%"))
-					      .add(Restrictions.like("specialty", "%"+keyword+"%"))
-					      .add(Restrictions.like("email", "%"+keyword+"%"))
-					      .add(Restrictions.like("contact", "%"+keyword+"%"))
+					Restrictions.disjunction()
+					.add(Restrictions.like("fullname", "%"+keyword+"%"))
+					.add(Restrictions.like("specialty", "%"+keyword+"%"))
+					.add(Restrictions.like("email", "%"+keyword+"%"))
+					.add(Restrictions.like("contact", "%"+keyword+"%"))
 					);
-			
+
 			criteria.createAlias("userRoles", "u");
 			List<UserProfile> list = criteria.list();
 			return (List<UserProfile>) list;
@@ -45,7 +65,7 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 		} catch (Exception ex) {
 			throw new DocException(HttpStatus.FAILED_DEPENDENCY, ex);
 		}
-	
+
 	}
 
 	public UserProfile validate(UserProfile userProfile) throws DocException {

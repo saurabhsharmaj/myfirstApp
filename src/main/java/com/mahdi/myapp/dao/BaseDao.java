@@ -102,7 +102,7 @@ public abstract class BaseDao<T> implements Dao<T> {
 		return t;
 	}
 
-	public T getRowByName(String fieldName, String value) {
+	public T getRowByColumnName(String fieldName, String value) {
 		Session session = getSession();
 		DetachedCriteria criteria = DetachedCriteria
 				.forClass(typeParameterClass);

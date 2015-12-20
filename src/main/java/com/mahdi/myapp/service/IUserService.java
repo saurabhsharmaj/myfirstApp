@@ -18,4 +18,8 @@ public interface IUserService extends IService<UserProfile> {
 
 	UserProfile validate(UserProfile userProfile) throws DocException;
 
+	boolean isEmailExist(String emailId) throws DocException;
+
+	Boolean isUserNameExist(String username) throws DocException;
+
 }

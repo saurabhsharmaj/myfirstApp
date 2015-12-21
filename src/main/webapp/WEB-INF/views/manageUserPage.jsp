@@ -24,7 +24,7 @@
 					        	<td>${user.username}</td>
 					        	<td>${user.userRoles.code}</td>
 					        	<td>${user.enabled}</td>
-					        	<td><a href="#">Edit</a> &nbsp; <a href="#">Delete</a> </td>
+					        	<td><a href="/MyFirstApp/admin/editUser/${user.id }">Edit</a> &nbsp; <a href="/MyFirstApp/admin/deleteUser/${user.id }">Delete</a> </td>
 					        </tr>	
 			   		</div>		   		
 		   		</c:forEach> 

@@ -28,7 +28,7 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 	public List<UserProfile> getList() throws DocException {
 		try {
 			Session session = getSession();
-			String hql = "select u from UserProfile u left join u.userRoles ur";
+			String hql = "select u from UserProfile u left join u.userRoles ur where u.enabled=1";
 			Query query = session.createQuery(hql);
 			List<UserProfile> list = query.list();
 			return list;

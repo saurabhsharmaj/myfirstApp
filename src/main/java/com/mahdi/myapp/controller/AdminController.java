@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -122,5 +123,69 @@ public class AdminController {
 		users.remove(DocUtils.getLoggedInUserProfile(session,userService));
 		mv.addObject("userList",users);
 		return mv;		
+	}
+	
+	@RequestMapping(value={"editUser/{id}"}, method=RequestMethod.GET)
+	public ModelAndView editUser(@PathVariable Integer id) throws DocException{
+		ModelAndView mv = new ModelAndView("manageEditUserPage");
+		UserProfile user = userService.getRowById(id);		
+		mv.addObject("user",user);
+		return mv;		
+	}
+	
+	@RequestMapping(value={"deleteUser/{id}"}, method=RequestMethod.GET)
+	public ModelAndView deleteUser(@PathVariable Integer id) throws DocException{
+		ModelAndView mv = new ModelAndView("manageUserPage");
+		UserProfile user =  userService.getRowById(id);
+		userService.deleteRow(id);		
+		mv.addObject("message",user.getUsername() +" has been deleted.");
+		return mv;		
+	}
+	
+	@RequestMapping(value= "updateManagedUserProfile", method = RequestMethod.POST)
+	public String updateManagedUserProfile(HttpSession session, @ModelAttribute("user") UserProfile userprofile) throws DocException{
+		UserProfile savedProfile = userService.getRowById(userprofile.getId());
+		
+		if(StringUtils.isNotEmpty(userprofile.getFullname())){
+			savedProfile.setFullname(userprofile.getFullname());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getSpecialty())){
+			savedProfile.setSpecialty(userprofile.getSpecialty());
+		}
+		
+		if(savedProfile.getAge() != userprofile.getAge()){
+			savedProfile.setAge(userprofile.getAge());
+		}
+		
+		if(savedProfile.getExpirence() != userprofile.getExpirence()){
+			savedProfile.setExpirence(userprofile.getExpirence());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getEmail())){
+			savedProfile.setEmail(userprofile.getEmail());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getContact())){
+			savedProfile.setContact(userprofile.getContact());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getUsername())){
+			savedProfile.setUsername(userprofile.getUsername());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getPassword())){
+			savedProfile.setPassword(userprofile.getPassword());
+		}
+		
+		if(StringUtils.isNotEmpty(userprofile.getSummary())){
+			savedProfile.setSummary(userprofile.getSummary());
+		}
+		
+		userService.insertRow(savedProfile);			
+				
+		return "redirect:/admin/listUsers";
+		
+
 	}
 }

@@ -2,6 +2,7 @@
 var isValidEmail = false;
 var isEmailIdUnique = false;
 var isUserNameUique = false;
+var isWeekPassword = false;
 
 function validEmail(emailId) {
 	if(emailId.length > 0){
@@ -13,7 +14,7 @@ function validEmail(emailId) {
     isEmailIdExist(emailId);
    } else {
 	   isValidEmail = true;
-	   $('#emailMsg').text('Email Id is not valid.').show();
+	   $('#emailMsg').html('<div class="alert alert-warning">Email Id is not valid.</div>').show();
    }
 	}
   
@@ -27,9 +28,9 @@ function isEmailIdExist(emailId){
 	$.ajax({
         url: "/MyFirstApp/isEmailExist/"+emailId+"/"
     }).then(function(data) {
-    	if(data){
+    	if(data.data){
     		isEmailIdUnique = true;
-    		$('#emailMsg').text('Please Choose Another email Id.').show();
+    		$('#emailMsg').html('<div class="alert alert-warning">Email Id already taken, Please choose another email Id.</div>').show();
     	}else {
     		isEmailIdUnique= false;
     	} 
@@ -46,9 +47,9 @@ function checkUsername(username){
 	$.ajax({
         url: "isUserNameExist/"+username+"/"
     }).then(function(data) {
-    	if(data){
+    	if(data.data){
     		isUserNameUique = true;
-    		$('#usernameMsg').text('Username Already Taken. please choose another username.').show();
+    		$('#usernameMsg').html('<div class="alert alert-warning">Username Already Taken. please choose another username.</div>').show();
     	}  else {
     		isUserNameUique = false;
     	}
@@ -61,7 +62,7 @@ function checkUsername(username){
 
 function validateForm(){
 	
-	if(isValidEmail|isEmailIdUnique|isUserNameUique){
+	if(isValidEmail|isEmailIdUnique|isUserNameUique|isWeekPassword){
 		return false;
 	} else {
 		return true;

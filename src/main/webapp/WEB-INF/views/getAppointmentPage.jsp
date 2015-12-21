@@ -2,11 +2,31 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/getUserValidation.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/zxcvbn.js"></script>
 <script>
 
 $( document ).ready(function() {
 	$('#signin').hide();
 	$('#registration').hide();
+	$('#passwordStrength').hide();
+	$('#password').keyup(function() {
+		  var textValue = $(this).val();				
+			$('#passwordStrength').hide();
+			if(textValue.length >= 0){			  
+				var result = zxcvbn(textValue);
+				if(result.score <= 1){
+				 isWeekPassword=true;
+				 $('#passwordStrength').html("Week").show();	  
+				} else if(result.score <= 3){
+				 isWeekPassword=false;
+				 $('#passwordStrength').html("Medium").show();			  
+				} else if(result.score <= 4){
+				 isWeekPassword=false;
+				 $('#passwordStrength').html("Strong").show();			  
+				}
+		}
+	});
+	
 });
 	
 
@@ -49,7 +69,7 @@ function displayRegistrationForm(){
 						</form:label>
 					</td>
 					<td>
-						<form:input path="email" cssClass="form-control" placeholder="Email address"  onblur="validEmail(this.value);"/>
+						<form:input path="email" cssClass="form-control" placeholder="Email address" required="true"  onblur="validEmail(this.value);"/>
 						<span id="emailMsg" style="color: red;"></span>
 					</td>
 				</tr>	
@@ -74,7 +94,8 @@ function displayRegistrationForm(){
 						</form:label>
 					</td>
 					<td>
-						<form:password path="password" cssClass="form-control" placeholder="password" required="true"/>
+						<form:password path="password" cssClass="form-control" placeholder="password" id="password" required="true"/>
+						<div id="passwordStrength" class="alert alert-warning">  </div>
 					</td>
 				</tr>	
 				

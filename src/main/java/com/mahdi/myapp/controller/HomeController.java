@@ -158,14 +158,14 @@ public class HomeController {
 	}
 	
 	@RequestMapping(value="isEmailExist/{emailId}/", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody Boolean isEmailExist(@PathVariable String emailId) throws DocException{		
-		return userService.isEmailExist(emailId);
+	public @ResponseBody DocResponse isEmailExist(@PathVariable String emailId) throws DocException{		
+		return new DocResponse(HttpStatus.OK, userService.isEmailExist(emailId),null);
 		
 	}
 	
 	@RequestMapping(value="isUserNameExist/{username}/", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody Boolean isUserNameExist(@PathVariable String username) throws DocException{		
-		return userService.isUserNameExist(username);
+	public @ResponseBody DocResponse isUserNameExist(@PathVariable String username) throws DocException{		
+		return new DocResponse(HttpStatus.OK, userService.isUserNameExist(username),null);
 		
 	}
 }

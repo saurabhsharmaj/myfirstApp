@@ -3,7 +3,30 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/getUserValidation.js"></script>
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/zxcvbn.js"></script>
+<script>
+$(document).ready(function(){
+	$('#passwordStrength').hide();
+	$('#password').keyup(function() {
+		  var textValue = $(this).val();
+				
+				$('#passwordStrength').hide();
+			if(textValue.length >= 0){			
+			  var result = zxcvbn(textValue);
+			  if(result.score <= 1){
+				  isWeekPassword=true;
+				  $('#passwordStrength').html("Week").show();	  
+			  } else if(result.score <= 3){
+				  isWeekPassword=false;
+				  $('#passwordStrength').html("Medium").show();			  
+			  } else if(result.score <= 4){
+				  isWeekPassword=false;
+				  $('#passwordStrength').html("Strong").show();			  
+			  }
+			}
+	});
+});
+</script>
 
 <div class="container container-table">
 	<div class="row vertical-center-row">
@@ -21,9 +44,11 @@
 							<spring:message text="email"/>
 						</form:label>
 					</td>
-					<td>
-						<form:input path="email" cssClass="form-control" placeholder="Email address"  onblur="validEmail(this.value);"/>
+					<td>      
+						<form:input path="email" cssClass="form-control" placeholder="Email address" required="true"   onblur="validEmail(this.value);"/>
+						
 						<span id="emailMsg" style="color: red;"></span>
+					
 					</td>
 				</tr>	
 				
@@ -47,7 +72,14 @@
 						</form:label>
 					</td>
 					<td>
-						<form:password path="password" cssClass="form-control" placeholder="password" required="true"/>
+					<div class="row">
+			        <div class="col-lg-12 control-label">
+									<form:password path="password" cssClass="form-control" placeholder="password" id="password" required="true"/>
+			        </div>
+			        <div class="col-lg-12 control-label">
+									<div id="passwordStrength" class="alert alert-warning">  </div>            
+			        </div>
+    </div>
 					</td>
 				</tr>	
 				

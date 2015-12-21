@@ -1,14 +1,17 @@
 package com.mahdi.myapp.webservice;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mahdi.myapp.exception.DocException;
+import com.mahdi.myapp.model.DocResponse;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IUserService;
 
@@ -18,6 +21,11 @@ public class GetDocRestController {
 
 	@Autowired
 	IUserService userService;
+	
+	@RequestMapping("test")
+	public @ResponseBody DocResponse test() throws DocException{
+		return new DocResponse(HttpStatus.OK,new Date(),null);
+	}
 	
 	@RequestMapping("getProfile/all")
 	public @ResponseBody List<UserProfile> getProfile() throws DocException{
@@ -33,4 +41,5 @@ public class GetDocRestController {
 		UserProfile profile = userService.getRowById(id);
 		return profile;
 	}
+	
 }

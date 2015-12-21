@@ -6,6 +6,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/zxcvbn.js"></script>
 <script>
 $(document).ready(function(){
+	$('#confirmPasswordMsg').hide();
 	$('#passwordStrength').hide();
 	$('#password').keyup(function() {
 		  var textValue = $(this).val();
@@ -13,6 +14,7 @@ $(document).ready(function(){
 				$('#passwordStrength').hide();
 			if(textValue.length >= 0){			
 			  var result = zxcvbn(textValue);
+			  console.log(result);
 			  if(result.score <= 1){
 				  isWeekPassword=true;
 				  $('#passwordStrength').html("Week").show();	  
@@ -80,6 +82,17 @@ $(document).ready(function(){
 									<div id="passwordStrength" class="alert alert-warning">  </div>            
 			        </div>
     </div>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>
+						Confirm Password
+					</td>
+					<td>
+					
+			        <input type="password" cssClass="form-control" placeholder="confirm password" id="confirm_password" required="true" onblur="matchPassword();">
+			        <div id="confirmPasswordMsg" class="alert alert-warning">  </div> 
 					</td>
 				</tr>	
 				

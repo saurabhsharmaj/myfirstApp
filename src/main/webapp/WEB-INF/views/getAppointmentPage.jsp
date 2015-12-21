@@ -6,6 +6,7 @@
 <script>
 
 $( document ).ready(function() {
+	$('#confirmPasswordMsg').hide();
 	$('#signin').hide();
 	$('#registration').hide();
 	$('#passwordStrength').hide();
@@ -98,6 +99,17 @@ function displayRegistrationForm(){
 						<div id="passwordStrength" class="alert alert-warning">  </div>
 					</td>
 				</tr>	
+				
+				<tr>
+					<td>
+						Confirm Password
+					</td>
+					<td>
+					
+			        <input type="password" cssClass="form-control" placeholder="confirm password" id="confirm_password" required="true" onblur="matchPassword();">
+			        <div id="confirmPasswordMsg" class="alert alert-warning">  </div> 
+					</td>
+				</tr>
 				
 				<tr>
 					<td colspan="2">			

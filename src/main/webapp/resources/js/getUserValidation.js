@@ -3,6 +3,7 @@ var isValidEmail = false;
 var isEmailIdUnique = false;
 var isUserNameUique = false;
 var isWeekPassword = false;
+var isPasswordNotMatch = false;
 
 function validEmail(emailId) {
 	if(emailId.length > 0){
@@ -62,9 +63,19 @@ function checkUsername(username){
 
 function validateForm(){
 	
-	if(isValidEmail|isEmailIdUnique|isUserNameUique|isWeekPassword){
+	if(isValidEmail|isEmailIdUnique|isUserNameUique|isWeekPassword|isPasswordNotMatch){
 		return false;
 	} else {
 		return true;
+	}
+}
+
+
+function matchPassword(){
+	$('#confirmPasswordMsg').hide();
+	isPasswordNotMatch= false;
+	if($('#password').val() != $('#confirm_password').val()){
+		isPasswordNotMatch= true;
+		$('#confirmPasswordMsg').html('Password is not match.').show();
 	}
 }

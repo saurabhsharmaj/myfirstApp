@@ -82,7 +82,7 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						<form:input path="age" />
+						<form:input path="age" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
 					</td>
 				</tr>	
 	
@@ -106,7 +106,7 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						<form:input path="contact" />
+						<form:input path="contact" onkeypress='return event.charCode >= 48 && event.charCode <= 57'/>
 					</td>
 				</tr>
 	

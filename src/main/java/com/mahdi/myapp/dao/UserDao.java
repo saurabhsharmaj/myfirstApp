@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -22,25 +21,6 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 		super(UserProfile.class);
 	}
 
-
-
-	@Override
-	public List<UserProfile> getList() throws DocException {
-		try {
-			Session session = getSession();
-			String hql = "select u from UserProfile u left join u.userRoles ur where u.enabled=1";
-			Query query = session.createQuery(hql);
-			List<UserProfile> list = query.list();
-			return list;
-		} catch (HibernateException ex) {
-			throw new DocException(HttpStatus.EXPECTATION_FAILED, ex);
-		} catch (Exception ex) {
-			throw new DocException(HttpStatus.FAILED_DEPENDENCY, ex);
-		}
-	}
-
-
-
 	public List<UserProfile> findUser(String keyword)throws DocException {
 
 		try {
@@ -52,12 +32,11 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 			criteria.add(
 					Restrictions.disjunction()
 					.add(Restrictions.like("fullname", "%"+keyword+"%"))
-					.add(Restrictions.like("specialty", "%"+keyword+"%"))
 					.add(Restrictions.like("email", "%"+keyword+"%"))
 					.add(Restrictions.like("contact", "%"+keyword+"%"))
 					);
 
-			criteria.createAlias("userRoles", "u");
+			criteria.createAlias("userRole", "u");
 			List<UserProfile> list = criteria.list();
 			return (List<UserProfile>) list;
 		} catch (HibernateException ex) {
@@ -77,7 +56,7 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 			criteria.add(Restrictions.eq("u.code", DocConstant.ROLE_PATIENT));
 			criteria.add(Restrictions.eq("username", userProfile.getUsername()).ignoreCase());
 			criteria.add(Restrictions.eq("password", userProfile.getPassword()));
-			criteria.createAlias("userRoles", "u");
+			criteria.createAlias("userRole", "u");
 			UserProfile profile = (UserProfile) criteria.uniqueResult();
 			return profile;
 		} catch (HibernateException ex) {
@@ -85,6 +64,16 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 		} catch (Exception ex) {
 			throw new DocException(HttpStatus.FAILED_DEPENDENCY, ex);
 		}
+	}
+	
+	@Override
+	public UserProfile getRowByColumnName(String fieldName, String value) {
+		Session session = getSession();
+		DetachedCriteria criteria = DetachedCriteria
+				.forClass(typeParameterClass);
+		criteria.add(Restrictions.eq(fieldName, value));
+		UserProfile t = (UserProfile) criteria.getExecutableCriteria(session).uniqueResult();
+		return t;
 	}
 
 }

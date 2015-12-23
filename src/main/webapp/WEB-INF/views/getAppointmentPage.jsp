@@ -61,7 +61,7 @@ function displayRegistrationForm(){
 			<form:form action="${addAction}" commandName="user" method="post" onsubmit="return validateForm();">
 			<form:hidden name="enabled" path="enabled" value="1"/>
 			<form:hidden name="profilePicUrl" path="profilePicUrl" value="profilePic.jpg"/>
-			<form:hidden name="userRoles" path="userRoles.id" value="3"/>
+			<form:hidden name="userRole" path="userRole.id" value="3"/>
 			<table>		
 				<tr>
 					<td>

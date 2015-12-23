@@ -60,6 +60,7 @@ $(document).ready(function() {
 							
 								<p>${doctor.username}</p>
 								<p><i>Contact No.:</i><b>${doctor.contact}</b></p>
+								<p><i>Summary :</i><b>${doctor.summary}</b></p>
 								<div class="active-stars-yellow space"></div>
 								<p style="font-size: 11px;">${doctor.expirence}</p>
 							</div>

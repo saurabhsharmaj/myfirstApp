@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
@@ -68,8 +69,8 @@ public class AdminController {
 			savedProfile.setFullname(userprofile.getFullname());
 		}
 		
-		if(StringUtils.isNotEmpty(userprofile.getSpecialty())){
-			savedProfile.setSpecialty(userprofile.getSpecialty());
+		if(savedProfile.getSpecializationId() != userprofile.getSpecializationId()){
+			savedProfile.setSpecializationId(userprofile.getSpecializationId());
 		}
 		
 		if(savedProfile.getAge() != userprofile.getAge()){
@@ -134,12 +135,11 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value={"deleteUser/{id}"}, method=RequestMethod.GET)
-	public ModelAndView deleteUser(@PathVariable Integer id) throws DocException{
-		ModelAndView mv = new ModelAndView("manageUserPage");
+	public @ResponseBody String deleteUser(@PathVariable Integer id, HttpSession session) throws DocException{
+		
 		UserProfile user =  userService.getRowById(id);
 		userService.deleteRow(id);		
-		mv.addObject("message",user.getUsername() +" has been deleted.");
-		return mv;		
+		return user.getUsername() +" has been deleted.";
 	}
 	
 	@RequestMapping(value= "updateManagedUserProfile", method = RequestMethod.POST)
@@ -150,8 +150,8 @@ public class AdminController {
 			savedProfile.setFullname(userprofile.getFullname());
 		}
 		
-		if(StringUtils.isNotEmpty(userprofile.getSpecialty())){
-			savedProfile.setSpecialty(userprofile.getSpecialty());
+		if(savedProfile.getSpecializationId() != userprofile.getSpecializationId()){
+			savedProfile.setSpecializationId(userprofile.getSpecializationId());
 		}
 		
 		if(savedProfile.getAge() != userprofile.getAge()){

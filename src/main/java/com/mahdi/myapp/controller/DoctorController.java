@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.UserProfile;
+import com.mahdi.myapp.service.ISpecializationService;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
@@ -32,6 +33,9 @@ public class DoctorController {
 	@Autowired
 	IUserRoleService userRoleService;
 	
+	@Autowired
+	ISpecializationService specialzationService;
+	
 	@RequestMapping(value={"/"}, method = RequestMethod.GET)
 	public ModelAndView doctorHomePage(){
 		ModelAndView mv = new ModelAndView("doctorPage");		
@@ -42,6 +46,7 @@ public class DoctorController {
 	public ModelAndView getProfile(HttpSession session) throws DocException{
 		ModelAndView mv = new ModelAndView("doctorViewProfilePage");		
 		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
+		mv.addObject("specializationList",specialzationService.getList());
 		return mv;
 		
 	}
@@ -50,6 +55,7 @@ public class DoctorController {
 	public ModelAndView editViewProfile(HttpSession session) throws DocException{
 		ModelAndView mv = new ModelAndView("doctorProfilePage");		
 		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
+		mv.addObject("specializationList",specialzationService.getList());
 		return mv;
 		
 	}
@@ -62,8 +68,8 @@ public class DoctorController {
 			savedProfile.setFullname(userprofile.getFullname());
 		}
 		
-		if(StringUtils.isNotEmpty(userprofile.getSpecialty())){
-			savedProfile.setSpecialty(userprofile.getSpecialty());
+		if(savedProfile.getSpecializationId() != userprofile.getSpecializationId()){
+			savedProfile.setSpecializationId(userprofile.getSpecializationId());
 		}
 		
 		if(savedProfile.getAge() != userprofile.getAge()){

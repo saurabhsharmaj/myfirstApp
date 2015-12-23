@@ -12,16 +12,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import com.mahdi.myapp.exception.DocException;
-import com.mahdi.myapp.model.Appointment;
+import com.mahdi.myapp.model.AppointmentSchedule;
 
 @Repository
-public class AppointmentDao extends BaseDao<Appointment>{
+public class AppointmentDao extends BaseDao<AppointmentSchedule>{
 
 	public AppointmentDao() {
-		super(Appointment.class);
+		super(AppointmentSchedule.class);
 	}
 	
-	public Integer saveAppointment(Appointment appintment) throws DocException {
+	public Integer saveAppointment(AppointmentSchedule appintment) throws DocException {
 		try {
 			Session session = getSession();
 			session.saveOrUpdate(appintment);
@@ -35,10 +35,10 @@ public class AppointmentDao extends BaseDao<Appointment>{
 		}
 	}
 	
-	public List<Appointment> getAppointmentList(Integer id, boolean isDoctor) throws DocException {
+	public List<AppointmentSchedule> getAppointmentList(Integer id, boolean isDoctor) throws DocException {
 		try {
 			Session session = getSession();
-			List<Appointment> list = null ;
+			List<AppointmentSchedule> list = null ;
 			@SuppressWarnings("unchecked")
 			DetachedCriteria deCriteria = DetachedCriteria
 					.forClass(typeParameterClass);	
@@ -51,7 +51,7 @@ public class AppointmentDao extends BaseDao<Appointment>{
 				criteria.createAlias("usersByPatientId", "patient");
 				list = criteria.add(Restrictions.eq("patient.id", id)).list();
 			}
-			return (List<Appointment>) list;
+			return (List<AppointmentSchedule>) list;
 		} catch (HibernateException ex) {
 			throw new DocException(HttpStatus.EXPECTATION_FAILED, ex);
 		} catch (Exception ex) {
@@ -59,10 +59,10 @@ public class AppointmentDao extends BaseDao<Appointment>{
 		}
 	}
 
-	public List<Appointment> findAppointment(String keyword, boolean isDoctor) throws DocException {
+	public List<AppointmentSchedule> findAppointment(String keyword, boolean isDoctor) throws DocException {
 		try {
 			Session session = getSession();
-			List<Appointment> list = null ;
+			List<AppointmentSchedule> list = null ;
 			@SuppressWarnings("unchecked")
 			DetachedCriteria deCriteria = DetachedCriteria
 					.forClass(typeParameterClass);	
@@ -73,7 +73,6 @@ public class AppointmentDao extends BaseDao<Appointment>{
 				criteria.add(
 						 Restrictions.disjunction()
 					      .add(Restrictions.like("doctor.fullname", "%"+keyword+"%"))
-					      .add(Restrictions.like("doctor.specialty", "%"+keyword+"%"))
 					      .add(Restrictions.like("doctor.email", "%"+keyword+"%"))
 					      .add(Restrictions.like("doctor.contact", "%"+keyword+"%"))
 							);
@@ -83,13 +82,12 @@ public class AppointmentDao extends BaseDao<Appointment>{
 				criteria.add(
 						 Restrictions.disjunction()
 					      .add(Restrictions.like("patient.fullname", "%"+keyword+"%"))
-					      .add(Restrictions.like("patient.specialty", "%"+keyword+"%"))
 					      .add(Restrictions.like("patient.email", "%"+keyword+"%"))
 					      .add(Restrictions.like("patient.contact", "%"+keyword+"%"))
 							);
 				list = criteria.list();
 			}
-			return (List<Appointment>) list;
+			return (List<AppointmentSchedule>) list;
 		} catch (HibernateException ex) {
 			throw new DocException(HttpStatus.EXPECTATION_FAILED, ex);
 		} catch (Exception ex) {

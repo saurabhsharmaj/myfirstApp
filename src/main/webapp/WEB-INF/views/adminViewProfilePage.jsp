@@ -46,7 +46,7 @@ function init(){
 		
 		<form:form action="${addAction}" commandName="userproflie">
 		<form:hidden name="enabled" path="enabled" value="1"/>	
-		<form:hidden name="userRoles" path="userRoles.id" value="2"/>
+		<form:hidden name="userRole" path="userRole.id" value="2"/>
 			<table>
 				<c:if test="${!empty userproflie.id}">
 				<tr>
@@ -140,7 +140,7 @@ function init(){
 					<td colspan="2">
 						
 						
-							<a href="${pageContext.request.contextPath}/admin/editViewProfile">Edit Profile</a>
+							<a class="btn btn-primary btn-sm" href="${pageContext.request.contextPath}/admin/editViewProfile">Edit Profile</a>
 						
 					</td>
 				</tr>

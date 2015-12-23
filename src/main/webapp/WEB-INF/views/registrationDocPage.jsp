@@ -38,7 +38,7 @@ $(document).ready(function(){
 			<form:form action="${addAction}" commandName="user" method="post" onsubmit="return validateForm();">			
 			<form:hidden name="enabled" path="enabled" value="1"/>
 			<form:hidden name="profilePicUrl" path="profilePicUrl" value="doctorProfilePic.jpg"/>
-			<form:hidden name="userRoles" path="userRoles.id" value="2"/>
+			<form:hidden name="userRole" path="userRole.id" value="2"/>
 			<table>		
 				<tr>
 					<td>

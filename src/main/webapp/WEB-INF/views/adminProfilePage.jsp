@@ -46,7 +46,7 @@ function init(){
 
 		<form:form action="${addAction}" commandName="userproflie">
 		<form:hidden name="enabled" path="enabled" value="1"/>	
-		<form:hidden name="userRoles" path="userRoles.id" value="2"/>
+		<form:hidden name="userRole" path="userRole.id" value="2"/>
 			<table>
 				<c:if test="${!empty userproflie.id}">
 				<tr>
@@ -149,7 +149,7 @@ function init(){
 					<td colspan="2">
 						
 						
-							<input type="submit"
+							<input type="submit" class="btn btn-primary btn-sm"
 								value="<spring:message text="Save User"/>" />
 						
 					</td>

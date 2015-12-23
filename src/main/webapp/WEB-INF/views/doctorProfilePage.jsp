@@ -46,7 +46,7 @@ function init(){
 
 		<form:form action="${addAction}" commandName="userproflie">
 		<form:hidden name="enabled" path="enabled" value="1"/>	
-		<form:hidden name="userRoles" path="userRoles.id" value="2"/>
+		<form:hidden name="userRole" path="userRole.id" value="2"/>
 			<table>
 				<c:if test="${!empty userproflie.id}">
 				<tr>
@@ -75,12 +75,19 @@ function init(){
 		
 				<tr>
 					<td>
-						<form:label path="specialty">
+						<form:label path="specializationId">
 							<spring:message text="specialty"/>
 						</form:label>
 					</td>
 					<td>
-						<form:input path="specialty" />
+						<div class="form-group">							 
+							<select class="form-control" name="specializationId">
+								
+									<c:forEach var="speciality" items="${specializationList}">
+										<option value="${speciality.id }">${speciality.name }</option>
+									</c:forEach>
+							</select>
+						</div>
 					</td>
 				</tr>	
 	

@@ -11,7 +11,11 @@
        <a class="blog-nav-item" href="${pageContext.request.contextPath}/admin/listUsers">Manager Users</a>
        <a class="blog-nav-item" href="${pageContext.request.contextPath}/admin/myprofile">my profile</a>
        <ul class="nav navbar-nav navbar-right">
-       [Admin],<a class="blog-nav-item" href="${pageContext.request.contextPath}/logout">logout</a>
+       <img
+		src="${pageContext.request.contextPath}/resources/profilepic/${userprofile.profilePicUrl}"
+		class="profilePicImage img-circle" alt="profile"
+		style="border: 1px solid grey;" width="50" height="50" id="profilePicImage">
+      Dear Admin[${userprofile.username}],<a class="blog-nav-item" href="${pageContext.request.contextPath}/logout">logout</a>
        </ul>
      </nav>
    </div>

@@ -1,5 +1,8 @@
 package com.mahdi.myapp.util;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.core.context.SecurityContextImpl;
@@ -23,5 +26,9 @@ public class DocUtils {
 		}catch(Exception ex){
 			throw new DocException(ex.getMessage());
 		}
+	}
+
+	public static List<String> getWorkDaysList() {
+		return Arrays.asList(new String[]{"1","2","3","4","5","6","7"});
 	}
 }

@@ -196,3 +196,7 @@ INSERT INTO `specialization` ( `name`, `Description`) VALUES ('Surgery, Thoracic
 INSERT INTO `specialization` ( `name`, `Description`) VALUES ('Surgery, Vascular','Diseases of the blood vessels that require surgical operation for diagnosis or treatment.');
 INSERT INTO `specialization` ( `name`, `Description`) VALUES ('Surgery, Colon and Rectal','Diseases of the large intestine (bowel), rectum and anus that require surgical operation for diagnosis or treatment.');
 INSERT INTO `specialization` ( `name`, `Description`) VALUES ('Surgery, Urology','Diseases of the kidneys, bladder and male reproductive tract that require surgical operation.');
+
+
+--
+INSERT INTO `getdoc`.`appointment_schedule` (`doctors_id`, `working_days`, `start_time`, `end_time`, `slot_size`) VALUES ('2', '5', '10', '6', '30');

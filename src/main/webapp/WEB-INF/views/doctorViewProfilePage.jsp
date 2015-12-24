@@ -80,12 +80,7 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						<select class="form-control" name="specializationId" disabled="disabled">
-								
-									<c:forEach var="speciality" items="${specializationList}">
-										<option value="${speciality.id }">${speciality.name }</option>
-									</c:forEach>
-							</select>
+						<form:select path="specializationId" cssClass="form-control" items="${specializationList}" itemValue="id" itemLabel="name" disabled="true"/>
 					</td>
 				</tr>	
 	
@@ -165,7 +160,8 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						${userproflie.appointmentSchedule}
+						${userproflie.appointmentSchedule.workingDays} / ${userproflie.appointmentSchedule.startTime}
+						/ ${userproflie.appointmentSchedule.endTime} / ${userproflie.appointmentSchedule.slotSize}
 					</td>
 				</tr>
 				<tr>

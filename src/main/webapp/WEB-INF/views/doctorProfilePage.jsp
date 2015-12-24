@@ -80,13 +80,8 @@ function init(){
 						</form:label>
 					</td>
 					<td>
-						<div class="form-group">							 
-							<select class="form-control" name="specializationId">
-								
-									<c:forEach var="speciality" items="${specializationList}">
-										<option value="${speciality.id }">${speciality.name }</option>
-									</c:forEach>
-							</select>
+						<div class="form-group">							
+							<form:select path="specializationId" cssClass="form-control" items="${specializationList}" itemValue="id" itemLabel="name" />
 						</div>
 					</td>
 				</tr>	
@@ -171,12 +166,24 @@ function init(){
 				</tr>
 				<tr>
 					<td>
-						<form:label path="appointmentSchedule">
-							<spring:message text="Appointment Schedule"/>
-						</form:label>
+						Appointment Schedule:
 					</td>
-					<td>
-						${userproflie.appointmentSchedule}
+					<td>						
+						<table>
+							<tr>
+							<td>Working days: 								
+							<form:select path="appointmentSchedule.workingDays" cssClass="form-control" required="true">
+						        <form:option value="">--Select--</form:option>
+						        <form:options items="${workingDaysList}" />
+						    </form:select>
+							</td>
+							<td>slotSize: <form:input path="appointmentSchedule.slotSize" />Min.</td>
+							</tr>
+							<tr>
+							<td>Start Time: <form:input path="appointmentSchedule.startTime" /></td>
+							<td>End Time: <form:input path="appointmentSchedule.endTime" /></td>
+							</tr>
+						</table>
 					</td>
 				</tr>
 				<tr>

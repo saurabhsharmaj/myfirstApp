@@ -3,7 +3,6 @@ package com.mahdi.myapp.controller;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
-import com.mahdi.myapp.model.AppointmentSchedule;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IAppointmentScheduleService;
 import com.mahdi.myapp.service.ISpecializationService;
@@ -52,7 +50,7 @@ public class DoctorController {
 	public ModelAndView getProfile(HttpSession session) throws DocException{
 		ModelAndView mv = new ModelAndView("doctorViewProfilePage");
 		UserProfile doctorProfile = DocUtils.getLoggedInUserProfile(session,userService);
-		//doctorProfile.setAppointmentSchedule(appointmentScheduleService.getAppointmentScheduleByDoctor(doctorProfile.getId()));
+		doctorProfile = userService.getRowById(doctorProfile.getId());//fresh Object from db.
 		mv.addObject("userproflie",doctorProfile);
 		mv.addObject("specializationList",specialzationService.getList());
 		return mv;
@@ -63,8 +61,9 @@ public class DoctorController {
 	public ModelAndView editViewProfile(HttpSession session) throws DocException{
 		ModelAndView mv = new ModelAndView("doctorProfilePage");		
 		UserProfile doctorProfile = DocUtils.getLoggedInUserProfile(session,userService);
-		//doctorProfile.setAppointmentSchedule(appointmentScheduleService.getAppointmentScheduleByDoctor(doctorProfile.getId()));
+		doctorProfile = userService.getRowById(doctorProfile.getId());//fresh Object from db.
 		mv.addObject("userproflie",doctorProfile);
+		mv.addObject("workingDaysList",DocUtils.getWorkDaysList());
 		mv.addObject("specializationList",specialzationService.getList());
 		return mv;
 		

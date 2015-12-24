@@ -52,7 +52,7 @@ public class DoctorController {
 	public ModelAndView getProfile(HttpSession session) throws DocException{
 		ModelAndView mv = new ModelAndView("doctorViewProfilePage");
 		UserProfile doctorProfile = DocUtils.getLoggedInUserProfile(session,userService);
-		doctorProfile.setAppointmentSchedule(appointmentScheduleService.getAppointmentScheduleByDoctor(doctorProfile.getId()));
+		//doctorProfile.setAppointmentSchedule(appointmentScheduleService.getAppointmentScheduleByDoctor(doctorProfile.getId()));
 		mv.addObject("userproflie",doctorProfile);
 		mv.addObject("specializationList",specialzationService.getList());
 		return mv;
@@ -63,7 +63,7 @@ public class DoctorController {
 	public ModelAndView editViewProfile(HttpSession session) throws DocException{
 		ModelAndView mv = new ModelAndView("doctorProfilePage");		
 		UserProfile doctorProfile = DocUtils.getLoggedInUserProfile(session,userService);
-		doctorProfile.setAppointmentSchedule(appointmentScheduleService.getAppointmentScheduleByDoctor(doctorProfile.getId()));
+		//doctorProfile.setAppointmentSchedule(appointmentScheduleService.getAppointmentScheduleByDoctor(doctorProfile.getId()));
 		mv.addObject("userproflie",doctorProfile);
 		mv.addObject("specializationList",specialzationService.getList());
 		return mv;

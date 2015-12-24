@@ -72,7 +72,7 @@ tr {
 								
 					        	<td>${user.id }</td>
 					        	<td>${user.username}</td>
-					        	<td>${user.userRole.code}</td>
+					        	<td>${user.userRoles.code}</td>
 					        	<td>${user.enabled}</td>
 					        	<td><a href="/MyFirstApp/admin/editUser/${user.id }" class="btn btn-primary btn-sm"  >Edit</a> &nbsp; 
 					        	<a href="#" class="btn btn-primary btn-sm" onclick="deleteUser(this,'${user.id }')">Delete</a>

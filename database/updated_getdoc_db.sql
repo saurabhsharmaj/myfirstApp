@@ -112,8 +112,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ALTER TABLE users ADD CONSTRAINT users_user_roles FOREIGN KEY  users(role)
     REFERENCES user_roles (id);
   
-ALTER TABLE `users` ADD CONSTRAINT `users_appointment_schedule`  FOREIGN KEY (`appointmentSchedule`)
-  REFERENCES `appointment_schedule` (`doctors_id`);
+ALTER TABLE users ADD CONSTRAINT users_appointment_schedule FOREIGN KEY  users(appointmentSchedule)    REFERENCES appointment_schedule (id);
     
 ALTER TABLE bookings ADD CONSTRAINT bookings_patient FOREIGN KEY bookings (patient_id)
     REFERENCES users (id);
@@ -124,16 +123,16 @@ ALTER TABLE bookings ADD CONSTRAINT bookings_doctor FOREIGN KEY bookings (doctor
 ALTER TABLE bookings ADD CONSTRAINT bookings_appointment_schedule FOREIGN KEY bookings(appointment_schedule_id)
     REFERENCES appointment_schedule (id);
     
-ALTER TABLE appointment_schedule ADD CONSTRAINT appointment_schedule_doctor FOREIGN KEY appointment_schedule (doctor_id)
+ALTER TABLE appointment_schedule ADD CONSTRAINT appointment_schedule_doctor FOREIGN KEY appointment_schedule (doctors_id)
     REFERENCES users (id);
 
 ALTER TABLE bookings ADD CONSTRAINT bookings_booking_status FOREIGN KEY bookings (status_id)
     REFERENCES booking_status (id);
 
     
-INSERT INTO `users` (`fullname`, `role`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('administrator', '1', 'admin@gmail.com', 'admin', 'demo', 'adminProfilePic.jpg', '1', 'I am power to enable/disable other users.');
-INSERT INTO `users` (`fullname`, `role`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('administrator', '2', 'doctor@gmail.com', 'doctor', 'demo', 'doctorProfilePic.jpg', '1', 'I am power to enable/disable other users.');
-INSERT INTO `users` (`fullname`, `role`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('administrator', '3', 'patient@gmail.com', 'patient', 'demo', 'patientProfilePic.jpg', '1', 'I am power to enable/disable other users.');
+INSERT INTO `users` (`fullname`, `role`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('administrator', '1', 'admin@gmail.com', 'admin', 'demo', 'adminProfilePic.jpg', '1', 'Manager the overall system');
+INSERT INTO `users` (`fullname`, `role`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('doctor', '2', 'doctor@gmail.com', 'doctor', 'demo', 'doctorProfilePic.jpg', '1', 'Waiting for patients');
+INSERT INTO `users` (`fullname`, `role`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('patient', '3', 'patient@gmail.com', 'patient', 'demo', 'patientProfilePic.jpg', '1', 'Want to Get Appointment.');
 
 -- --------------------------------------------------------
 

@@ -59,11 +59,11 @@ public class FileUploadController implements ServletContextAware {
 			}
 		}
 		
-		if(userprofile.getUserRole().getCode().equals(DocConstant.ROLE_ADMIN)){			
+		if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_ADMIN)){			
 			return "redirect:admin/myprofile";
-		} else if(userprofile.getUserRole().getCode().equals(DocConstant.ROLE_DOCTOR)){			
+		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_DOCTOR)){			
 			return "redirect:doctor/myprofile";
-		} else if(userprofile.getUserRole().getCode().equals(DocConstant.ROLE_PATIENT)){			
+		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_PATIENT)){			
 			return "redirect:patient/myprofile";
 		} else {
 			return "errorPage";

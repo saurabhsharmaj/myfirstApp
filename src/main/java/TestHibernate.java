@@ -12,7 +12,7 @@ import com.mahdi.myapp.model.BookingStatus;
 import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.Specialization;
 import com.mahdi.myapp.model.UserProfile;
-import com.mahdi.myapp.model.UserRole;
+import com.mahdi.myapp.model.UserRoles;
 
 public class TestHibernate {
 
@@ -41,7 +41,7 @@ public class TestHibernate {
 	      .addAnnotatedClass(BookingStatus.class)
 	      .addAnnotatedClass(Specialization.class)
 	      .addAnnotatedClass(UserProfile.class)
-	        .addAnnotatedClass(UserRole.class);
+	        .addAnnotatedClass(UserRoles.class);
 	      configuration.setProperty("hibernate.dialect",
 	        "org.hibernate.dialect.MySQL5Dialect");
 	      configuration.setProperty("hibernate.connection.driver_class",

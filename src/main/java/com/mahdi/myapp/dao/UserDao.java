@@ -36,7 +36,7 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 					.add(Restrictions.like("contact", "%"+keyword+"%"))
 					);
 
-			criteria.createAlias("userRole", "u");
+			criteria.createAlias("userRoles", "u");
 			List<UserProfile> list = criteria.list();
 			return (List<UserProfile>) list;
 		} catch (HibernateException ex) {
@@ -56,7 +56,7 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 			criteria.add(Restrictions.eq("u.code", DocConstant.ROLE_PATIENT));
 			criteria.add(Restrictions.eq("username", userProfile.getUsername()).ignoreCase());
 			criteria.add(Restrictions.eq("password", userProfile.getPassword()));
-			criteria.createAlias("userRole", "u");
+			criteria.createAlias("userRoles", "u");
 			UserProfile profile = (UserProfile) criteria.uniqueResult();
 			return profile;
 		} catch (HibernateException ex) {

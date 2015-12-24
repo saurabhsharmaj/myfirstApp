@@ -17,6 +17,6 @@
         <mapping class="com.mahdi.myapp.model.BookingStatus"/>  
         <mapping class="com.mahdi.myapp.model.Specialization"/>   
         <mapping class="com.mahdi.myapp.model.UserProfile"/> 
-        <mapping class="com.mahdi.myapp.model.UserRole"/>  
+        <mapping class="com.mahdi.myapp.model.UserRoles"/>  
     </session-factory>
 </hibernate-configuration>

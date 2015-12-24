@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mahdi.myapp.dao.UserRoleDao;
 import com.mahdi.myapp.exception.DocException;
-import com.mahdi.myapp.model.UserRole;
+import com.mahdi.myapp.model.UserRoles;
 
 @Service
 @Transactional
@@ -17,19 +17,19 @@ public class UserRoleService implements IUserRoleService {
 	@Autowired
 	UserRoleDao userRoleDao;
 	
-	public int insertRow(UserRole t) throws DocException {
+	public int insertRow(UserRoles t) throws DocException {
 		return userRoleDao.insertRow(t);
 	}
 
-	public List<UserRole> getList() throws DocException {
+	public List<UserRoles> getList() throws DocException {
 		return userRoleDao.getList();
 	}
 
-	public UserRole getRowById(int id) throws DocException {
+	public UserRoles getRowById(int id) throws DocException {
 		return userRoleDao.getRowById(id);
 	}
 
-	public int updateRow(UserRole t) throws DocException {
+	public int updateRow(UserRoles t) throws DocException {
 		return userRoleDao.updateRow(t);
 	}
 
@@ -37,12 +37,12 @@ public class UserRoleService implements IUserRoleService {
 		return userRoleDao.deleteRow(id);
 	}
 
-	public UserRole getRowByName(String columnName, String value) {		
+	public UserRoles getRowByName(String columnName, String value) {		
 		return userRoleDao.getRowByColumnName(columnName, value);
 	}
 	
 	
-	public List<UserRole> getRoleExceptAdmin() throws DocException{
+	public List<UserRoles> getRoleExceptAdmin() throws DocException{
 		return userRoleDao.getRoleExceptAdmin();
 	}
 }

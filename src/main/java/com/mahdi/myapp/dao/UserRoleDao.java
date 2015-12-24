@@ -11,17 +11,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import com.mahdi.myapp.exception.DocException;
-import com.mahdi.myapp.model.UserRole;
+import com.mahdi.myapp.model.UserRoles;
 import com.mahdi.myapp.util.DocConstant;
 
 @Repository
-public class UserRoleDao extends BaseDao<UserRole> implements Dao<UserRole> {
+public class UserRoleDao extends BaseDao<UserRoles> implements Dao<UserRoles> {
 	
 	public UserRoleDao() {
-		super(UserRole.class);
+		super(UserRoles.class);
 	}
 
-	public List<UserRole> getRoleExceptAdmin() throws DocException {
+	public List<UserRoles> getRoleExceptAdmin() throws DocException {
 
 		try {
 			Session session = getSession();
@@ -29,8 +29,8 @@ public class UserRoleDao extends BaseDao<UserRole> implements Dao<UserRole> {
 			DetachedCriteria deCriteria = DetachedCriteria.forClass(typeParameterClass);
 			Criteria criteria = deCriteria.getExecutableCriteria(session);
 			criteria.add(Restrictions.not(Restrictions.in("code", new String[]{DocConstant.ROLE_ADMIN})));
-			List<UserRole> list = criteria.list();
-			return (List<UserRole>) list;
+			List<UserRoles> list = criteria.list();
+			return (List<UserRoles>) list;
 		} catch (HibernateException ex) {
 			throw new DocException(HttpStatus.EXPECTATION_FAILED, ex);
 		} catch (Exception ex) {

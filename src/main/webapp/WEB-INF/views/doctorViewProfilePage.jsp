@@ -158,7 +158,16 @@ function init(){
 						${userproflie.summary}
 					</td>
 				</tr>
-	
+				<tr>
+					<td>
+						<form:label path="appointmentSchedule">
+							<spring:message text="Appointment Schedule"/>
+						</form:label>
+					</td>
+					<td>
+						${userproflie.appointmentSchedule}
+					</td>
+				</tr>
 				<tr>
 					<td colspan="2">
 						

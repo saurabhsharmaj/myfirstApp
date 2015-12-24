@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   	`fullname` varchar(50),
  	`role` int  NOT NULL,
 	`specialization_id` int(11) ,
+	`appointmentSchedule` int(11),
 	`clinic_name` varchar(50),
 	`address` varchar(1000),
 	`qualification` varchar(50),
@@ -110,6 +111,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 ALTER TABLE users ADD CONSTRAINT users_user_roles FOREIGN KEY  users(role)
     REFERENCES user_roles (id);
+  
+ALTER TABLE `users` ADD CONSTRAINT `users_appointment_schedule`  FOREIGN KEY (`appointmentSchedule`)
+  REFERENCES `appointment_schedule` (`doctors_id`);
     
 ALTER TABLE bookings ADD CONSTRAINT bookings_patient FOREIGN KEY bookings (patient_id)
     REFERENCES users (id);

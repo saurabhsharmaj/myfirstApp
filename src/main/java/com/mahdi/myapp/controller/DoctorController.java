@@ -3,6 +3,7 @@ package com.mahdi.myapp.controller;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
+import com.mahdi.myapp.model.AppointmentSchedule;
 import com.mahdi.myapp.model.UserProfile;
+import com.mahdi.myapp.service.IAppointmentScheduleService;
 import com.mahdi.myapp.service.ISpecializationService;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
@@ -36,6 +39,9 @@ public class DoctorController {
 	@Autowired
 	ISpecializationService specialzationService;
 	
+	@Autowired
+	IAppointmentScheduleService appointmentScheduleService;
+	
 	@RequestMapping(value={"/"}, method = RequestMethod.GET)
 	public ModelAndView doctorHomePage(){
 		ModelAndView mv = new ModelAndView("doctorPage");		
@@ -44,8 +50,10 @@ public class DoctorController {
 	
 	@RequestMapping(value={"myprofile"}, method = RequestMethod.GET)
 	public ModelAndView getProfile(HttpSession session) throws DocException{
-		ModelAndView mv = new ModelAndView("doctorViewProfilePage");		
-		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
+		ModelAndView mv = new ModelAndView("doctorViewProfilePage");
+		UserProfile doctorProfile = DocUtils.getLoggedInUserProfile(session,userService);
+		doctorProfile.setAppointmentSchedule(appointmentScheduleService.getAppointmentScheduleByDoctor(doctorProfile.getId()));
+		mv.addObject("userproflie",doctorProfile);
 		mv.addObject("specializationList",specialzationService.getList());
 		return mv;
 		
@@ -54,7 +62,9 @@ public class DoctorController {
 	@RequestMapping(value={"editViewProfile"}, method = RequestMethod.GET)
 	public ModelAndView editViewProfile(HttpSession session) throws DocException{
 		ModelAndView mv = new ModelAndView("doctorProfilePage");		
-		mv.addObject("userproflie",DocUtils.getLoggedInUserProfile(session,userService));
+		UserProfile doctorProfile = DocUtils.getLoggedInUserProfile(session,userService);
+		doctorProfile.setAppointmentSchedule(appointmentScheduleService.getAppointmentScheduleByDoctor(doctorProfile.getId()));
+		mv.addObject("userproflie",doctorProfile);
 		mv.addObject("specializationList",specialzationService.getList());
 		return mv;
 		

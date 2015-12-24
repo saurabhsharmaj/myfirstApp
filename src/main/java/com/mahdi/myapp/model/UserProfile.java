@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.SQLDelete;
@@ -46,7 +47,8 @@ public class UserProfile implements java.io.Serializable {
 	private String summary;
 	private Set<Bookings> bookingsesForDoctorId = new HashSet<Bookings>(0);
 	private Set<Bookings> bookingsesForPatientId = new HashSet<Bookings>(0);
-
+	private AppointmentSchedule appointmentSchedule;
+	
 	public UserProfile() {
 	}
 
@@ -59,7 +61,7 @@ public class UserProfile implements java.io.Serializable {
 	public UserProfile(UserRole userRole, String fullname, Integer specializationId, String clinicName, String address,
 			String qualification, Integer rating, Integer age, Float expirence, String email, String contact,
 			String username, String password, String profilePicUrl, Byte enabled, String summary,
-			Set<Bookings> bookingsesForDoctorId, Set<Bookings> bookingsesForPatientId) {
+			Set<Bookings> bookingsesForDoctorId, Set<Bookings> bookingsesForPatientId, AppointmentSchedule appointmentSchedule) {
 		this.userRole = userRole;
 		this.fullname = fullname;
 		this.specializationId = specializationId;
@@ -78,6 +80,7 @@ public class UserProfile implements java.io.Serializable {
 		this.summary = summary;
 		this.bookingsesForDoctorId = bookingsesForDoctorId;
 		this.bookingsesForPatientId = bookingsesForPatientId;
+		this.appointmentSchedule = appointmentSchedule;
 	}
 
 	@Id
@@ -254,5 +257,20 @@ public class UserProfile implements java.io.Serializable {
 	public void setBookingsesForPatientId(Set<Bookings> bookingsesForPatientId) {
 		this.bookingsesForPatientId = bookingsesForPatientId;
 	}
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy="doctor")
+	public AppointmentSchedule getAppointmentSchedule() {
+		return appointmentSchedule;
+	}
+
+	public void setAppointmentSchedule(AppointmentSchedule appointmentSchedule) {
+		this.appointmentSchedule = appointmentSchedule;
+	}
+
+		
+	
+	
+	
+	
 
 }

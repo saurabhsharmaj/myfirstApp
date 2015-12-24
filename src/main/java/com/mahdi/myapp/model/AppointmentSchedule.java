@@ -6,15 +6,16 @@ package com.mahdi.myapp.model;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,7 +28,7 @@ import javax.persistence.TemporalType;
 public class AppointmentSchedule implements java.io.Serializable {
 
 	private Integer id;
-	private int doctorsId;
+	private UserProfile doctor;
 	private String workingDays;
 	private Date startTime;
 	private Date endTime;
@@ -37,15 +38,15 @@ public class AppointmentSchedule implements java.io.Serializable {
 	public AppointmentSchedule() {
 	}
 
-	public AppointmentSchedule(int doctorsId, String workingDays, int slotSize) {
-		this.doctorsId = doctorsId;
+	public AppointmentSchedule(UserProfile doctor, String workingDays, int slotSize) {
+		this.doctor = doctor;
 		this.workingDays = workingDays;
 		this.slotSize = slotSize;
 	}
 
-	public AppointmentSchedule(int doctorsId, String workingDays, Date startTime, Date endTime, int slotSize,
+	public AppointmentSchedule(UserProfile doctor, String workingDays, Date startTime, Date endTime, int slotSize,
 			Set<Bookings> bookingses) {
-		this.doctorsId = doctorsId;
+		this.doctor = doctor;
 		this.workingDays = workingDays;
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -65,13 +66,14 @@ public class AppointmentSchedule implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "doctors_id", nullable = false)
-	public int getDoctorsId() {
-		return this.doctorsId;
+	@OneToOne(fetch = FetchType.LAZY)
+	@PrimaryKeyJoinColumn
+	public UserProfile getDoctor() {
+		return this.doctor;
 	}
 
-	public void setDoctorsId(int doctorsId) {
-		this.doctorsId = doctorsId;
+	public void setDoctor(UserProfile doctor) {
+		this.doctor = doctor;
 	}
 
 	@Column(name = "working_days", nullable = false, length = 50)

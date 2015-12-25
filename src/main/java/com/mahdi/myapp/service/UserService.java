@@ -21,6 +21,7 @@ import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.AppointmentSchedule;
 import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.UserProfile;
+import com.mahdi.myapp.util.DocUtils;
 
 @Service
 @Transactional
@@ -70,52 +71,13 @@ public class UserService implements IUserService {
 	public List<UserProfile> findUser(String keyword) throws DocException {
 		List<UserProfile> searchUsers =  userDao.findUser(keyword);
 		for (UserProfile userProfile : searchUsers) {
-			userProfile.setAllBooking(getBookings(userProfile, true));
+			//TODO:Paas AlreadyBooking.
+			userProfile.setAllBooking(DocUtils.getBookings(userProfile, null));
 		}
 		return searchUsers;
-	}
+	}	
 
-	private Set<Bookings> getBookings(UserProfile userProfile, boolean b) {
-		Set<Bookings> bookings = new LinkedHashSet<Bookings>();
-		int maxAvailbleSlot = 0;
-		AppointmentSchedule as = userProfile.getAppointmentSchedule();
-
-		final DateTime dt1 = new DateTime(as.getStartTime());
-		final DateTime dt2 = new DateTime(as.getEndTime());
-
-		maxAvailbleSlot = Minutes.minutesBetween(dt1, dt2).getMinutes() / as.getSlotSize();
-		
-		Date start = dt1.toDate();
-		Date end = dt1.plusMinutes(as.getSlotSize()).toDate();
-		
-		for (int i = 0; i < maxAvailbleSlot; i++) {
-			bookings.add(new Bookings(start,end));
-			start = end;
-			end = new DateTime(end).plusMinutes(30).toDate();
-		}
-
-		//TODO Findout already booked schedule.
-		return bookings;
-	}
-
-	/*public static void main(String[] args) {
-		final String dateStart = "01/14/2012 10:00:00";
-		final String dateStop = "01/14/2012 14:00:00";
-		
-		final DateTimeFormatter format = DateTimeFormat.forPattern("MM/dd/yyyy HH:mm:ss");
-		
-		final DateTime dt1 = format.parseDateTime(dateStart);
-		final DateTime dt2 = format.parseDateTime(dateStop);
-		int  maxAvailbleSlot = Minutes.minutesBetween(dt1, dt2).getMinutes() / 30;
-		Date start = dt1.toDate();
-		Date end = dt1.plusMinutes(30).toDate();
-
-		for (int i = 0; i < maxAvailbleSlot; i++) {			
-			System.out.println(start +" - "+ end);
-			start = end;
-			end = new DateTime(end).plusMinutes(30).toDate();
-		}
-	}*/
+	
 	
 	public Integer saveAppointment(UserProfile user, UserProfile doctor) throws DocException {		
 		//TODO change return appointmentDao.saveAppointment(new Appointment(doctor,user,new Date(),DocConstant.NEW_REQUEST));

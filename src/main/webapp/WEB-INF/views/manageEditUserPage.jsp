@@ -46,7 +46,9 @@ function init(){
 
 		<form:form action="${addAction}" commandName="user">
 		<form:hidden name="enabled" path="enabled" value="1"/>	
-		<form:hidden name="userRoles" path="userRoles.id" value="2"/>
+		<%-- <c:forEach items="${user.userRoles}" var="userRole">
+			<form:hidden name="userRoles" path="userRole.id" value="2"/>
+		</c:forEach> --%>
 			<table>
 				<c:if test="${!empty user.id}">
 				<tr>

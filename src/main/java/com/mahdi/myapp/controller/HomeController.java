@@ -31,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.DocResponse;
 import com.mahdi.myapp.model.UserProfile;
+import com.mahdi.myapp.service.IAppointmentScheduleService;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
@@ -46,6 +47,9 @@ public class HomeController {
 	
 	@Autowired
 	IUserRoleService userRoleService;
+	
+	@Autowired 
+	IAppointmentScheduleService appointmentScheduleService;
 	
 	@RequestMapping(value={"/","home"}, method = RequestMethod.GET)
 	public ModelAndView homePage() throws DocumentException{		
@@ -71,6 +75,7 @@ public class HomeController {
 	
 	@RequestMapping(value={"registerDoctor"}, method = RequestMethod.POST)
 	public String saveDoctor(@ModelAttribute UserProfile userProfile) throws DocException{		
+		userProfile.setUserRoles(userRoleService.getRowsByName("code",DocConstant.ROLE_DOCTOR));
 		userService.insertRow(userProfile);
 		return "redirect:/login";
 	}
@@ -103,13 +108,16 @@ public class HomeController {
 	public ModelAndView getDoctorProfile(@PathVariable Integer id, HttpSession session) throws DocException{		
 		ModelAndView mv = null;
 		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session,userService);
+		
 		if(userProfile != null ){			
 			mv = new ModelAndView("viewDoctorProfilePageWithLogin");
 		} else {
 			mv = new ModelAndView("viewDoctorProfilePageWithLogout");
 		}
-		
-		mv.addObject("profile", userService.getRowById(id));
+		UserProfile doctorProfile = userService.getRowById(id);
+		//TODO:Paas AlreadyBooking.
+		doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile,null));
+		mv.addObject("profile",doctorProfile);
 		return mv;
 	}	
 	
@@ -134,7 +142,11 @@ public class HomeController {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			session.setAttribute(DocConstant.USERPROFILE, profile);
 			model.addAttribute("user", user);
-			model.addAttribute("doctor", userService.getRowById(doctorId));
+			
+			//TODO: Load already booking
+			UserProfile doctorProfile = userService.getRowById(doctorId);
+			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, null));			
+			model.addAttribute("doctor", doctorProfile);
 			return "forward:/patient/viewDoctorAppointment";
 		}
 		//userService.insertRow(userProfile);
@@ -143,7 +155,7 @@ public class HomeController {
 	
 	@RequestMapping(value={"newRegistration/{doctorId}"}, method = RequestMethod.POST)
 	public String saveAppointmentWithDoctorForNewPatient(@PathVariable Integer doctorId ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
-		
+			userProfile.setUserRoles(userRoleService.getRowsByName("code",DocConstant.ROLE_PATIENT));
 			int id = userService.insertRow(userProfile);
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 			authorities.add(new SimpleGrantedAuthority(DocConstant.ROLE_PATIENT));
@@ -152,7 +164,12 @@ public class HomeController {
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			session.setAttribute(DocConstant.USERPROFILE, userService.getRowById(id));
 			model.addAttribute("user", user);
-			model.addAttribute("doctor", userService.getRowById(doctorId));
+			
+			//TODO: Load already booking
+			UserProfile doctorProfile = userService.getRowById(doctorId);
+			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, null));			
+			model.addAttribute("doctor", doctorProfile);
+			
 			return "forward:/patient/viewDoctorAppointment";
 		
 	}

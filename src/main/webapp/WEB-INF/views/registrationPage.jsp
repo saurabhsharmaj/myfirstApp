@@ -18,7 +18,9 @@ function isEmailIdExist(emailId){
 <form:form action="${addAction}" commandName="user" method="post">
 			<form:hidden name="enabled" path="enabled" value="1"/>
 			<form:hidden name="profilePicUrl" path="profilePicUrl" value="profilePic.jpg"/>
-			<form:hidden name="userRoles" path="userRoles.id" value="3"/>
+			<c:forEach items="${user.userRoles}" var="userRole">
+			<form:hidden name="userRoles" path="userRole.id" value="3"/>
+		</c:forEach>
 <table>		
 	<tr>
 		<td>

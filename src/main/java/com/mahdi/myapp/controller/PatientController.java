@@ -154,7 +154,10 @@ public class PatientController {
 	@RequestMapping(value={"getAppointment/{doctorId}/{userId}"}, method = RequestMethod.GET)
 	public String getAppointment(@PathVariable Integer doctorId, @PathVariable Integer userId, Model model) throws DocException{	
 		model.addAttribute("user", userService.getRowById(userId));
-		model.addAttribute("doctor", userService.getRowById(doctorId));
+		//TODO:Paas AlreadyBooking.
+		UserProfile doctorProfile = userService.getRowById(doctorId);
+		doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile,null));
+		model.addAttribute("doctor", doctorProfile);
 		return "viewDoctorAppointmentPage";		
 	}
 

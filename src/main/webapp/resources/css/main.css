@@ -222,3 +222,28 @@ h6, .h6 {
 	background: #428BCA;
     color: white;
 }
+
+.appointment{
+	overflow: auto;
+}
+.appointment ul {
+            display:table-row;
+        }
+   .appointment ul li
+   {
+       display: table-cell;
+       height: 100px;
+       list-style-type: none;
+       margin: 10px;
+       vertical-align: middle;
+   }
+   .appointment ul li a {
+       display:table-cell;
+       vertical-align: middle;
+       height:100px;
+       border: solid 1px black;
+   }
+.appointment ul li.button a {
+    height:50px;
+    border: solid 1px black;
+}

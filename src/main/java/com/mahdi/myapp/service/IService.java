@@ -18,7 +18,9 @@ public interface IService<T> {
 	public T getRowById(int id) throws DocException;
 
 	
-	T getRowByName(String columnName, String value);
+	public T getRowByName(String columnName, String value);
+	
+	public List<T> getRowsByName(String columnName, String value);
 	
 	
 	public int updateRow(T t) throws DocException ;

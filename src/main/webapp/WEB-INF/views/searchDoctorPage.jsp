@@ -62,11 +62,18 @@ $(document).ready(function() {
 								<p><i>Contact No.:</i><b>${doctor.contact}</b></p>
 								<p><i>Summary :</i><b>${doctor.summary}</b></p>
 								<p><i>Appointment Slots :</i>
+								<div class="appointment">
 										<ul>
 										<c:forEach items="${doctor.allBooking}" var="booking">
-											<li>[${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name }</li>
+											<li class=".col-md-4">
+												<c:if test="${booking.bookingStatus.code==1}">
+												<button type="button" class="btn btn-success">${booking.datetimeStart}</button>
+												</c:if>
+											<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
+											</li>
 										</c:forEach>
 										</ul>
+									</div>
 								</p>
 								<div class="active-stars-yellow space"></div>
 								<p style="font-size: 11px;">${doctor.expirence}</p>

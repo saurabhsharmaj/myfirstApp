@@ -3,9 +3,12 @@ package com.mahdi.myapp.model;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,7 +47,7 @@ public class UserProfile implements java.io.Serializable {
 	private Byte enabled;
 	private String summary;
 	private Set<Bookings> bookingsesForDoctorId = new HashSet<Bookings>(0);
-	private Set<UserRoles> userRoles = new HashSet<UserRoles>(0);
+	private List<UserRoles> userRoles = new ArrayList<UserRoles>(0);
 	private AppointmentSchedule appointmentSchedule;
 	private Set<Bookings> bookingsesForPatientId = new HashSet<Bookings>(0);
 	private Set<Bookings> allBooking = new HashSet<Bookings>(0);
@@ -59,7 +62,7 @@ public class UserProfile implements java.io.Serializable {
 	public UserProfile(Specialization specialization, String fullname, String clinicName, String address,
 			String qualification, Integer rating, Integer age, Float expirence, String email, String contact,
 			String username, String password, String profilePicUrl, Byte enabled, String summary,
-			Set<Bookings> bookingsesForDoctorId, Set<UserRoles> userRoles, AppointmentSchedule appointmentSchedule,
+			Set<Bookings> bookingsesForDoctorId, List<UserRoles> userRoles, AppointmentSchedule appointmentSchedule,
 			Set<Bookings> bookingsesForPatientId) {
 		this.specialization = specialization;
 		this.fullname = fullname;
@@ -239,15 +242,15 @@ public class UserProfile implements java.io.Serializable {
 		this.bookingsesForDoctorId = bookingsesForDoctorId;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_role_mapping", catalog = "getdoc", joinColumns = {
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "user_role_mapping",  joinColumns = {
 			@JoinColumn(name = "user_id", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "role", nullable = false, updatable = false) })
-	public Set<UserRoles> getUserRoles() {
+	public List<UserRoles> getUserRoles() {
 		return this.userRoles;
 	}
 
-	public void setUserRoles(Set<UserRoles> userRoles) {
+	public void setUserRoles(List<UserRoles> userRoles) {
 		this.userRoles = userRoles;
 	}
 

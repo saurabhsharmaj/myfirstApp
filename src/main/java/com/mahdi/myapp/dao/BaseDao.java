@@ -110,6 +110,15 @@ public abstract class BaseDao<T> implements Dao<T> {
 		T t = (T) criteria.getExecutableCriteria(session).uniqueResult();
 		return t;
 	}
+	
+	public List<T> getRowsByColumnName(String fieldName, String value) {
+		Session session = getSession();
+		DetachedCriteria criteria = DetachedCriteria
+				.forClass(typeParameterClass);
+		criteria.add(Restrictions.eq(fieldName, value));
+		List<T> t = (List<T>) criteria.getExecutableCriteria(session).list();
+		return t;
+	}
 	/**
 	 * Method is used to update data in database. and used Session interface for
 	 * save and update data by calling methos of this interface.

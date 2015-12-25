@@ -46,7 +46,9 @@ function init(){
 
 		<form:form action="${addAction}" commandName="userproflie">
 		<form:hidden name="enabled" path="enabled" value="1"/>	
-		<form:hidden name="userRoles" path="userRoles.id" value="2"/>
+		<%-- <c:forEach items="${userproflie.userRoles}" var="userRole">
+			<form:hidden name="userRoles" path="userRole.id" value="2"/>
+		</c:forEach> --%>
 			<table>
 				<c:if test="${!empty userproflie.id}">
 				<tr>
@@ -179,10 +181,10 @@ function init(){
 							</td>
 							<td>slotSize: <form:input path="appointmentSchedule.slotSize" />Min.</td>
 							</tr>
-							<tr>
+							<%-- <tr>
 							<td>Start Time: <form:input  path="appointmentSchedule.startTime"/></td>
 							<td>End Time: <form:input path="appointmentSchedule.endTime"/></td>
-							</tr>
+							</tr> --%>
 						</table>
 					</td>
 				</tr>

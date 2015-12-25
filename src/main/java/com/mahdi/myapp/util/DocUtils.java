@@ -43,21 +43,21 @@ public class DocUtils {
 		Set<Bookings> bookings = new LinkedHashSet<Bookings>();
 		int maxAvailbleSlot = 0;
 		AppointmentSchedule as = userProfile.getAppointmentSchedule();
-
-		final DateTime dt1 = new DateTime(as.getStartTime());
-		final DateTime dt2 = new DateTime(as.getEndTime());
-
-		maxAvailbleSlot = Minutes.minutesBetween(dt1, dt2).getMinutes() / as.getSlotSize();
-		
-		Date start = dt1.toDate();
-		Date end = dt1.plusMinutes(as.getSlotSize()).toDate();
-		
-		for (int i = 0; i < maxAvailbleSlot; i++) {
-			bookings.add(new Bookings(start,end));
-			start = end;
-			end = new DateTime(end).plusMinutes(30).toDate();
+		if(as!=null){
+			final DateTime dt1 = new DateTime(as.getStartTime());
+			final DateTime dt2 = new DateTime(as.getEndTime());
+	
+			maxAvailbleSlot = Minutes.minutesBetween(dt1, dt2).getMinutes() / as.getSlotSize();
+			
+			Date start = dt1.toDate();
+			Date end = dt1.plusMinutes(as.getSlotSize()).toDate();
+			
+			for (int i = 0; i < maxAvailbleSlot; i++) {
+				bookings.add(new Bookings(start,end));
+				start = end;
+				end = new DateTime(end).plusMinutes(30).toDate();
+			}
 		}
-
 		//TODO Findout already booked schedule.
 		return bookings;
 	}

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.UserProfile;
+import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
 import com.mahdi.myapp.util.DocUtils;
@@ -32,6 +33,9 @@ public class FileUploadController implements ServletContextAware {
 
 	@Autowired
 	IUserService userService;
+	
+	@Autowired
+	IUserRoleService roleService;
 	
 	@RequestMapping(value = "saveProfilePic", method = RequestMethod.POST)
 	public String saveProfilePic(
@@ -59,11 +63,11 @@ public class FileUploadController implements ServletContextAware {
 			}
 		}
 		
-		if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_ADMIN)){			
+		if(userprofile.getUserRoleses().contains(roleService.getRowByName("code", DocConstant.ROLE_ADMIN))){			
 			return "redirect:admin/myprofile";
-		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_DOCTOR)){			
+		} else if(userprofile.getUserRoleses().contains(roleService.getRowByName("code", DocConstant.ROLE_DOCTOR))){			
 			return "redirect:doctor/myprofile";
-		} else if(userprofile.getUserRoles().getCode().equals(DocConstant.ROLE_PATIENT)){			
+		} else if(userprofile.getUserRoleses().contains(roleService.getRowByName("code", DocConstant.ROLE_PATIENT))){			
 			return "redirect:patient/myprofile";
 		} else {
 			return "errorPage";

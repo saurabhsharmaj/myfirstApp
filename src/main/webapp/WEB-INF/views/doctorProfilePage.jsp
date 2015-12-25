@@ -75,13 +75,13 @@ function init(){
 		
 				<tr>
 					<td>
-						<form:label path="specializationId">
+						<form:label path="specialization">
 							<spring:message text="specialty"/>
 						</form:label>
 					</td>
 					<td>
 						<div class="form-group">							
-							<form:select path="specializationId" cssClass="form-control" items="${specializationList}" itemValue="id" itemLabel="name" />
+							<form:select path="specialization" cssClass="form-control" items="${specializationList}" itemValue="id" itemLabel="name" />
 						</div>
 					</td>
 				</tr>	

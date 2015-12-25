@@ -81,8 +81,8 @@ public class DoctorController {
 			savedProfile.setFullname(userprofile.getFullname());
 		}
 		
-		if(savedProfile.getSpecializationId() != userprofile.getSpecializationId()){
-			savedProfile.setSpecializationId(userprofile.getSpecializationId());
+		if(savedProfile.getSpecialization() != userprofile.getSpecialization()){
+			savedProfile.setSpecialization(userprofile.getSpecialization());
 		}
 		
 		if(savedProfile.getAge() != userprofile.getAge()){

@@ -89,7 +89,7 @@ public class UserService implements IUserService {
 		Date end = dt1.plusMinutes(as.getSlotSize()).toDate();
 		
 		for (int i = 0; i < maxAvailbleSlot; i++) {
-			bookings.add(new Bookings(as,start,end));
+			bookings.add(new Bookings(start,end));
 			start = end;
 			end = new DateTime(end).plusMinutes(30).toDate();
 		}

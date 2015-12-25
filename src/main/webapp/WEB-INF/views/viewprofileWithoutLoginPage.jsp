@@ -4,7 +4,7 @@
 			<h3>View your Doctor</h3>
 			<img src="${pageContext.request.contextPath}/resources/profilepic/${profile.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
 			<div class="col-2">FullName: ${profile.fullname}</div>
-			<div class="col-2">specialty: ${profile.specializationId}</div>
+			<div class="col-2">specialty: ${profile.specialization}</div>
 			<div class="col-2">age: ${profile.age}</div>
 			<div class="col-2">experience: ${profile.expirence}</div>
 			<div class="col-2">contact: ${profile.contact}</div>			

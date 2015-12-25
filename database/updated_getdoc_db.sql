@@ -14,10 +14,9 @@ use getdoc;
 
 CREATE TABLE IF NOT EXISTS `appointment_schedule` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `doctors_id` int(11) NOT NULL,
   `working_days` varchar(50) NOT NULL,
-  `start_time` time DEFAULT NULL,
-  `end_time` time DEFAULT NULL,
+  `start_time` dateTime DEFAULT NULL,
+  `end_time` dateTime DEFAULT NULL,
   `slot_size` int(11) NOT NULL,  
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1 ;
@@ -30,8 +29,7 @@ CREATE TABLE IF NOT EXISTS `appointment_schedule` (
 
 CREATE TABLE IF NOT EXISTS `bookings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `doctor_id` int(11) NOT NULL,
-  `appointment_schedule_id` int(11) NOT NULL,
+  `doctor_id` int(11) NOT NULL,  
   `patient_id` int(11) NOT NULL,
   `diseases_description` text NOT NULL,
   `datetime_start` datetime NOT NULL,
@@ -49,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `bookings` (
 CREATE TABLE IF NOT EXISTS `booking_status` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(25) NOT NULL,
+  `code` int NOT NULL,
   PRIMARY KEY (`id`)
 )  AUTO_INCREMENT=6 ;
 
@@ -56,12 +55,13 @@ CREATE TABLE IF NOT EXISTS `booking_status` (
 -- Dumping data for table `booking_status`
 --
 
-INSERT INTO `booking_status` (`id`, `name`) VALUES
-(1, 'Pending for Approval'),
-(2, 'Approved & Booked'),
-(3, 'Cancelled by User'),
-(4, 'Visited'),
-(5, 'User failed to Visit');
+INSERT INTO `booking_status` (`id`, `name`, `code`) VALUES
+(0, 'Available for Booking',1),
+(1, 'Pending for Approval',2),
+(2, 'Approved & Booked',3),
+(3, 'Cancelled by User',4),
+(4, 'Visited',5),
+(5, 'User failed to Visit',6);
 
 
 -- Table user_roles
@@ -89,10 +89,8 @@ INSERT INTO `user_roles` (`id`, `code`, `name`, `description`, `enabled`) VALUES
 
 CREATE TABLE IF NOT EXISTS `users` (
   	`id` int(11) NOT NULL AUTO_INCREMENT,
-  	`fullname` varchar(50),
- 	`role` int  NOT NULL,
-	`specialization_id` int(11) ,
-	`appointmentSchedule` int(11),
+  	`specialization_id` int(11),
+  	`fullname` varchar(50),		
 	`clinic_name` varchar(50),
 	`address` varchar(1000),
 	`qualification` varchar(50),
@@ -109,32 +107,36 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 )  AUTO_INCREMENT=1 ;
 
-ALTER TABLE users ADD CONSTRAINT users_user_roles FOREIGN KEY  users(role)
-    REFERENCES user_roles (id);
+-- ALTER TABLE users ADD CONSTRAINT users_user_roles FOREIGN KEY  users(role) REFERENCES user_roles (id);
   
-ALTER TABLE users ADD CONSTRAINT users_appointment_schedule FOREIGN KEY  users(appointmentSchedule)    REFERENCES appointment_schedule (id);
+-- ALTER TABLE users ADD CONSTRAINT users_appointment_schedule FOREIGN KEY  users(appointmentSchedule)    REFERENCES appointment_schedule (id);
     
-ALTER TABLE bookings ADD CONSTRAINT bookings_patient FOREIGN KEY bookings (patient_id)
-    REFERENCES users (id);
+-- ALTER TABLE bookings ADD CONSTRAINT bookings_patient FOREIGN KEY bookings (patient_id) REFERENCES users (id);
 
-ALTER TABLE bookings ADD CONSTRAINT bookings_doctor FOREIGN KEY bookings (doctor_id)
-    REFERENCES users (id);
+-- ALTER TABLE bookings ADD CONSTRAINT bookings_doctor FOREIGN KEY bookings (doctor_id) REFERENCES users (id);
 
-ALTER TABLE bookings ADD CONSTRAINT bookings_appointment_schedule FOREIGN KEY bookings(appointment_schedule_id)
-    REFERENCES appointment_schedule (id);
+-- ALTER TABLE bookings ADD CONSTRAINT bookings_appointment_schedule FOREIGN KEY bookings(appointment_schedule_id) REFERENCES appointment_schedule (id);
     
-ALTER TABLE appointment_schedule ADD CONSTRAINT appointment_schedule_doctor FOREIGN KEY appointment_schedule (doctors_id)
-    REFERENCES users (id);
+-- ALTER TABLE appointment_schedule ADD CONSTRAINT appointment_schedule_doctor FOREIGN KEY appointment_schedule (doctors_id) REFERENCES users (id);
 
-ALTER TABLE bookings ADD CONSTRAINT bookings_booking_status FOREIGN KEY bookings (status_id)
-    REFERENCES booking_status (id);
+-- ALTER TABLE bookings ADD CONSTRAINT bookings_booking_status FOREIGN KEY bookings (status_id) REFERENCES booking_status (id);
 
     
-INSERT INTO `users` (`fullname`, `role`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('administrator', '1', 'admin@gmail.com', 'admin', 'demo', 'adminProfilePic.jpg', '1', 'Manager the overall system');
-INSERT INTO `users` (`fullname`, `role`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('doctor', '2', 'doctor@gmail.com', 'doctor', 'demo', 'doctorProfilePic.jpg', '1', 'Waiting for patients');
-INSERT INTO `users` (`fullname`, `role`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('patient', '3', 'patient@gmail.com', 'patient', 'demo', 'patientProfilePic.jpg', '1', 'Want to Get Appointment.');
+INSERT INTO `users` (`fullname`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('administrator', 'admin@gmail.com', 'admin', 'demo', 'adminProfilePic.jpg', '1', 'Manager the overall system');
+INSERT INTO `users` (`fullname`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('doctor', 'doctor@gmail.com', 'doctor', 'demo', 'doctorProfilePic.jpg', '1', 'Waiting for patients');
+INSERT INTO `users` (`fullname`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('patient', 'patient@gmail.com', 'patient', 'demo', 'patientProfilePic.jpg', '1', 'Want to Get Appointment.');
 
 -- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS `user_role_mapping` (
+ `user_id` int(11) NOT NULL,
+ `role` int(11) NOT NULL,  
+  PRIMARY KEY (user_id,role)
+) AUTO_INCREMENT=1 ;
+
+
+INSERT INTO `user_role_mapping` (`user_id`, `role`) VALUES (1,1);
+INSERT INTO `user_role_mapping` (`user_id`, `role`) VALUES (2,2);
+INSERT INTO `user_role_mapping` (`user_id`, `role`) VALUES (3,3);
 
 --
 -- Table structure for table `specialization`
@@ -199,4 +201,25 @@ INSERT INTO `specialization` ( `name`, `Description`) VALUES ('Surgery, Urology'
 
 
 --
-INSERT INTO `getdoc`.`appointment_schedule` (`doctors_id`, `working_days`, `start_time`, `end_time`, `slot_size`) VALUES ('2', '5', '10', '6', '30');
+INSERT INTO `getdoc`.`appointment_schedule` (`id`, `working_days`, `start_time`, `end_time`, `slot_size`) VALUES ('2', '5', now(), now(), '30');
+
+ALTER TABLE users ADD CONSTRAINT `fk_users_specialization`
+    FOREIGN KEY (`specialization_id`) REFERENCES `specialization` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    
+ALTER TABLE appointment_schedule ADD CONSTRAINT `fk_appointment_schedule_users`
+    FOREIGN KEY (`id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE bookings ADD CONSTRAINT `fk_bookings_users_patient`
+    FOREIGN KEY (`patient_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION; 
+
+ALTER TABLE bookings ADD CONSTRAINT `fk_bookings_users_doctor`
+    FOREIGN KEY (`doctor_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE user_role_mapping ADD CONSTRAINT `fk_user_role_mapping_users`
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ 
+ALTER TABLE user_role_mapping ADD CONSTRAINT `fk_user_role_mapping_user_roles`
+    FOREIGN KEY (`role`) REFERENCES `user_roles` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION ;
+    
+ALTER TABLE bookings ADD CONSTRAINT `fk_bookings_ booking_status`
+    FOREIGN KEY (`status_id`) REFERENCES `booking_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

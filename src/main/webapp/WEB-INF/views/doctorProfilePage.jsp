@@ -163,7 +163,7 @@ function init(){
 					<td>
 						<form:textarea path="summary" />
 					</td>
-				</tr>
+				</tr>				
 				<tr>
 					<td>
 						Appointment Schedule:
@@ -180,8 +180,8 @@ function init(){
 							<td>slotSize: <form:input path="appointmentSchedule.slotSize" />Min.</td>
 							</tr>
 							<tr>
-							<td>Start Time: <form:input path="appointmentSchedule.startTime" /></td>
-							<td>End Time: <form:input path="appointmentSchedule.endTime" /></td>
+							<td>Start Time: <form:input  path="appointmentSchedule.startTime"/></td>
+							<td>End Time: <form:input path="appointmentSchedule.endTime"/></td>
 							</tr>
 						</table>
 					</td>

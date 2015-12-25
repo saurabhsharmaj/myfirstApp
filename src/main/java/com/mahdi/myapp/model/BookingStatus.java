@@ -35,6 +35,11 @@ public class BookingStatus implements java.io.Serializable {
 		this.bookingses = bookingses;
 	}
 
+	public BookingStatus(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 

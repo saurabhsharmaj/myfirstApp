@@ -3,6 +3,7 @@ package com.mahdi.myapp.controller;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
+import com.mahdi.myapp.model.AppointmentSchedule;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IAppointmentScheduleService;
 import com.mahdi.myapp.service.ISpecializationService;
@@ -40,6 +42,7 @@ public class DoctorController {
 	@Autowired
 	IAppointmentScheduleService appointmentScheduleService;
 	
+
 	@RequestMapping(value={"/"}, method = RequestMethod.GET)
 	public ModelAndView doctorHomePage(){
 		ModelAndView mv = new ModelAndView("doctorPage");		
@@ -51,6 +54,7 @@ public class DoctorController {
 		ModelAndView mv = new ModelAndView("doctorViewProfilePage");
 		UserProfile doctorProfile = DocUtils.getLoggedInUserProfile(session,userService);
 		doctorProfile = userService.getRowById(doctorProfile.getId());//fresh Object from db.
+		Hibernate.initialize(doctorProfile.getAppointmentSchedule());		
 		mv.addObject("userproflie",doctorProfile);
 		mv.addObject("specializationList",specialzationService.getList());
 		return mv;
@@ -108,6 +112,9 @@ public class DoctorController {
 		if(StringUtils.isNotEmpty(userprofile.getSummary())){
 			savedProfile.setSummary(userprofile.getSummary());
 		}
+		
+		userprofile.getAppointmentSchedule().setUsers(savedProfile);
+		savedProfile.setAppointmentSchedule(userprofile.getAppointmentSchedule());
 		
 		userService.insertRow(savedProfile);	
 		session.setAttribute(DocConstant.USERPROFILE, savedProfile);		

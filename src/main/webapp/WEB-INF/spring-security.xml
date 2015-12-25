@@ -52,7 +52,7 @@
 		  users-by-username-query=
 		    "select username, password, enabled from users where enabled =true and username=? "
 		  authorities-by-username-query=
-		    "select username, code from users, user_roles where users.role = user_roles.id and users.username =?  " />
+		    "select username, code from users u , user_roles ur, user_role_mapping urm where u.id = urm.user_id and ur.id = urm.role and u.username = ?  " />
        </authentication-provider>
  		
    </authentication-manager>

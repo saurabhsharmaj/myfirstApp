@@ -86,7 +86,7 @@ public class HomeController {
 	
 	@RequestMapping(value={"searchDoctor"}, method = RequestMethod.POST)
 	public ModelAndView searchDoctor(HttpSession session, @RequestParam("keyword") String keyword) throws DocException{
-		System.out.println(keyword);
+		
 		ModelAndView mv =  null;
 		UserProfile userProfile = DocUtils.getLoggedInUserProfile(session,userService);
 		if(userProfile != null ){			

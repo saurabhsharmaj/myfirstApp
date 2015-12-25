@@ -1,18 +1,22 @@
 package com.mahdi.myapp.model;
 // Generated Dec 24, 2015 4:41:42 PM by Hibernate Tools 4.3.1.Final
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -47,6 +51,10 @@ public class UserProfile implements java.io.Serializable {
 	private Set<Bookings> bookingsesForDoctorId = new HashSet<Bookings>(0);
 	private Set<Bookings> bookingsesForPatientId = new HashSet<Bookings>(0);
 	private Set<AppointmentSchedule> appointmentSchedules = new HashSet<AppointmentSchedule>(0);
+	
+	
+	private Set<Bookings> allBooking = new HashSet<Bookings>(0);
+	
 
 	public UserProfile() {
 	}
@@ -96,7 +104,8 @@ public class UserProfile implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
 	@JoinColumn(name = "appointmentSchedule")
 	public AppointmentSchedule getAppointmentSchedule() {
 		return this.appointmentSchedule;
@@ -251,7 +260,7 @@ public class UserProfile implements java.io.Serializable {
 		this.summary = summary;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByDoctorId")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByDoctorId",cascade = {CascadeType.ALL})
 	public Set<Bookings> getBookingsesForDoctorId() {
 		return this.bookingsesForDoctorId;
 	}
@@ -260,7 +269,7 @@ public class UserProfile implements java.io.Serializable {
 		this.bookingsesForDoctorId = bookingsesForDoctorId;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByPatientId")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usersByPatientId",cascade = {CascadeType.ALL})
 	public Set<Bookings> getBookingsesForPatientId() {
 		return this.bookingsesForPatientId;
 	}
@@ -269,7 +278,7 @@ public class UserProfile implements java.io.Serializable {
 		this.bookingsesForPatientId = bookingsesForPatientId;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "users",cascade = {CascadeType.ALL})
 	public Set<AppointmentSchedule> getAppointmentSchedules() {
 		return this.appointmentSchedules;
 	}
@@ -278,4 +287,14 @@ public class UserProfile implements java.io.Serializable {
 		this.appointmentSchedules = appointmentSchedules;
 	}
 
+	@Transient
+	public Set<Bookings> getAllBooking() {
+		return allBooking;
+	}
+
+	public void setAllBooking(Set<Bookings> allBooking) {
+		this.allBooking = allBooking;
+	}
+
+	
 }

@@ -59,7 +59,7 @@ INSERT INTO `booking_status` (`id`, `name`, `code`) VALUES
 
 (1, 'Pending for Approval',1),
 (2, 'Approved & Booked',2),
-(3, 'Cancelled by User',3),
+(3, 'Cancelled',3),
 (4, 'Visited',4),
 (5, 'User failed to Visit',5);
 
@@ -201,7 +201,7 @@ INSERT INTO `specialization` ( `name`, `Description`) VALUES ('Surgery, Urology'
 
 
 --
-INSERT INTO `getdoc`.`appointment_schedule` (`id`, `working_days`, `start_time`, `end_time`, `slot_size`) VALUES ('2', '5', now(), now(), '30');
+INSERT INTO `getdoc`.`appointment_schedule` (`id`, `working_days`, `start_time`, `end_time`, `slot_size`) VALUES ('2', '5', '2015-12-26 10:00:00', '2015-12-26 13:00:00', '30');
 
 ALTER TABLE users ADD CONSTRAINT `fk_users_specialization`
     FOREIGN KEY (`specialization_id`) REFERENCES `specialization` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;

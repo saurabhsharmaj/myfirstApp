@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--  This page display when patient search for any doctor. -->
 	
 
@@ -65,8 +66,8 @@ $(document).ready(function() {
 										<ul>
 										<c:forEach items="${doctor.allBooking}" var="booking">
 											<li class=".col-md-4">
-												<c:if test="${booking.bookingStatus.code==1}">
-												<a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" >${booking.datetimeStart}</a>
+												<c:if test="${booking.bookingStatus.code==1}">												
+												<a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>
 												</c:if>
 											<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
 											</li>
@@ -96,15 +97,15 @@ $(document).ready(function() {
 								      </div>
 								      <div class="modal-body">
 								       	<img src="${pageContext.request.contextPath}/resources/profilepic/${doctor.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
-								       	Dr.${doctor.username}
-								       	${doctor.clinicName}
+								       	<i>Dr.${doctor.username}</i>
+								       	<p>(${doctor.clinicName},${doctor.address})</p>
 								       		<div class="appointment">
 								       		<p>Appointment Schedule:</p>
 												<ul>
 												<c:forEach items="${doctor.allBooking}" var="booking">
 													<li class=".col-md-4">
 														<c:if test="${booking.bookingStatus.code==1}">
-														<a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" >${booking.datetimeStart}</a>						
+														<a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>						
 														</c:if>
 													<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
 													</li>

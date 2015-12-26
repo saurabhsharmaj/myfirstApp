@@ -130,7 +130,7 @@ public class HomeController {
 		UserProfile patientProfile = new UserProfile();
 		mv.addObject("user", patientProfile );
 		mv.addObject("doctor", doctorProfile);	
-		Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason", bookingStatusService.getRowById(1) );
+		Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason", bookingStatusService.getRowById(DocConstant.BOOKING_PENDING_APPROVED) );
 		mv.addObject("appointmentStartTime", booking);
 		return mv;		
 	}
@@ -152,8 +152,8 @@ public class HomeController {
 			UserProfile doctorProfile = userService.getRowById(doctorId);
 			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, null));			
 			model.addAttribute("doctor", doctorProfile);
-			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowById(1));
-			model.addAttribute("appointmentStartTime", booking);
+			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowById(DocConstant.BOOKING_PENDING_APPROVED));
+			model.addAttribute("selectSlot", booking);
 			return "forward:/patient/viewDoctorAppointment";
 		}
 		//userService.insertRow(userProfile);
@@ -177,7 +177,7 @@ public class HomeController {
 			UserProfile doctorProfile = userService.getRowById(doctorId);
 			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, null));			
 			model.addAttribute("doctor", doctorProfile);
-			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowById(1));
+			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowById(DocConstant.BOOKING_PENDING_APPROVED));
 			model.addAttribute("selectSlot", booking);
 			return "forward:/patient/viewDoctorAppointment";
 		

@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <div class="container container-table">
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4 col-sm-1">
@@ -16,7 +18,7 @@
 					<c:forEach items="${profile.allBooking}" var="booking">
 						<li class=".col-md-4">
 							<c:if test="${booking.bookingStatus.code==1}">
-							<button type="button" class="btn btn-success">${booking.datetimeStart}</button>
+							<button type="button" class="btn btn-success"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></button>
 							</c:if>
 						<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
 						</li>
@@ -48,7 +50,7 @@
 												<c:forEach items="${profile.allBooking}" var="booking">
 													<li class=".col-md-4">
 														<c:if test="${booking.bookingStatus.code==1}">
-														<a type="button" class="btn btn-sm btn-success" href="getAppointment/${profile.id }/${user.id}" >${booking.datetimeStart}</a>						
+														<a type="button" class="btn btn-sm btn-success" href="getAppointment/${profile.id }/${user.id}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>						
 														</c:if>
 													<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
 													</li>

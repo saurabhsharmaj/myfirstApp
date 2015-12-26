@@ -21,10 +21,10 @@ public class BookingDao extends BaseDao<Bookings> implements Dao<Bookings> {
 		super(Bookings.class);
 	}
 
-	public List<AppointmentSchedule> getAppointmentList(Integer id, boolean isDoctor) throws DocException {
+	public List<Bookings> getAppointmentList(Integer id, boolean isDoctor) throws DocException {
 		try {
 			Session session = getSession();
-			List<AppointmentSchedule> list = null ;
+			List<Bookings> list = null ;
 			@SuppressWarnings("unchecked")
 			DetachedCriteria deCriteria = DetachedCriteria
 					.forClass(typeParameterClass);	
@@ -37,7 +37,7 @@ public class BookingDao extends BaseDao<Bookings> implements Dao<Bookings> {
 				criteria.createAlias("usersByPatientId", "patient");
 				list = criteria.add(Restrictions.eq("patient.id", id)).list();
 			}
-			return (List<AppointmentSchedule>) list;
+			return (List<Bookings>) list;
 		} catch (HibernateException ex) {
 			throw new DocException(HttpStatus.EXPECTATION_FAILED, ex);
 		} catch (Exception ex) {

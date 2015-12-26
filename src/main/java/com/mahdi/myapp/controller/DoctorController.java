@@ -9,15 +9,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
-import com.mahdi.myapp.model.AppointmentSchedule;
+import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IAppointmentScheduleService;
+import com.mahdi.myapp.service.IBookingService;
+import com.mahdi.myapp.service.IBookingStatusService;
 import com.mahdi.myapp.service.ISpecializationService;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
@@ -41,6 +44,12 @@ public class DoctorController {
 	
 	@Autowired
 	IAppointmentScheduleService appointmentScheduleService;
+	
+	@Autowired
+	IBookingService bookingService;
+	
+	@Autowired
+	IBookingStatusService bookingStatusService;
 	
 
 	@RequestMapping(value={"/"}, method = RequestMethod.GET)
@@ -135,8 +144,20 @@ public class DoctorController {
 	public ModelAndView appointmentlist(HttpSession session) throws DocException{
 		UserProfile user = DocUtils.getLoggedInUserProfile(session,userService);
 		ModelAndView mv = new ModelAndView("appointmentListDoctorPage");
-		mv.addObject("appointmentList", userService.getAppointmentList(user.getId(), true));
+		mv.addObject("appointmentList", userService.getBookingList(user.getId(), true));
+		mv.addObject("bookingStatus", bookingStatusService.getList());
 		return mv;
 		
 	}
+	
+	
+	@RequestMapping(value={"approved/{bookingId}/{status}"}, method = RequestMethod.GET)
+	public String appointmentlist(@PathVariable Integer bookingId ,@PathVariable Integer status ,HttpSession session) throws DocException{
+		Bookings booking = bookingService.getRowById(bookingId);
+		booking.setBookingStatus(bookingStatusService.getRowById(status));
+		bookingService.insertRow(booking);
+		return "redirect:/doctor/appointmentlist";
+		
+	}
+	
 }

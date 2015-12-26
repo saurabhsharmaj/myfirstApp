@@ -12,6 +12,7 @@ import com.mahdi.myapp.dao.BookingDao;
 import com.mahdi.myapp.dao.UserDao;
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.AppointmentSchedule;
+import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.util.DocUtils;
 
@@ -80,7 +81,7 @@ public class UserService implements IUserService {
 		return 0;
 	}
 
-	public List<AppointmentSchedule> getAppointmentList(Integer userId, boolean isDoctor) throws DocException {
+	public List<Bookings> getBookingList(Integer userId, boolean isDoctor) throws DocException {
 		return bookingDao.getAppointmentList(userId,isDoctor);
 	}
 

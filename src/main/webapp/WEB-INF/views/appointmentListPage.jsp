@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="container container-table">
     <div class="row vertical-center-row">
@@ -20,8 +21,19 @@
 							<tr>
 					        	<td>${appointment.id }</td>
 					        	<td>${appointment.usersByDoctorId.username}</td>
-					        	<td>${appointment.datetimeStart }</td>
-					        	<td>${appointment.bookingStatus.name }</td>
+					        	<td><fmt:formatDate value="${appointment.datetimeStart}" pattern="dd/MM/yyyy hh:mm a" /></td>
+					        	<td>
+					        		<c:if test="${appointment.bookingStatus.id==1 }">
+					        			<a href="${pageContext.request.contextPath}/doctor/approved/${appointment.id}" class="btn btn-warning">${appointment.bookingStatus.name }</a>
+					        		</c:if>
+					        		<c:if test="${appointment.bookingStatus.id==2 || appointment.bookingStatus.id==4 }">
+					        			<span class="label label-success">${appointment.bookingStatus.name }</span>
+					        		</c:if>
+					        		
+					        		<c:if test="${appointment.bookingStatus.id==3 || appointment.bookingStatus.id==5 }">
+					        			<span class="label label-danger">${appointment.bookingStatus.name }</span>
+					        		</c:if>
+					        	</td>
 					        </tr>	
 			   		</div>		   		
 		   		</c:forEach> 

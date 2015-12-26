@@ -130,7 +130,7 @@ public class PatientController {
 		
 		UserProfile patientProfile = DocUtils.getLoggedInUserProfile(session,userService);
 		UserProfile doctorProfile= userService.getRowById(id);
-		Bookings booking = DocUtils.getBooking(timeSlot, doctorProfile, patientProfile, "illness",bookingStatusService.getRowById(1));
+		Bookings booking = DocUtils.getBooking(timeSlot, doctorProfile, patientProfile, "illness",bookingStatusService.getRowById(DocConstant.BOOKING_PENDING_APPROVED));
 		Integer appointId = bookingService.insertRow(booking);		
 		mv.addObject("doctor", doctorProfile);
 		mv.addObject("appointId",appointId);
@@ -150,7 +150,7 @@ public class PatientController {
 	public ModelAndView appointmentlist(HttpSession session) throws DocException{
 		ModelAndView mv = new ModelAndView("appointmentListPage");
 		UserProfile user = DocUtils.getLoggedInUserProfile(session,userService);
-		mv.addObject("appointmentList", userService.getAppointmentList(user.getId(), false));
+		mv.addObject("appointmentList", userService.getBookingList(user.getId(), false));
 		return mv;
 
 	}

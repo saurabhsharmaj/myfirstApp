@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url var="addAction" value="/updateProfile" ></c:url>
 <script type="text/javascript">
@@ -161,9 +161,20 @@ function init(){
 							<spring:message text="Appointment Schedule"/>
 						</form:label>
 					</td>
-					<td>
-						${userproflie.appointmentSchedule.workingDays} / ${userproflie.appointmentSchedule.startTime}
-						/ ${userproflie.appointmentSchedule.endTime} / ${userproflie.appointmentSchedule.slotSize}
+					<td>						 
+						 <div class="row">
+						  <div class="col-*-*">Working Days: ${userproflie.appointmentSchedule.workingDays}</div>
+						</div>
+						<div class="row">
+						  <div class="col-*-*">Slot Size: ${userproflie.appointmentSchedule.slotSize}</div>  
+						</div>
+						
+						 <div class="row">
+						  <div class="col-*-*">Start Time: <fmt:formatDate value="${userproflie.appointmentSchedule.startTime}" pattern="hh:mm a" /></div>
+						</div>
+						<div class="row">
+						  <div class="col-*-*">End Time:<fmt:formatDate value="${userproflie.appointmentSchedule.endTime}" pattern="hh:mm a" /></div>  
+						</div>
 					</td>
 				</tr>
 				<tr>

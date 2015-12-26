@@ -1,5 +1,5 @@
-<%@page import="java.util.Date"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <div class="container container-table">
 	<div class="row vertical-center-row">
 		<div class="text-center col-md-4 col-md-offset-4 col-sm-1">
@@ -17,7 +17,7 @@
 					<c:forEach items="${doctor.allBooking}" var="booking">
 						<li class=".col-md-4">
 							<c:if test="${booking.bookingStatus.code==1}">
-							<button type="button" class="btn btn-success">${booking.datetimeStart}</button>
+							<button type="button" class="btn btn-success"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></button>
 							</c:if>
 						<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
 						</li>

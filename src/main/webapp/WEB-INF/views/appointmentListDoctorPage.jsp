@@ -1,6 +1,16 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<script>
+function setAction(appId, status){
+	console.log(appId +" - "+status);
+	var url = '/MyFirstApp/doctor/approved/'+appId+"/"+status;
+	$('#changeStatus-'+appId).attr("href", url);	
+}
+</script>
 <div class="container container-table">
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4 col-sm-1">
@@ -20,22 +30,13 @@
 							<tr>
 					        	<td>${appointment.id }</td>
 					        	<td>${appointment.usersByPatientId.username}</td>
-					        	<td>${appointment.datetimeStart }</td>
 					        	<td>
-					        		<c:if test="${appointment.bookingStatus.id==1 }">
-					        			<a href="#" class="btn btn-warning">${appointment.bookingStatus.name }</a>
-					        		</c:if>
-					        		<c:if test="${appointment.bookingStatus.id==2 || appointment.bookingStatus.id==4 }">
-					        			<span class="label label-success">${appointment.bookingStatus.name }</span>
-					        		</c:if>
-					        		
-					        		<c:if test="${appointment.bookingStatus.id==3 || appointment.bookingStatus.id==5 }">
-					        			<span class="label label-danger">${appointment.bookingStatus.name }</span>
-					        		</c:if>
-					        		
-					        		
-					        		
-					        		</td>
+					        		<fmt:formatDate value="${appointment.datetimeStart}" pattern="dd/mm/yyyy hh:mm a" />
+					        	</td>
+					        	<td title="${appointment.bookingStatus.name}">
+					        		<form:select path="bookingStatus" cssClass="form-control" style="display:inline-block;" items="${bookingStatus}" itemValue="id" itemLabel="name" onchange="setAction('${appointment.id }',this.value);"/>
+					        		<a id="changeStatus-${appointment.id }" href="#" class="btn btn-primary" style="float:right;">Save Status</a>
+					        	</td>
 					        </tr>	
 			   		</div>		   		
 		   		</c:forEach> 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.AppointmentSchedule;
+import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.UserProfile;
 
 public interface IUserService extends IService<UserProfile> {
@@ -12,7 +13,7 @@ public interface IUserService extends IService<UserProfile> {
 
 	public Integer saveAppointment(UserProfile user, UserProfile doctor) throws DocException;
 	
-	List<AppointmentSchedule> getAppointmentList(Integer userId, boolean isDoctor) throws DocException;
+	List<Bookings> getBookingList(Integer userId, boolean isDoctor) throws DocException;
 
 	List<AppointmentSchedule>  findAppointment(String keyword, boolean b) throws DocException;
 

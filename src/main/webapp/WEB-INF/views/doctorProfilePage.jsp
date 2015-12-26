@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:url var="addAction" value="updateProfile" ></c:url>
 <script type="text/javascript">
@@ -83,7 +83,11 @@ function init(){
 					</td>
 					<td>
 						<div class="form-group">							
-							<form:select path="specialization" cssClass="form-control" items="${specializationList}" itemValue="id" itemLabel="name" />
+							<%-- <form:select path="specialization" cssClass="form-control" items="${specializationList}" itemValue="id" itemLabel="name" /> --%>
+							<%-- <form:select path="specialization"  cssClass="form-control">
+			                    <form:option value="NONE"> --SELECT--</form:option>
+			                    <form:options items="${specializationList}" itemValue="id" itemLabel="name" />
+			                </form:select> --%>
 						</div>
 					</td>
 				</tr>	
@@ -170,7 +174,7 @@ function init(){
 					<td>
 						Appointment Schedule:
 					</td>
-					<td>						
+					<td><form:hidden path="appointmentSchedule.id" />						
 						<table>
 							<tr>
 							<td>Working days: 								
@@ -181,10 +185,14 @@ function init(){
 							</td>
 							<td>slotSize: <form:input path="appointmentSchedule.slotSize" />Min.</td>
 							</tr>
-							<%-- <tr>
-							<td>Start Time: <form:input  path="appointmentSchedule.startTime"/></td>
-							<td>End Time: <form:input path="appointmentSchedule.endTime"/></td>
-							</tr> --%>
+							<tr>
+							<td>Start Time: 
+									<fmt:formatDate var="start" value="${userproflie.appointmentSchedule.startTime}" pattern="dd/MM/yyyy hh:mm a" />
+								<form:input  path="appointmentSchedule.startTime" value="${start }"/></td>
+							<td>End Time: 
+								<fmt:formatDate var="end" value="${userproflie.appointmentSchedule.endTime}" pattern="dd/MM/yyyy hh:mm a" />
+							<form:input path="appointmentSchedule.endTime" value="${end}"/></td>
+							</tr>
 						</table>
 					</td>
 				</tr>

@@ -41,4 +41,8 @@ public class SpecializationService implements ISpecializationService {
 		return specializationDao.deleteRow(id);
 	}
 
+	public List<Specialization> getRowsByName(String columnName, String value) {
+		return specializationDao.getRowsByColumnName(columnName, value);
+	}
+
 }

@@ -17,7 +17,7 @@ function isEmailIdExist(emailId){
 <c:url var="addAction" value="/registerPatient" ></c:url>
 <form:form action="${addAction}" commandName="user" method="post">
 			<form:hidden name="enabled" path="enabled" value="1"/>
-			<form:hidden name="profilePicUrl" path="profilePicUrl" value="profilePic.jpg"/>
+			<form:hidden name="profilePicUrl" path="profilePicUrl" value="patientProfilePic.jpg"/>
 			<c:forEach items="${user.userRoles}" var="userRole">
 			<form:hidden name="userRoles" path="userRole.id" value="3"/>
 		</c:forEach>

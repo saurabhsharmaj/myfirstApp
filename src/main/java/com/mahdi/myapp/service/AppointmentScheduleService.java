@@ -45,4 +45,8 @@ public class AppointmentScheduleService implements IAppointmentScheduleService {
 		return appointmentScheduleDao.getRowByColumnName("doctors_id", doctorId.toString());
 	}
 
+	public List<AppointmentSchedule> getRowsByName(String columnName, String value) {
+		return appointmentScheduleDao.getRowsByColumnName(columnName, value);
+	}
+
 }

@@ -60,10 +60,10 @@ function displayRegistrationForm(){
 				<c:url var="addAction" value=" ${pageContext.request.contextPath}/newRegistration/${doctor.id}" ></c:url>
 			<form:form action="${addAction}" commandName="user" method="post" onsubmit="return validateForm();">
 			<form:hidden name="enabled" path="enabled" value="1"/>
-			<form:hidden name="profilePicUrl" path="profilePicUrl" value="profilePic.jpg"/>
-			<c:forEach items="${user.userRoles}" var="userRole">
+			<form:hidden name="profilePicUrl" path="profilePicUrl" value="patientProfilePic.jpg"/>
+			<%-- <c:forEach items="${user.userRoles}" var="userRole">
 				<form:hidden name="userRoles" path="userRole.id" value="3"/>
-			</c:forEach>
+			</c:forEach> --%>
 			<table>		
 				<tr>
 					<td>

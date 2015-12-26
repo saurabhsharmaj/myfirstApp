@@ -1,16 +1,8 @@
 package com.mahdi.myapp.service;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.joda.time.DateTime;
-import org.joda.time.Minutes;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +11,6 @@ import com.mahdi.myapp.dao.AppointmentDao;
 import com.mahdi.myapp.dao.UserDao;
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.AppointmentSchedule;
-import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.util.DocUtils;
 
@@ -109,6 +100,10 @@ public class UserService implements IUserService {
 
 	public Boolean isUserNameExist(String username) throws DocException {
 		return userDao.getRowByColumnName("username", username)==null?false:true;
+	}
+
+	public List<UserProfile> getRowsByName(String columnName, String value) {
+		return userDao.getRowsByColumnName(columnName, value);
 	}
 	
 }

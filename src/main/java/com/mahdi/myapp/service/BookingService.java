@@ -40,4 +40,8 @@ public class BookingService implements IBookingService {
 	public int deleteRow(int id) throws DocException {
 		return bookingDao.deleteRow(id);
 	}
+
+	public List<Bookings> getRowsByName(String columnName, String value) {
+		return bookingDao.getRowsByColumnName(columnName, value);
+	}
 }

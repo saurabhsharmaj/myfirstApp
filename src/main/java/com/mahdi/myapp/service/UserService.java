@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mahdi.myapp.dao.AppointmentDao;
+import com.mahdi.myapp.dao.BookingDao;
 import com.mahdi.myapp.dao.UserDao;
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.AppointmentSchedule;
@@ -23,6 +24,10 @@ public class UserService implements IUserService {
 	
 	@Autowired
 	AppointmentDao appointmentDao;
+	
+	@Autowired
+	BookingDao bookingDao;
+	
 	
 	public int insertRow(UserProfile t) throws DocException {
 		return userDao.insertRow(t);
@@ -76,8 +81,7 @@ public class UserService implements IUserService {
 	}
 
 	public List<AppointmentSchedule> getAppointmentList(Integer userId, boolean isDoctor) throws DocException {
-		//TODO change return appointmentDao.getAppointmentList(userId, isDoctor);
-		return new ArrayList<AppointmentSchedule>();
+		return bookingDao.getAppointmentList(userId,isDoctor);
 	}
 
 	public List<AppointmentSchedule> findAppointment(String keyword, boolean isDoctor) throws DocException {

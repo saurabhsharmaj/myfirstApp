@@ -20,8 +20,8 @@
 							<tr>
 					        	<td>${appointment.id }</td>
 					        	<td>${appointment.usersByDoctorId.username}</td>
-					        	<td>${appointment.appointmentDate }</td>
-					        	<td>${appointment.status }</td>
+					        	<td>${appointment.datetimeStart }</td>
+					        	<td>${appointment.bookingStatus.name }</td>
 					        </tr>	
 			   		</div>		   		
 		   		</c:forEach> 

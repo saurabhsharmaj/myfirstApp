@@ -66,7 +66,7 @@ $(document).ready(function() {
 										<c:forEach items="${doctor.allBooking}" var="booking">
 											<li class=".col-md-4">
 												<c:if test="${booking.bookingStatus.code==1}">
-												<a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${user.id}" >${booking.datetimeStart}</a>
+												<a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" >${booking.datetimeStart}</a>
 												</c:if>
 											<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
 											</li>
@@ -104,7 +104,7 @@ $(document).ready(function() {
 												<c:forEach items="${doctor.allBooking}" var="booking">
 													<li class=".col-md-4">
 														<c:if test="${booking.bookingStatus.code==1}">
-														<a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${user.id}" >${booking.datetimeStart}</a>						
+														<a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" >${booking.datetimeStart}</a>						
 														</c:if>
 													<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
 													</li>

@@ -29,9 +29,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
+import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.DocResponse;
 import com.mahdi.myapp.model.UserProfile;
-import com.mahdi.myapp.service.IAppointmentScheduleService;
+import com.mahdi.myapp.service.IBookingStatusService;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
@@ -48,8 +49,8 @@ public class HomeController {
 	@Autowired
 	IUserRoleService userRoleService;
 	
-	@Autowired 
-	IAppointmentScheduleService appointmentScheduleService;
+	@Autowired
+	IBookingStatusService bookingStatusService;
 	
 	@RequestMapping(value={"/","home"}, method = RequestMethod.GET)
 	public ModelAndView homePage() throws DocumentException{		
@@ -122,39 +123,45 @@ public class HomeController {
 	}	
 	
 	
-	@RequestMapping(value={"getAppointment/{doctorId}"}, method = RequestMethod.GET)
-	public ModelAndView getAppointment(@PathVariable Integer doctorId) throws DocException{	
+	@RequestMapping(value={"getAppointment/{doctorId}/{appointmentStartTime}"}, method = RequestMethod.GET)
+	public ModelAndView getAppointment(@PathVariable Integer doctorId,@PathVariable Long  appointmentStartTime ) throws DocException{	
 		ModelAndView mv = new ModelAndView("getAppointmentPage");		
-		UserProfile doctor= userService.getRowById(doctorId);
-		mv.addObject("user", new UserProfile());
-		mv.addObject("doctor", doctor);	
+		UserProfile doctorProfile= userService.getRowById(doctorId);
+		UserProfile patientProfile = new UserProfile();
+		mv.addObject("user", patientProfile );
+		mv.addObject("doctor", doctorProfile);	
+		Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason", bookingStatusService.getRowByName("code", "2") );
+		mv.addObject("appointmentStartTime", booking);
 		return mv;		
 	}
 		
-	@RequestMapping(value={"signin/{doctorId}"}, method = RequestMethod.POST)
-	public String saveAppointmentWithDoctorForExistingPatients(@PathVariable Integer doctorId ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
-		UserProfile profile = userService.validate(userProfile);
-		if( profile != null ){
+	@RequestMapping(value={"signin/{doctorId}/{appointmentStartTime}"}, method = RequestMethod.POST)
+	public String saveAppointmentWithDoctorForExistingPatients(@PathVariable Integer doctorId,@PathVariable Long  appointmentStartTime ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
+		UserProfile patientProfile = userService.validate(userProfile);
+		if( patientProfile != null ){
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 			authorities.add(new SimpleGrantedAuthority(DocConstant.ROLE_PATIENT));
 			UserDetails user = new User(userProfile.getUsername(), userProfile.getPassword() , authorities);
 			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			session.setAttribute(DocConstant.USERPROFILE, profile);
-			model.addAttribute("user", user);
+			session.setAttribute(DocConstant.USERPROFILE, patientProfile);
+			
+			model.addAttribute("user", patientProfile);
 			
 			//TODO: Load already booking
 			UserProfile doctorProfile = userService.getRowById(doctorId);
 			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, null));			
 			model.addAttribute("doctor", doctorProfile);
+			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowByName("code", "2"));
+			model.addAttribute("appointmentStartTime", booking);
 			return "forward:/patient/viewDoctorAppointment";
 		}
 		//userService.insertRow(userProfile);
 		return "redirect:/login";
 	}
 	
-	@RequestMapping(value={"newRegistration/{doctorId}"}, method = RequestMethod.POST)
-	public String saveAppointmentWithDoctorForNewPatient(@PathVariable Integer doctorId ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
+	@RequestMapping(value={"newRegistration/{doctorId}/{appointmentStartTime}"}, method = RequestMethod.POST)
+	public String saveAppointmentWithDoctorForNewPatient(@PathVariable Integer doctorId, @PathVariable Long  appointmentStartTime ,@ModelAttribute UserProfile userProfile,Model model, HttpSession session) throws DocException{		
 			userProfile.setUserRoles(userRoleService.getRowsByName("code",DocConstant.ROLE_PATIENT));
 			int id = userService.insertRow(userProfile);
 			List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
@@ -162,14 +169,16 @@ public class HomeController {
 			UserDetails user = new User(userProfile.getUsername(), userProfile.getPassword() , authorities);
 			Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
-			session.setAttribute(DocConstant.USERPROFILE, userService.getRowById(id));
-			model.addAttribute("user", user);
+			UserProfile patientProfile = userService.getRowById(id);
+			session.setAttribute(DocConstant.USERPROFILE, patientProfile);
+			model.addAttribute("user", patientProfile);
 			
 			//TODO: Load already booking
 			UserProfile doctorProfile = userService.getRowById(doctorId);
 			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, null));			
 			model.addAttribute("doctor", doctorProfile);
-			
+			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowByName("code", "2"));
+			model.addAttribute("selectSlot", booking);
 			return "forward:/patient/viewDoctorAppointment";
 		
 	}

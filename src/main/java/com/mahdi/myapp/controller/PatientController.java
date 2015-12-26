@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
+import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.UserProfile;
+import com.mahdi.myapp.service.IBookingService;
+import com.mahdi.myapp.service.IBookingStatusService;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
 import com.mahdi.myapp.util.DocConstant;
@@ -34,6 +37,12 @@ public class PatientController {
 	@Autowired
 	IUserRoleService userRoleService;
 
+	@Autowired
+	IBookingService bookingService;
+	
+	@Autowired
+	IBookingStatusService bookingStatusService;
+	
 	@RequestMapping(value={"/"}, method = RequestMethod.GET)
 	public ModelAndView userHomePage(){
 		ModelAndView mv = new ModelAndView("patientPage");
@@ -115,14 +124,15 @@ public class PatientController {
 	}
 
 
-	@RequestMapping(value={"saveAppointment/{id}"}, method = RequestMethod.GET)
-	public ModelAndView saveAppointment(@PathVariable Integer id, HttpSession session) throws DocException{	
+	@RequestMapping(value={"saveAppointment/{id}/{timeSlot}"}, method = RequestMethod.GET)
+	public ModelAndView saveAppointment(@PathVariable Integer id,@PathVariable Long timeSlot, HttpSession session) throws DocException{	
 		ModelAndView mv = new ModelAndView("appointmentSuccessPage");
 		
-		UserProfile user = DocUtils.getLoggedInUserProfile(session,userService);
-		UserProfile doctor= userService.getRowById(id);
-		Integer appointId = userService.saveAppointment(user, doctor);
-		mv.addObject("doctor", doctor);
+		UserProfile patientProfile = DocUtils.getLoggedInUserProfile(session,userService);
+		UserProfile doctorProfile= userService.getRowById(id);
+		Bookings booking = DocUtils.getBooking(timeSlot, doctorProfile, patientProfile, "illness",bookingStatusService.getRowByName("code", "2"));
+		Integer appointId = bookingService.insertRow(booking);		
+		mv.addObject("doctor", doctorProfile);
 		mv.addObject("appointId",appointId);
 		return mv;		
 	}
@@ -138,8 +148,8 @@ public class PatientController {
 	
 	@RequestMapping(value={"appointmentlist"}, method = RequestMethod.GET)
 	public ModelAndView appointmentlist(HttpSession session) throws DocException{
-		UserProfile user = DocUtils.getLoggedInUserProfile(session,userService);
 		ModelAndView mv = new ModelAndView("appointmentListPage");
+		UserProfile user = DocUtils.getLoggedInUserProfile(session,userService);
 		mv.addObject("appointmentList", userService.getAppointmentList(user.getId(), false));
 		return mv;
 

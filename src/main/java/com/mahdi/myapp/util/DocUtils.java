@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.AppointmentSchedule;
+import com.mahdi.myapp.model.BookingStatus;
 import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IUserService;
@@ -55,10 +56,15 @@ public class DocUtils {
 			for (int i = 0; i < maxAvailbleSlot; i++) {
 				bookings.add(new Bookings(start,end));
 				start = end;
-				end = new DateTime(end).plusMinutes(30).toDate();
+				end = new DateTime(end).plusMinutes(as.getSlotSize()).toDate();
 			}
 		}
 		//TODO Findout already booked schedule.
 		return bookings;
 	}
+
+	public static Bookings getBooking(Long appointmentStartTime, UserProfile doctorProfile, UserProfile patientProfile,
+			String reason,BookingStatus bookingStatus) {
+		return new Bookings(bookingStatus, doctorProfile, patientProfile, reason, new Date(appointmentStartTime), new DateTime(appointmentStartTime).plusMinutes(doctorProfile.getAppointmentSchedule().getSlotSize()).toDate());
+	}	
 }

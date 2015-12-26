@@ -20,8 +20,22 @@
 							<tr>
 					        	<td>${appointment.id }</td>
 					        	<td>${appointment.usersByPatientId.username}</td>
-					        	<td>${appointment.appointmentDate }</td>
-					        	<td>${appointment.status }</td>
+					        	<td>${appointment.datetimeStart }</td>
+					        	<td>
+					        		<c:if test="${appointment.bookingStatus.id==1 }">
+					        			<a href="#" class="btn btn-warning">${appointment.bookingStatus.name }</a>
+					        		</c:if>
+					        		<c:if test="${appointment.bookingStatus.id==2 || appointment.bookingStatus.id==4 }">
+					        			<span class="label label-success">${appointment.bookingStatus.name }</span>
+					        		</c:if>
+					        		
+					        		<c:if test="${appointment.bookingStatus.id==3 || appointment.bookingStatus.id==5 }">
+					        			<span class="label label-danger">${appointment.bookingStatus.name }</span>
+					        		</c:if>
+					        		
+					        		
+					        		
+					        		</td>
 					        </tr>	
 			   		</div>		   		
 		   		</c:forEach> 

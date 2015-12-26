@@ -54,10 +54,10 @@ function displayRegistrationForm(){
 			
 		        <input type="radio" name="type" onclick="displayRegistrationForm();"/>I'm new to GetDoc.
 				<input type="radio" name="type" onclick="displayLoginForm();"/>I've used GetDoc before.
-		     
+		     	<input type="hidden" name="appointmentStartTime" value="${appointmentStartTime.datetimeStartInLong}">
 		     <div id="registration">
-		     	<h2>Registration Page</h2>
-				<c:url var="addAction" value=" ${pageContext.request.contextPath}/newRegistration/${doctor.id}" ></c:url>
+		     	<h2>Registration Page -${appointmentStartTime.datetimeStartInLong}</h2>
+				<c:url var="addAction" value=" ${pageContext.request.contextPath}/newRegistration/${doctor.id}/${appointmentStartTime.datetimeStartInLong}" ></c:url>
 			<form:form action="${addAction}" commandName="user" method="post" onsubmit="return validateForm();">
 			<form:hidden name="enabled" path="enabled" value="1"/>
 			<form:hidden name="profilePicUrl" path="profilePicUrl" value="patientProfilePic.jpg"/>
@@ -123,9 +123,9 @@ function displayRegistrationForm(){
 			</table>	
 			</form:form>
 		     </div>
-		     <div id="signin">
-		   <form class="form-signin" action ="${pageContext.request.contextPath}/signin/${doctor.id}" method="post">
-		    <h2 class="form-signin-heading">Please sign in</h2>	
+		     <div id="signin"> 
+		   <form class="form-signin" action ="${pageContext.request.contextPath}/signin/${doctor.id}/${appointmentStartTime.datetimeStartInLong}" method="post">
+		    <h2 class="form-signin-heading">Please sign in - ${appointmentStartTime.datetimeStartInLong}</h2>	
 		    <h3 style="color: red;">${error_message}</h3>	    
 		    <label for="username" class="sr-only">Username</label>
 		    <input type="input" id="username" name="username" class="form-control" placeholder="username" required autofocus>

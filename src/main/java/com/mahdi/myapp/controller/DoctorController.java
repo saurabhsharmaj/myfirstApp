@@ -135,8 +135,10 @@ public class DoctorController {
 	
 	@RequestMapping(value={"searchPatient"}, method = RequestMethod.POST)
 	public ModelAndView searchPatient(HttpSession session, @RequestParam("keyword") String keyword) throws DocException{
-		ModelAndView mv = new ModelAndView("searchPatientPage");		
-		mv.addObject("patientList", userService.findAppointment(keyword, true));
+		ModelAndView mv = new ModelAndView("searchPatientPage");
+		UserProfile doctorProfile = DocUtils.getLoggedInUserProfile(session, userService);
+		mv.addObject("bookingStatus", bookingStatusService.getList());
+		mv.addObject("patientList", userService.findAppointment(keyword, doctorProfile));
 		return mv;
 	}
 	

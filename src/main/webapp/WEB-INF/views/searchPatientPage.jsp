@@ -1,6 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<script>
+function setAction(appId, status){
+	console.log(appId +" - "+status);
+	var url = '/MyFirstApp/doctor/approved/'+appId+"/"+status;
+	$('#changeStatus-'+appId).attr("href", url);	
+}
+</script>
 
 <div class="container container-table">
     <div class="row vertical-center-row">
@@ -22,25 +30,9 @@
 					        	<td>${patient.id }</td>
 					        	<td>${patient.usersByPatientId.username}</td>
 					        	<td><fmt:formatDate value="${patient.datetimeStart}" pattern="dd/MM/yyyy hh:mm a" /></td>
-					        	<td>
-					        		<c:choose>
-										<c:when test="${patient.bookingStatus.id == 1}">
-									       <span class="label label-warning" title="${patient.bookingStatus.name}">${patient.bookingStatus.name}</span> 
-									    </c:when>
-									    <c:when test="${patient.bookingStatus.id == 2}">
-									       <span class="label label-info" title="${patient.bookingStatus.name}">${patient.bookingStatus.name}</span> 
-									    </c:when>
-									    <c:when test="${patient.bookingStatus.id == 3}">
-									       <span class="label label-danger" title="${patient.bookingStatus.name}">${patient.bookingStatus.name}</span> 
-									    </c:when>
-									    <c:when test="${patient.bookingStatus.id == 4}">
-									       <span class="label label-default" title="${patient.bookingStatus.name}">${patient.bookingStatus.name}</span> 
-									    </c:when>
-									    
-									    <c:otherwise>
-									     <span class="label label-success" title="${patient.bookingStatus.name}">${patient.bookingStatus.name}</span>
-									    </c:otherwise>
-									</c:choose>
+					        	<td title="${patient.bookingStatus.name}">
+					        		<form:select path="bookingStatus" cssClass="form-control" style="display:inline-block;" items="${bookingStatus}" itemValue="id" itemLabel="name" onchange="setAction('${patient.id }',this.value);"/>
+					        		<a id="changeStatus-${patient.id }" href="#" class="btn btn-primary" style="float:right;">Save Status</a>
 					        	</td>
 					        </tr>	
 			   		</div>		   		

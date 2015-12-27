@@ -85,8 +85,8 @@ public class UserService implements IUserService {
 		return bookingDao.getAppointmentList(userId,isDoctor);
 	}
 
-	public List<Bookings> findAppointment(String keyword, boolean isDoctor) throws DocException {		
-		return bookingDao.findAppointment(keyword, isDoctor);
+	public List<Bookings> findAppointment(String keyword, UserProfile doctorProfile) throws DocException {		
+		return bookingDao.findAppointment(keyword, doctorProfile);
 	}
 
 	public UserProfile validate(UserProfile userProfile) throws DocException {

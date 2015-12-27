@@ -53,7 +53,6 @@ public class AppointmentSchedule implements java.io.Serializable {
 	@GenericGenerator(name = "generator", strategy = "foreign", parameters = @Parameter(name = "property", value = "users") )
 	@Id
 	@GeneratedValue(generator = "generator")
-
 	@Column(name = "id", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;

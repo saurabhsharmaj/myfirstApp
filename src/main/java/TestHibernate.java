@@ -1,9 +1,12 @@
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
@@ -19,7 +22,7 @@ public class TestHibernate {
 	public static void main(String[] args) {
 		SessionFactory factor = createSessionFactory();
 		Session session = factor.openSession();
-		String hql = "select u from UserProfile u join fetch u.userRole ur";
+		/*String hql = "select u from UserProfile u join fetch u.userRole ur";
 		Query query = session.createQuery(hql);
 		List<UserProfile> list = query.list();
 		
@@ -28,9 +31,39 @@ public class TestHibernate {
 		mapper.registerModule(new Hibernate4Module());
 		
 		
-			System.out.println(mapper.valueToTree(list));
+			System.out.println(mapper.valueToTree(list));*/
+		UserProfile d = new UserProfile();
+		d.setId(3);
+		List<Bookings> booking = test(session,"patient",d);
 		
+		for (Bookings b : booking) {
+			System.out.println(b.getUsersByDoctorId().getUsername());
+		}
+	}
+	
+	private static List<Bookings> test(Session session, String keyword, UserProfile doctorProfile){
+
 		
+		List<Bookings> list = null ;
+		@SuppressWarnings("unchecked")
+		DetachedCriteria deCriteria = DetachedCriteria
+				.forClass(Bookings.class);	
+		Criteria criteria = deCriteria.getExecutableCriteria(session);
+		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);			
+		criteria.createAlias("usersByPatientId", "patient");
+		criteria.createAlias("usersByDoctorId", "doctor");
+		criteria.add(
+					 Restrictions.disjunction()
+					 .add(Restrictions.like("patient.username", "%"+keyword+"%"))
+				      .add(Restrictions.like("patient.fullname", "%"+keyword+"%"))
+				      .add(Restrictions.like("patient.email", "%"+keyword+"%"))
+				      .add(Restrictions.like("patient.contact", "%"+keyword+"%"))
+					);
+		criteria.add(Restrictions.eq("doctor.id", doctorProfile.getId()));
+			list = criteria.list();
+		
+		return (List<Bookings>) list;
+	
 	}
 
 	

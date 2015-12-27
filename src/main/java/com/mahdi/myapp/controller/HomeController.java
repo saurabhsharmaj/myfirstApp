@@ -32,6 +32,7 @@ import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.DocResponse;
 import com.mahdi.myapp.model.UserProfile;
+import com.mahdi.myapp.service.IBookingService;
 import com.mahdi.myapp.service.IBookingStatusService;
 import com.mahdi.myapp.service.IUserRoleService;
 import com.mahdi.myapp.service.IUserService;
@@ -49,6 +50,8 @@ public class HomeController {
 	@Autowired
 	IUserRoleService userRoleService;
 	
+	@Autowired
+	IBookingService bookingService;
 	@Autowired
 	IBookingStatusService bookingStatusService;
 	
@@ -116,8 +119,8 @@ public class HomeController {
 			mv = new ModelAndView("viewDoctorProfilePageWithLogout");
 		}
 		UserProfile doctorProfile = userService.getRowById(id);
-		//TODO:Paas AlreadyBooking.
-		doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile,null));
+		List<Bookings> bookedSlots = bookingService.getAppointmentList(doctorProfile.getId(), true);
+		doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile,bookedSlots));
 		mv.addObject("profile",doctorProfile);
 		return mv;
 	}	
@@ -148,9 +151,10 @@ public class HomeController {
 			
 			model.addAttribute("user", patientProfile);
 			
-			//TODO: Load already booking
+		
 			UserProfile doctorProfile = userService.getRowById(doctorId);
-			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, null));			
+			List<Bookings> bookedSlots = bookingService.getAppointmentList(doctorProfile.getId(), true);
+			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, bookedSlots));			
 			model.addAttribute("doctor", doctorProfile);
 			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowById(DocConstant.BOOKING_PENDING_APPROVED));
 			model.addAttribute("selectSlot", booking);
@@ -173,9 +177,10 @@ public class HomeController {
 			session.setAttribute(DocConstant.USERPROFILE, patientProfile);
 			model.addAttribute("user", patientProfile);
 			
-			//TODO: Load already booking
+			
 			UserProfile doctorProfile = userService.getRowById(doctorId);
-			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, null));			
+			List<Bookings> bookedSlots = bookingService.getAppointmentList(doctorProfile.getId(), true);
+			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, bookedSlots));			
 			model.addAttribute("doctor", doctorProfile);
 			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowById(DocConstant.BOOKING_PENDING_APPROVED));
 			model.addAttribute("selectSlot", booking);

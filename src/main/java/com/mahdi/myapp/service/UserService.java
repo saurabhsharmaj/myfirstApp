@@ -68,8 +68,8 @@ public class UserService implements IUserService {
 	public List<UserProfile> findUser(String keyword) throws DocException {
 		List<UserProfile> searchUsers =  userDao.findUser(keyword);
 		for (UserProfile userProfile : searchUsers) {
-			//TODO:Paas AlreadyBooking.
-			userProfile.setAllBooking(DocUtils.getBookings(userProfile, null));
+			List<Bookings> bookedSlots = bookingDao.getAppointmentList(userProfile.getId(), true);
+			userProfile.setAllBooking(DocUtils.getBookings(userProfile, bookedSlots));
 		}
 		return searchUsers;
 	}	

@@ -2,8 +2,10 @@ package com.mahdi.myapp.util;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -40,8 +42,14 @@ public class DocUtils {
 		return Arrays.asList(new String[]{"1","2","3","4","5","6","7"});
 	}
 
-	public static Set<Bookings> getBookings(UserProfile userProfile, List<Bookings> alreadyBookings) {
+	public static Set<Bookings> getBookings(UserProfile userProfile, List<Bookings> bookedSlots) {
 		Set<Bookings> bookings = new LinkedHashSet<Bookings>();
+		Map<Long, Bookings> alreadBookedMap = new HashMap<Long, Bookings>(0);
+		if(bookedSlots != null){
+			for (Bookings booking : bookedSlots) {
+				alreadBookedMap.put(booking.getDatetimeStartInLong(), booking);
+			}
+		}
 		int maxAvailbleSlot = 0;
 		AppointmentSchedule as = userProfile.getAppointmentSchedule();
 		if(as!=null){
@@ -54,7 +62,12 @@ public class DocUtils {
 			Date end = dt1.plusMinutes(as.getSlotSize()).toDate();
 			
 			for (int i = 0; i < maxAvailbleSlot; i++) {
-				bookings.add(new Bookings(start,end));
+				Bookings booking = new Bookings(start,end);
+				if(alreadBookedMap.containsKey(start.getTime())){
+					booking = alreadBookedMap.get(start.getTime());
+				}
+				
+				bookings.add(booking);
 				start = end;
 				end = new DateTime(end).plusMinutes(as.getSlotSize()).toDate();
 			}

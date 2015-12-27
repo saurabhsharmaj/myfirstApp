@@ -2,6 +2,8 @@ package com.mahdi.myapp.model;
 // Generated Dec 25, 2015 6:16:27 PM by Hibernate Tools 4.3.1.Final
 
 import java.util.Date;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,6 +14,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -60,7 +63,7 @@ public class AppointmentSchedule implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
 	@PrimaryKeyJoinColumn
 	public UserProfile getUsers() {
 		return this.users;

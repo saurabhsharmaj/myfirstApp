@@ -254,7 +254,7 @@ public class UserProfile implements java.io.Serializable {
 		this.userRoles = userRoles;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "users")
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "users", cascade=CascadeType.ALL)
 	public AppointmentSchedule getAppointmentSchedule() {
 		return this.appointmentSchedule;
 	}

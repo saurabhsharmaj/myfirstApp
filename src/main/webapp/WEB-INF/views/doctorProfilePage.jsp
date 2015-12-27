@@ -174,7 +174,7 @@ function init(){
 					<td>
 						Appointment Schedule:
 					</td>
-					<td><form:hidden path="appointmentSchedule.id" />						
+					<td><%-- <form:hidden path="appointmentSchedule.id" /> --%>						
 						<table>
 							<tr>
 							<td>Working days: 								

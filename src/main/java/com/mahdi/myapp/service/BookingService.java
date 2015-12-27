@@ -44,4 +44,8 @@ public class BookingService implements IBookingService {
 	public List<Bookings> getRowsByName(String columnName, String value) {
 		return bookingDao.getRowsByColumnName(columnName, value);
 	}
+
+	public List<Bookings> getAppointmentList(Integer id, boolean isDoctor) throws DocException {
+		return bookingDao.getAppointmentList(id, isDoctor);
+	}
 }

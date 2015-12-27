@@ -4,7 +4,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!--  This page display when patient search for any doctor. -->
-	
 
 <link href="${pageContext.request.contextPath}/resources/css/dataTables.bootstrap.min.css" rel="stylesheet"> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery.dataTables.min.js"></script>
@@ -38,7 +37,7 @@ $(document).ready(function() {
 				</div>
   			</form:form>
   				
-		   <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+		   <table id="example" class="table table-striped table-bordered">
 		   <thead>
 		        <tr>
 		            <th>List of Doctor</th>            
@@ -58,7 +57,7 @@ $(document).ready(function() {
 							</div>
 							<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 text-left" style="padding: 3px;">
 							
-								<p>${doctor.username}</p>
+								<p>${doctor.username}[${doctor.expirence}]</p>
 								<p><i>Contact No.:</i><b>${doctor.contact}</b></p>
 								<p><i>Summary :</i><b>${doctor.summary}</b></p>
 								<p><i>Appointment Slots :</i>
@@ -66,17 +65,30 @@ $(document).ready(function() {
 										<ul>
 										<c:forEach items="${doctor.allBooking}" var="booking">
 											<li class=".col-md-4">
-												<c:if test="${booking.bookingStatus.code==1}">												
-												<a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>
-												</c:if>
+											<c:choose>
+															<c:when test="${booking.bookingStatus.id == 1}">
+														       <span class="btn btn-sm btn-warning disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
+														    </c:when>
+														    <c:when test="${booking.bookingStatus.id == 2}">
+														       <span class="btn btn-sm btn-info disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
+														    </c:when>
+														    <c:when test="${booking.bookingStatus.id == 3}">
+														       <span class="btn btn-sm btn-danger disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
+														    </c:when>
+														    <c:when test="${booking.bookingStatus.id == 4}">
+														       <span class="btn btn-sm btn-default disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
+														    </c:when>
+														    
+														    <c:otherwise>
+														     <a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>
+														    </c:otherwise>
+														</c:choose>	
+												
 											<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
 											</li>
 										</c:forEach>
 										</ul>
-									</div>
-								</p>
-								<div class="active-stars-yellow space"></div>
-								<p style="font-size: 11px;">${doctor.expirence}</p>
+								</div>								
 							</div>
 							
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"
@@ -96,33 +108,70 @@ $(document).ready(function() {
 								        <h5>Click a time below to book an appointment.</h5>
 								      </div>
 								      <div class="modal-body">
-								       	<img src="${pageContext.request.contextPath}/resources/profilepic/${doctor.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
-								       	<i>Dr.${doctor.username}</i>
-								       	<p>(${doctor.clinicName},${doctor.address})</p>
-								       		<div class="appointment">
-								       		<p>Appointment Schedule:</p>
-												<ul>
+								       	<div class="container-fluid">
+								       	<div class="row">
+										  <div class="col-sm-6">
+										  		<div class="row">
+												  <div class="col-*-1">
+												  	<img src="${pageContext.request.contextPath}/resources/profilepic/${doctor.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
+												  </div>
+												  <div class="col-*-1">Dr.${doctor.username}</div>
+												</div>
+												
+												<div class="row">
+												  <div class="col-*-1">
+													<p><i>Contact No.:</i><b>${doctor.contact}</b></p>
+												  </div>
+												  <div class="col-*-1">
+													<p><i>Summary :</i><b>${doctor.summary}</b></p>
+												  </div>
+											    </div>
+								
+										  		<div class="row">
+												  <div class="col-*-1">
+								       				<p>(${doctor.clinicName},${doctor.address})</p>
+								       			  </div>
+								       		   </div>
+										  </div>
+										  <div class="col-sm-2">
+										  		<ul class="list-group row">
 												<c:forEach items="${doctor.allBooking}" var="booking">
-													<li class=".col-md-4">
-														<c:if test="${booking.bookingStatus.code==1}">
-														<a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>						
-														</c:if>
-													<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
+													<li class="list-group-item col-xs-12 borderless">
+														<c:choose>
+															<c:when test="${booking.bookingStatus.id == 1}">
+														       <span class="btn btn-sm btn-warning disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
+														    </c:when>
+														    <c:when test="${booking.bookingStatus.id == 2}">
+														       <span class="btn btn-sm btn-info disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
+														    </c:when>
+														    <c:when test="${booking.bookingStatus.id == 3}">
+														       <span class="btn btn-sm btn-danger disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
+														    </c:when>
+														    <c:when test="${booking.bookingStatus.id == 4}">
+														       <span class="btn btn-sm btn-default disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
+														    </c:when>
+														    
+														    <c:otherwise>
+														     <a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>
+														    </c:otherwise>
+														</c:choose>													
 													</li>
 												</c:forEach>
 												</ul>
-											</div>
-																	
+										  </div>
+										</div>							
+								      </div><!-- End container-fluid -->
 								      </div>
 								      <div class="modal-footer">
 								        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 								      </div>
 								    </div>
+								    </div>
 								  </div>
-								</div>
-							<!-- End popup  -->
-						</div>	
-				</td></tr>
+							<!-- End popup  -->	
+						</div>							
+					</td>
+				</tr>
 		   	</c:forEach> 
 		   	</tbody>
 		   	</table>
@@ -130,7 +179,4 @@ $(document).ready(function() {
 		   	<c:otherwise>
 		   			No Result found.
 		   	</c:otherwise> 
-	   	</c:choose>    
-   </div>	
-               
-</div>
+	   	</c:choose> 

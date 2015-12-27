@@ -246,3 +246,8 @@ h6, .h6 {
     height:50px;
     border: solid 1px black;
 }
+
+li.borderless {
+  border: 0 none;
+  padding: 5px 125;
+}

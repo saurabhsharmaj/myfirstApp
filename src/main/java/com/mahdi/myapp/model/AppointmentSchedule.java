@@ -62,7 +62,7 @@ public class AppointmentSchedule implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@OneToOne(fetch = FetchType.LAZY,cascade=CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY)
 	@PrimaryKeyJoinColumn
 	public UserProfile getUsers() {
 		return this.users;

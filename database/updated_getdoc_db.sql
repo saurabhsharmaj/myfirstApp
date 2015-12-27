@@ -56,12 +56,8 @@ CREATE TABLE IF NOT EXISTS `booking_status` (
 --
 
 INSERT INTO `booking_status` (`id`, `name`, `code`) VALUES
-
-(1, 'Pending for Approval',1),
-(2, 'Approved & Booked',2),
-(3, 'Cancelled',3),
-(4, 'Visited',4),
-(5, 'User failed to Visit',5);
+(1, 'Approved & Booked',1),
+(2, 'Cancelled',2);
 
 
 -- Table user_roles

@@ -132,21 +132,12 @@ public class PatientController {
 		
 		UserProfile patientProfile = DocUtils.getLoggedInUserProfile(session,userService);
 		UserProfile doctorProfile= userService.getRowById(id);
-		Bookings booking = DocUtils.getBooking(timeSlot, doctorProfile, patientProfile, "illness",bookingStatusService.getRowById(DocConstant.BOOKING_PENDING_APPROVED));
+		Bookings booking = DocUtils.getBooking(timeSlot, doctorProfile, patientProfile, "illness",bookingStatusService.getRowById(DocConstant.BOOKING_STATUS_APPROVED));
 		Integer appointId = bookingService.insertRow(booking);		
 		mv.addObject("doctor", doctorProfile);
 		mv.addObject("appointId",appointId);
 		return mv;		
-	}
-
-	@RequestMapping(value={"getAppointment/{doctorId}"}, method = RequestMethod.GET)
-	public ModelAndView getAppointment(@PathVariable Integer doctorId) throws DocException{	
-		ModelAndView mv = new ModelAndView("getPatientAppointmentPage");		
-		UserProfile doctor= userService.getRowById(doctorId);
-		mv.addObject("user", new UserProfile());
-		mv.addObject("doctor", doctor);	
-		return mv;		
-	}
+	}	
 	
 	@RequestMapping(value={"appointmentlist"}, method = RequestMethod.GET)
 	public ModelAndView appointmentlist(HttpSession session) throws DocException{
@@ -163,14 +154,17 @@ public class PatientController {
 		return "viewDoctorAppointmentPage";		
 	}
 
-	@RequestMapping(value={"getAppointment/{doctorId}/{userId}"}, method = RequestMethod.GET)
-	public String getAppointment(@PathVariable Integer doctorId, @PathVariable Integer userId, Model model) throws DocException{	
-		model.addAttribute("user", userService.getRowById(userId));
+	@RequestMapping(value={"getAppointment/{doctorId}/{timeSlot}"}, method = RequestMethod.GET)
+	public String getAppointment(@PathVariable Integer doctorId, @PathVariable Long timeSlot, Model model, HttpSession session) throws DocException{	
 		
+		UserProfile patientProfile = DocUtils.getLoggedInUserProfile(session,userService);
 		UserProfile doctorProfile = userService.getRowById(doctorId);
+		Bookings booking = DocUtils.getBooking(timeSlot, doctorProfile, patientProfile, "illness",bookingStatusService.getRowById(DocConstant.BOOKING_STATUS_APPROVED));
+		
 		List<Bookings> bookedSlots = bookingService.getAppointmentList(doctorProfile.getId(), true);
 		doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, bookedSlots));			
 		model.addAttribute("doctor", doctorProfile);
+		model.addAttribute("selectSlot", booking);
 		return "viewDoctorAppointmentPage";		
 	}
 

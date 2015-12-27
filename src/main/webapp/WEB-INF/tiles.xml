@@ -179,7 +179,7 @@
     
     <definition name="searchDoctorPageWithLogin" extends="patient.definition">
         <put-attribute name="title" value="Home Page" />
-        <put-attribute name="body" value="/WEB-INF/views/searchDoctorPage.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/searchDoctorPageWithLogin.jsp" />
     </definition>
     
     <definition name="searchDoctorPageWithLogout" extends="default.definition">

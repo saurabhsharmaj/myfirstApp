@@ -20,17 +20,15 @@
 				   		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">&nbsp;</div>							
 							<tr>
 					        	<td>${appointment.id }</td>
-					        	<td>${appointment.usersByDoctorId.username}</td>
+					        	<td>Dr. ${appointment.usersByDoctorId.username}</td>
 					        	<td><fmt:formatDate value="${appointment.datetimeStart}" pattern="dd/MM/yyyy hh:mm a" /></td>
 					        	<td>
+					        		
 					        		<c:if test="${appointment.bookingStatus.id==1 }">
-					        			<a href="${pageContext.request.contextPath}/doctor/approved/${appointment.id}" class="btn btn-warning">${appointment.bookingStatus.name }</a>
-					        		</c:if>
-					        		<c:if test="${appointment.bookingStatus.id==2 || appointment.bookingStatus.id==4 }">
 					        			<span class="label label-success">${appointment.bookingStatus.name }</span>
 					        		</c:if>
 					        		
-					        		<c:if test="${appointment.bookingStatus.id==3 || appointment.bookingStatus.id==5 }">
+					        		<c:if test="${appointment.bookingStatus.id==2}">
 					        			<span class="label label-danger">${appointment.bookingStatus.name }</span>
 					        		</c:if>
 					        	</td>

@@ -133,7 +133,7 @@ public class HomeController {
 		UserProfile patientProfile = new UserProfile();
 		mv.addObject("user", patientProfile );
 		mv.addObject("doctor", doctorProfile);	
-		Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason", bookingStatusService.getRowById(DocConstant.BOOKING_PENDING_APPROVED) );
+		Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason", bookingStatusService.getRowById(DocConstant.BOOKING_STATUS_APPROVED) );
 		mv.addObject("appointmentStartTime", booking);
 		return mv;		
 	}
@@ -156,7 +156,7 @@ public class HomeController {
 			List<Bookings> bookedSlots = bookingService.getAppointmentList(doctorProfile.getId(), true);
 			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, bookedSlots));			
 			model.addAttribute("doctor", doctorProfile);
-			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowById(DocConstant.BOOKING_PENDING_APPROVED));
+			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowById(DocConstant.BOOKING_STATUS_APPROVED));
 			model.addAttribute("selectSlot", booking);
 			return "forward:/patient/viewDoctorAppointment";
 		}
@@ -182,21 +182,9 @@ public class HomeController {
 			List<Bookings> bookedSlots = bookingService.getAppointmentList(doctorProfile.getId(), true);
 			doctorProfile.setAllBooking(DocUtils.getBookings(doctorProfile, bookedSlots));			
 			model.addAttribute("doctor", doctorProfile);
-			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowById(DocConstant.BOOKING_PENDING_APPROVED));
+			Bookings booking =  DocUtils.getBooking(appointmentStartTime, doctorProfile , patientProfile , "Reason",bookingStatusService.getRowById(DocConstant.BOOKING_STATUS_APPROVED));
 			model.addAttribute("selectSlot", booking);
 			return "forward:/patient/viewDoctorAppointment";
-		
-	}
-	
-	@RequestMapping(value="isEmailExist/{emailId}/", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody DocResponse isEmailExist(@PathVariable String emailId) throws DocException{		
-		return new DocResponse(HttpStatus.OK, userService.isEmailExist(emailId),null);
-		
-	}
-	
-	@RequestMapping(value="isUserNameExist/{username}/", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody DocResponse isUserNameExist(@PathVariable String username) throws DocException{		
-		return new DocResponse(HttpStatus.OK, userService.isUserNameExist(username),null);
 		
 	}
 }

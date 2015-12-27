@@ -27,7 +27,7 @@ function isEmailIdExist(emailId){
 	if(emailId.length > 0){
 	isEmailIdUnique=false;
 	$.ajax({
-        url: "/MyFirstApp/isEmailExist/"+emailId+"/"
+        url: "/MyFirstApp/rest/isEmailExist/"+emailId+"/"
     }).then(function(data) {
     	if(data.data){
     		isEmailIdUnique = true;
@@ -46,7 +46,7 @@ function checkUsername(username){
 	$('#usernameMsg').hide();
 	if(username.length > 0){
 	$.ajax({
-        url: "isUserNameExist/"+username+"/"
+        url: "rest/isUserNameExist/"+username+"/"
     }).then(function(data) {
     	if(data.data){
     		isUserNameUique = true;

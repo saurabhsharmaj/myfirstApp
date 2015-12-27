@@ -33,7 +33,7 @@ function setAction(appId, status){
 					        	<td>
 					        		<fmt:formatDate value="${appointment.datetimeStart}" pattern="dd/mm/yyyy hh:mm a" />
 					        	</td>
-					        	<td title="${appointment.bookingStatus.name}">
+					        	<td title="${appointment.bookingStatus.name}">${appointment.bookingStatus.name}
 					        		<form:select path="bookingStatus" cssClass="form-control" style="display:inline-block;" items="${bookingStatus}" itemValue="id" itemLabel="name" onchange="setAction('${appointment.id }',this.value);"/>
 					        		<a id="changeStatus-${appointment.id }" href="#" class="btn btn-primary" style="float:right;">Save Status</a>
 					        	</td>

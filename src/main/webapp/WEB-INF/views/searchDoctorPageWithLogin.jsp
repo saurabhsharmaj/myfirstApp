@@ -40,7 +40,7 @@ $(document).ready(function() {
 		   <table id="example" class="table table-striped table-bordered">
 		   <thead>
 		        <tr>
-		            <th>List of Doctor x</th>            
+		            <th>List of Doctor y</th>            
 		        </tr>
 		    </thead>
 		   <tbody>
@@ -73,9 +73,9 @@ $(document).ready(function() {
 														    <c:when test="${booking.bookingStatus.id == 2}">
 														       <span class="btn btn-sm btn-danger disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
 														    </c:when>
-														    
+														   
 														    <c:otherwise>
-														     <a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>
+														     <a type="button" class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/patient/getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>
 														    </c:otherwise>
 														</c:choose>	
 												
@@ -143,7 +143,7 @@ $(document).ready(function() {
 														    
 														    
 														    <c:otherwise>
-														     <a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>
+														     <a type="button" class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/patient/getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>
 														    </c:otherwise>
 														</c:choose>													
 													</li>

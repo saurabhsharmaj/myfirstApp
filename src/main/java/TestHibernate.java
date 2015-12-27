@@ -1,15 +1,14 @@
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.mahdi.myapp.model.AppointmentSchedule;
 import com.mahdi.myapp.model.BookingStatus;
 import com.mahdi.myapp.model.Bookings;
@@ -19,6 +18,9 @@ import com.mahdi.myapp.model.UserRoles;
 
 public class TestHibernate {
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SessionFactory factor = createSessionFactory();
 		Session session = factor.openSession();
@@ -32,13 +34,19 @@ public class TestHibernate {
 		
 		
 			System.out.println(mapper.valueToTree(list));*/
-		UserProfile d = new UserProfile();
+		UserProfile pro = new UserProfile("demo", "demo");
+		AppointmentSchedule as = new AppointmentSchedule(pro, "5" , new Date(), new Date(), 30);
+		pro.setAppointmentSchedule(as);
+		session.saveOrUpdate(pro);
+		Serializable id = session.getIdentifier(pro);
+		System.out.println(Integer.valueOf(id.toString()));
+		/*UserProfile d = new UserProfile();
 		d.setId(3);
 		List<Bookings> booking = test(session,"patient",d);
 		
 		for (Bookings b : booking) {
 			System.out.println(b.getUsersByDoctorId().getUsername());
-		}
+		}*/
 	}
 	
 	private static List<Bookings> test(Session session, String keyword, UserProfile doctorProfile){

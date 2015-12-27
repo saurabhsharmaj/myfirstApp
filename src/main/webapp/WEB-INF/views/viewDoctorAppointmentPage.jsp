@@ -16,24 +16,18 @@
 					<ul>
 					<c:forEach items="${doctor.allBooking}" var="booking">
 						<li class=".col-md-4">
-							<c:choose>
-															<c:when test="${booking.bookingStatus.id == 1}">
-														       <span class="btn btn-sm btn-warning disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
-														    </c:when>
-														    <c:when test="${booking.bookingStatus.id == 2}">
-														       <span class="btn btn-sm btn-info disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
-														    </c:when>
-														    <c:when test="${booking.bookingStatus.id == 3}">
-														       <span class="btn btn-sm btn-danger disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
-														    </c:when>
-														    <c:when test="${booking.bookingStatus.id == 4}">
-														       <span class="btn btn-sm btn-default disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
-														    </c:when>
-														    
-														    <c:otherwise>
-														     <a type="button" class="btn btn-sm btn-success" href="getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>
-														    </c:otherwise>
-														</c:choose>	
+							<c:choose>															
+							    <c:when test="${booking.bookingStatus.id == 1}">
+							       <span class="btn btn-sm btn-info disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
+							    </c:when>
+							    <c:when test="${booking.bookingStatus.id == 2}">
+							       <span class="btn btn-sm btn-danger disabled" title="${booking.bookingStatus.name}"><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></span> 
+							    </c:when>
+							   
+							    <c:otherwise>
+							     <a type="button" class="btn btn-sm btn-success" href="${pageContext.request.contextPath}/patient/getAppointment/${doctor.id }/${booking.datetimeStartInLong}" ><fmt:formatDate value="${booking.datetimeStart}" pattern="hh:mm a" /></a>
+							    </c:otherwise>
+							</c:choose>	
 						<%-- [${booking.datetimeStart} - ${booking.datetimeEnd}] ${booking.bookingStatus.name } --%>
 						</li>
 					</c:forEach>

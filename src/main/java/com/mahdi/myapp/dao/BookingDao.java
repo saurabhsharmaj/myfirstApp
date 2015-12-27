@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import com.mahdi.myapp.exception.DocException;
-import com.mahdi.myapp.model.AppointmentSchedule;
 import com.mahdi.myapp.model.Bookings;
 
 @Repository

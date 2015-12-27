@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <div class="container container-table">
     <div class="row vertical-center-row">
@@ -20,8 +21,27 @@
 							<tr>
 					        	<td>${patient.id }</td>
 					        	<td>${patient.usersByPatientId.username}</td>
-					        	<td>${patient.appointmentDate }</td>
-					        	<td>${patient.status }</td>
+					        	<td><fmt:formatDate value="${patient.datetimeStart}" pattern="dd/MM/yyyy hh:mm a" /></td>
+					        	<td>
+					        		<c:choose>
+										<c:when test="${patient.bookingStatus.id == 1}">
+									       <span class="label label-warning" title="${patient.bookingStatus.name}">${patient.bookingStatus.name}</span> 
+									    </c:when>
+									    <c:when test="${patient.bookingStatus.id == 2}">
+									       <span class="label label-info" title="${patient.bookingStatus.name}">${patient.bookingStatus.name}</span> 
+									    </c:when>
+									    <c:when test="${patient.bookingStatus.id == 3}">
+									       <span class="label label-danger" title="${patient.bookingStatus.name}">${patient.bookingStatus.name}</span> 
+									    </c:when>
+									    <c:when test="${patient.bookingStatus.id == 4}">
+									       <span class="label label-default" title="${patient.bookingStatus.name}">${patient.bookingStatus.name}</span> 
+									    </c:when>
+									    
+									    <c:otherwise>
+									     <span class="label label-success" title="${patient.bookingStatus.name}">${patient.bookingStatus.name}</span>
+									    </c:otherwise>
+									</c:choose>
+					        	</td>
 					        </tr>	
 			   		</div>		   		
 		   		</c:forEach> 

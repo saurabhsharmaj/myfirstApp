@@ -3,7 +3,6 @@ package com.mahdi.myapp.service;
 import java.util.List;
 
 import com.mahdi.myapp.exception.DocException;
-import com.mahdi.myapp.model.AppointmentSchedule;
 import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.UserProfile;
 
@@ -15,7 +14,7 @@ public interface IUserService extends IService<UserProfile> {
 	
 	List<Bookings> getBookingList(Integer userId, boolean isDoctor) throws DocException;
 
-	List<AppointmentSchedule>  findAppointment(String keyword, boolean b) throws DocException;
+	List<Bookings>  findAppointment(String keyword, boolean b) throws DocException;
 
 	UserProfile validate(UserProfile userProfile) throws DocException;
 

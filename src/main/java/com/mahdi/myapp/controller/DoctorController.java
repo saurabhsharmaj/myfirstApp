@@ -121,8 +121,8 @@ public class DoctorController {
 		if(StringUtils.isNotEmpty(userprofile.getSummary())){
 			savedProfile.setSummary(userprofile.getSummary());
 		}
-		savedProfile.setAppointmentSchedule(null);
-		userprofile.getAppointmentSchedule().setUsers(savedProfile);
+		
+		userprofile.getAppointmentSchedule().setUserProfile(savedProfile);
 		savedProfile.setAppointmentSchedule(userprofile.getAppointmentSchedule());
 		
 		userService.insertRow(savedProfile);	

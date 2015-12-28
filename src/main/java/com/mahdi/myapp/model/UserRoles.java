@@ -30,7 +30,7 @@ public class UserRoles implements java.io.Serializable {
 	private String description;
 	private Boolean isInternal;
 	private byte enabled;
-	private Set<UserProfile> userses = new HashSet<UserProfile>(0);
+	private Set<UserProfile> userProfiles = new HashSet<UserProfile>(0);
 
 	public UserRoles() {
 	}
@@ -41,13 +41,13 @@ public class UserRoles implements java.io.Serializable {
 	}
 
 	public UserRoles(String code, String name, String description, Boolean isInternal, byte enabled,
-			Set<UserProfile> userses) {
+			Set<UserProfile> userProfiles) {
 		this.code = code;
 		this.name = name;
 		this.description = description;
 		this.isInternal = isInternal;
 		this.enabled = enabled;
-		this.userses = userses;
+		this.userProfiles = userProfiles;
 	}
 
 	@Id
@@ -106,16 +106,13 @@ public class UserRoles implements java.io.Serializable {
 		this.enabled = enabled;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_role_mapping", joinColumns = {
-			@JoinColumn(name = "role", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "user_id", nullable = false, updatable = false) })
-	public Set<UserProfile> getUserses() {
-		return this.userses;
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy="userRoles")	
+	public Set<UserProfile> getUserProfiles() {
+		return this.userProfiles;
 	}
 
-	public void setUserses(Set<UserProfile> userses) {
-		this.userses = userses;
+	public void setUserProfiles(Set<UserProfile> userProfiles) {
+		this.userProfiles = userProfiles;
 	}
 
 }

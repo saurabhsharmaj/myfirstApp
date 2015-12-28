@@ -1,6 +1,5 @@
 package com.mahdi.myapp.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import com.mahdi.myapp.dao.AppointmentDao;
 import com.mahdi.myapp.dao.BookingDao;
 import com.mahdi.myapp.dao.UserDao;
 import com.mahdi.myapp.exception.DocException;
-import com.mahdi.myapp.model.AppointmentSchedule;
 import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.util.DocUtils;

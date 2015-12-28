@@ -1,8 +1,8 @@
-import java.io.Serializable;
-import java.util.Date;
+
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -21,34 +21,40 @@ public class TestHibernate {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
+		
 		SessionFactory factor = createSessionFactory();
 		Session session = factor.openSession();
-		/*String hql = "select u from UserProfile u join fetch u.userRole ur";
+		String hql = "select u from UserProfile u join fetch u.userRoles ur where ur.id  = 2 and u.id=2";
 		Query query = session.createQuery(hql);
 		List<UserProfile> list = query.list();
-		
-		ObjectMapper mapper = new ObjectMapper();
-		// for Hibernate 4.x:
-		mapper.registerModule(new Hibernate4Module());
-		
-		
-			System.out.println(mapper.valueToTree(list));*/
-		UserProfile pro = new UserProfile("demo", "demo");
-		AppointmentSchedule as = new AppointmentSchedule(pro, "5" , new Date(), new Date(), 30);
-		pro.setAppointmentSchedule(as);
-		session.saveOrUpdate(pro);
-		Serializable id = session.getIdentifier(pro);
-		System.out.println(Integer.valueOf(id.toString()));
-		/*UserProfile d = new UserProfile();
-		d.setId(3);
-		List<Bookings> booking = test(session,"patient",d);
-		
-		for (Bookings b : booking) {
-			System.out.println(b.getUsersByDoctorId().getUsername());
-		}*/
+		UserProfile doctor = null;
+		for (UserProfile userProfile : list) {
+							
+			doctor= userProfile;
+			
+		}
+	try{
+		System.out.print(doctor.getId() +" - "+ doctor.getUsername());
+		System.out.println(" -  "+doctor.getAppointmentSchedule().getSlotSize());
+	}catch(Exception ex){
+		System.out.println();
 	}
+	session.getTransaction().begin();
+	session.evict(doctor);
+	AppointmentSchedule as = new AppointmentSchedule();
+	as.setId(doctor.getId());
+	as.setUserProfile(doctor);
+	as.setSlotSize(400);
+	doctor.setAppointmentSchedule(as);
+//	doctor.setFullname("doctor"+new Date().getTime());
 	
+		session.saveOrUpdate(doctor);
+	
+	session.getTransaction().commit();	
+	
+	}
+
 	private static List<Bookings> test(Session session, String keyword, UserProfile doctorProfile){
 
 		

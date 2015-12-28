@@ -14,10 +14,10 @@ use getdoc;
 
 CREATE TABLE IF NOT EXISTS `appointment_schedule` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `working_days` varchar(50) NOT NULL,
+  `working_days` varchar(50) DEFAULT NULL,
   `start_time` dateTime DEFAULT NULL,
   `end_time` dateTime DEFAULT NULL,
-  `slot_size` int(11) NOT NULL,  
+  `slot_size` int(11) DEFAULT NULL,  
   PRIMARY KEY (`id`)
 ) AUTO_INCREMENT=1 ;
 

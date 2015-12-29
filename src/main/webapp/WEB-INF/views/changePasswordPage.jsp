@@ -33,7 +33,7 @@ function validatePassword(){
 		    <h3 class="form-signin-heading">Get your password</h3>	
 		    <h3 style="color: red;">${error_message}</h3>	    
 		    <label for="email" class="sr-only">Email Id</label>
-		    id:<input type="text" name="id" value="${userProfile.id}">
+		    id:<input type="hidden" name="id" value="${userProfile.id}">
 		    <tr>
 					<td>
 						New Password :

@@ -9,8 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -64,7 +64,7 @@ public class AppointmentSchedule implements java.io.Serializable {
 	}
 
 	@OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-	@PrimaryKeyJoinColumn
+	@JoinColumn(name = "id", referencedColumnName = "id", insertable = true, updatable = true) 
 	public UserProfile getUserProfile() {
 		return this.userProfile;
 	}

@@ -18,5 +18,6 @@
         <mapping class="com.mahdi.myapp.model.Specialization"/>   
         <mapping class="com.mahdi.myapp.model.UserProfile"/> 
         <mapping class="com.mahdi.myapp.model.UserRoles"/>  
+        <mapping class="com.mahdi.myapp.model.PasswordResetToken"/>
     </session-factory>
 </hibernate-configuration>

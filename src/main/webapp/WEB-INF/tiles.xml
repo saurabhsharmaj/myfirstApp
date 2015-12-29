@@ -197,4 +197,25 @@
         <put-attribute name="body" value="/WEB-INF/views/appointmentListPage.jsp" />
     </definition>   
    
+   <definition name="forgotpasswordPage" extends="default.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/forgotpasswordPage.jsp" />
+    </definition>
+    
+    <definition name="sucessResetPasswordPage" extends="default.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/successMsg.jsp" />
+    </definition>
+   
+    <definition name="changePasswordPage" extends="default.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/changePasswordPage.jsp" />
+    </definition>
+    
+     <definition name="saveNewPasswordSuccessPage" extends="default.definition">
+        <put-attribute name="title" value="Home Page" />
+        <put-attribute name="body" value="/WEB-INF/views/successMsg.jsp" />
+    </definition>
+   
+   
 </tiles-definitions>

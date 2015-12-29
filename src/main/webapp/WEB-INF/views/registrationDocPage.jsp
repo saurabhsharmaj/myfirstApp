@@ -93,7 +93,7 @@ $(document).ready(function(){
 					</td>
 					<td>
 					
-			        <input type="password" cssClass="form-control" placeholder="confirm password" id="confirm_password" required="true" onblur="matchPassword();">
+			        <input type="password" class="form-control" placeholder="confirm password" id="confirm_password" required="true" onblur="matchPassword();">
 			        <div id="confirmPasswordMsg" class="alert alert-warning">  </div> 
 					</td>
 				</tr>	

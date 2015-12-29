@@ -1,16 +1,15 @@
 package com.mahdi.myapp.util;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
+import com.amazonaws.HttpMethod;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.Bucket;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
@@ -23,15 +22,22 @@ public class AmazonS3Example {
 		// credentials object identifying user for authentication
 		// user must have AWSConnector and AmazonS3FullAccess for 
 		// this example to work
+		/*
+		 *  greenhouse
+Access Key ID:
+AKIAJBD36EJ3MGSYQZEA
+Secret Access Key:
+qhY/fxz+3ywFryXNH7njS87XZtOUnvw1J6vve9Cr
+		 */
 		AWSCredentials credentials = new BasicAWSCredentials(
-				"AKIAI5QYMUD5GS2XDEPQ", 
-				"JzraXX7E4RIeLBJeSw62WJosMc+JCX5FnKctd28b");
+				"AKIAJI4ODZBCUCMCVOEA", 
+				"QJk7E7N/U40CbnAmhypPzJTMGKooNx1j0ruj9bob");
 		
 		// create a client connection based on credentials
 		AmazonS3 s3client = new AmazonS3Client(credentials);
 		
-		// create bucket - name must be unique for all S3 users
-		String bucketName = "javatutorial-net-example-bucket";
+		/*// create bucket - name must be unique for all S3 users
+		String bucketName = "greenhousevideo";
 		//s3client.createBucket(bucketName);
 		
 		// list buckets
@@ -41,15 +47,16 @@ public class AmazonS3Example {
 		}
 		
 		// create folder into bucket
-		String folderName = "testfolder";
+		String folderName = "greenhousevideo";
 		createFolder(bucketName, folderName, s3client);
 		
 		// upload file to folder and set it to public
-		String fileName = folderName + SUFFIX + "Koala.jpg";
-		s3client.putObject(new PutObjectRequest(bucketName, fileName, 
-				new File("C:\\mahdi\\Koala.jpg"))
-				.withCannedAcl(CannedAccessControlList.PublicRead));
+		String fileName = "Koala.jpg";
 		
+		PutObjectResult result =s3client.putObject(new PutObjectRequest(bucketName, fileName, new File("C:\\prem\\a_overfriendly.mp4")).withCannedAcl(CannedAccessControlList.PublicRead));
+		*/
+		URL url = s3client.generatePresignedUrl("greenhousevideo/a_overfriendly.mp4", "AKIAJI4ODZBCUCMCVOEA", null, HttpMethod.GET);
+		System.out.println(url);
 		//deleteFolder(bucketName, folderName, s3client);
 		
 		// deletes bucket

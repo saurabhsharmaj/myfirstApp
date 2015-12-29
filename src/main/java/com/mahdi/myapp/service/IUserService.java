@@ -4,13 +4,12 @@ import java.util.List;
 
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.Bookings;
+import com.mahdi.myapp.model.PasswordResetToken;
 import com.mahdi.myapp.model.UserProfile;
 
 public interface IUserService extends IService<UserProfile> {
 
 	List<UserProfile> findUser(String keyword) throws DocException;	
-
-	public Integer saveAppointment(UserProfile user, UserProfile doctor) throws DocException;
 	
 	List<Bookings> getBookingList(Integer userId, boolean isDoctor) throws DocException;
 
@@ -21,5 +20,9 @@ public interface IUserService extends IService<UserProfile> {
 	boolean isEmailExist(String emailId) throws DocException;
 
 	Boolean isUserNameExist(String username) throws DocException;
+	
+	int savePasswordResetToken(PasswordResetToken t) throws DocException;
+
+	UserProfile getUserProfileByToken(String token) throws DocException;
 
 }

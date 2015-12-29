@@ -27,5 +27,11 @@ public class DocException extends Exception {
 		this.ex = ex;
 		log.error("error: ",ex);
 	}
+	
+	public DocException(String message, Exception ex) {
+		super(message, ex);		
+		this.ex = ex;
+		log.error("error: ",ex);
+	}
 
 }

@@ -122,6 +122,7 @@ INSERT INTO `users` (`fullname`, `email`, `username`, `password`, `profilePicUrl
 INSERT INTO `users` (`fullname`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('doctor', 'doctor@gmail.com', 'doctor', 'demo', 'doctorProfilePic.jpg', '1', 'Waiting for patients');
 INSERT INTO `users` (`fullname`, `email`, `username`, `password`, `profilePicUrl`, `enabled`, `summary`) VALUES ('patient', 'patient@gmail.com', 'patient', 'demo', 'patientProfilePic.jpg', '1', 'Want to Get Appointment.');
 
+
 -- --------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user_role_mapping` (
  `user_id` int(11) NOT NULL,
@@ -134,6 +135,23 @@ INSERT INTO `user_role_mapping` (`user_id`, `role`) VALUES (1,1);
 INSERT INTO `user_role_mapping` (`user_id`, `role`) VALUES (2,2);
 INSERT INTO `user_role_mapping` (`user_id`, `role`) VALUES (3,3);
 
+--
+-- Table structure for table `password_reset_token`
+--
+
+DROP TABLE IF EXISTS password_reset_token;
+ CREATE TABLE password_reset_token
+ (
+ id INT NOT NULL AUTO_INCREMENT,
+ token VARCHAR(100) NOT NULL,
+ user_id int(10)  NOT NULL,
+ expiryDate DATETIME  NOT NULL,
+ CreatedTime DATETIME NOT NULL,
+ ModifiedTime DATETIME NOT NULL,
+ PRIMARY KEY (id)
+ );
+ 
+ 
 --
 -- Table structure for table `specialization`
 --
@@ -219,3 +237,6 @@ ALTER TABLE user_role_mapping ADD CONSTRAINT `fk_user_role_mapping_user_roles`
     
 ALTER TABLE bookings ADD CONSTRAINT `fk_bookings_ booking_status`
     FOREIGN KEY (`status_id`) REFERENCES `booking_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+    
+ALTER TABLE password_reset_token ADD CONSTRAINT `fk_password_reset_token`
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION; 

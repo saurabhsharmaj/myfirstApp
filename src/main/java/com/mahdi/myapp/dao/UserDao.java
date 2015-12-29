@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import com.mahdi.myapp.exception.DocException;
+import com.mahdi.myapp.model.AppointmentSchedule;
+import com.mahdi.myapp.model.PasswordResetToken;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.util.DocConstant;
 
@@ -26,10 +28,10 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 
 	@Override
 	public int insertRow(UserProfile t) throws HibernateException {
-		Session session = getSession();		
+		Session session = getSession();
 		session.saveOrUpdate(t);
-		Serializable id = session.getIdentifier(t);
-		return Integer.valueOf(id.toString());
+		Serializable id = session.getIdentifier(t);		
+		return Integer.valueOf(id.toString());		
 	}
 
 
@@ -89,4 +91,32 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 		return t;
 	}
 
+
+
+	
+	public int savePasswordResetToken(PasswordResetToken t) throws DocException {
+		try {
+			Session session = getSession();
+			session.saveOrUpdate(t);
+			Serializable id = session.getIdentifier(t);
+			return (Integer) id;
+		} catch (HibernateException ex) {
+			throw new DocException(HttpStatus.EXPECTATION_FAILED, ex);
+		} catch (Exception ex) {
+			throw new DocException(HttpStatus.FAILED_DEPENDENCY, ex);
+		}
+	}
+
+
+
+	public PasswordResetToken getUserProfileByToken(String token) {
+		Session session = getSession();
+		DetachedCriteria criteria = DetachedCriteria
+				.forClass(PasswordResetToken.class);
+		criteria.add(Restrictions.eq("token", token));
+		PasswordResetToken passwordResetToken = (PasswordResetToken) criteria.getExecutableCriteria(session).uniqueResult();
+		return passwordResetToken;
+	}
+
+	
 }

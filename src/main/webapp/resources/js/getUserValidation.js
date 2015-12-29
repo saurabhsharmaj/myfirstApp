@@ -18,7 +18,7 @@ function validEmail(emailId) {
 	   $('#emailMsg').html('<div class="alert alert-warning">Email Id is not valid.</div>').show();
    }
 	}
-  
+  return isValidEmail;
 }
 
 function isEmailIdExist(emailId){

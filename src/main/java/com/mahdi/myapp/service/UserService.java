@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mahdi.myapp.dao.AppointmentDao;
 import com.mahdi.myapp.dao.BookingDao;
 import com.mahdi.myapp.dao.UserDao;
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.Bookings;
+import com.mahdi.myapp.model.PasswordResetToken;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.util.DocUtils;
 
@@ -20,10 +20,7 @@ public class UserService implements IUserService {
 		
 	@Autowired
 	UserDao userDao;
-	
-	@Autowired
-	AppointmentDao appointmentDao;
-	
+		
 	@Autowired
 	BookingDao bookingDao;
 	
@@ -72,13 +69,6 @@ public class UserService implements IUserService {
 		return searchUsers;
 	}	
 
-	
-	
-	public Integer saveAppointment(UserProfile user, UserProfile doctor) throws DocException {		
-		//TODO change return appointmentDao.saveAppointment(new Appointment(doctor,user,new Date(),DocConstant.NEW_REQUEST));
-		return 0;
-	}
-
 	public List<Bookings> getBookingList(Integer userId, boolean isDoctor) throws DocException {
 		return bookingDao.getAppointmentList(userId,isDoctor);
 	}
@@ -106,6 +96,15 @@ public class UserService implements IUserService {
 
 	public List<UserProfile> getRowsByName(String columnName, String value) {
 		return userDao.getRowsByColumnName(columnName, value);
+	}
+
+	public int savePasswordResetToken(PasswordResetToken t) throws DocException {
+		return userDao.savePasswordResetToken(t);
+	}
+
+	public UserProfile getUserProfileByToken(String token) throws DocException {		
+		PasswordResetToken passwordResetToken = userDao.getUserProfileByToken(token);
+		return passwordResetToken != null ? passwordResetToken.getUserProfile() : null;
 	}
 	
 }

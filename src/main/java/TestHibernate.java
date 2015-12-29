@@ -41,7 +41,7 @@ public class TestHibernate {
 		System.out.println();
 	}
 	session.getTransaction().begin();
-	session.evict(doctor);
+	session.evict(doctor.getAppointmentSchedule());
 	AppointmentSchedule as = new AppointmentSchedule();
 	as.setId(doctor.getId());
 	as.setUserProfile(doctor);

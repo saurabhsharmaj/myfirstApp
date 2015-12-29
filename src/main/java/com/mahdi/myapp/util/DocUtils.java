@@ -8,10 +8,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.joda.time.DateTime;
 import org.joda.time.Minutes;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.security.core.userdetails.User;
 
@@ -22,8 +27,8 @@ import com.mahdi.myapp.model.Bookings;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IUserService;
 
-public class DocUtils {
-
+public class DocUtils {	
+	
 	public static UserProfile getLoggedInUserProfile(HttpSession session, IUserService userService) throws DocException{
 		try{
 		UserProfile userProfile = (UserProfile)session.getAttribute(DocConstant.USERPROFILE);
@@ -79,5 +84,27 @@ public class DocUtils {
 	public static Bookings getBooking(Long appointmentStartTime, UserProfile doctorProfile, UserProfile patientProfile,
 			String reason,BookingStatus bookingStatus) {
 		return new Bookings(bookingStatus, doctorProfile, patientProfile, reason, new Date(appointmentStartTime), new DateTime(appointmentStartTime).plusMinutes(doctorProfile.getAppointmentSchedule().getSlotSize()).toDate());
-	}	
+	}
+	
+	public static MimeMessage createMimeMailMessage(JavaMailSender mailSender, UserProfile userProfile, String url) throws MessagingException{
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("admin@getDoc.com");
+		message.setTo(userProfile.getEmail());
+		message.setSubject("Somebody requested a new password for your GetDoc account");		
+		message.setSentDate(new Date());	
+        message.setText("<html><body><p>Hi "+userProfile.getUsername()+",</p><p>Somebody recently asked to reset your GetDoc password.</p><p><a href="+url+">Click here to change your password.</a></p><p>Didn't request this change?</p><p>If you didn't request a new password, let us know immediately.</p><p>Thanks,</p><p>Admin GetDoc</p></body> </html>");        
+        return createMimeMailTemplate(mailSender, message);
+	}
+	
+	public static MimeMessage createMimeMailTemplate(JavaMailSender mailSender, SimpleMailMessage simpleMailMessage) throws MessagingException {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true);		
+		helper.setFrom(simpleMailMessage.getFrom());
+		helper.setTo(simpleMailMessage.getTo());
+		helper.setSubject(simpleMailMessage.getSubject());
+		helper.setText(simpleMailMessage.getText());		
+		return message;
+		
+	}
+	
 }

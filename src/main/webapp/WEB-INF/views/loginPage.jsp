@@ -10,6 +10,9 @@
 		    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
 		    <div class="checkbox">
 		      <label>
+		        <a href="forgotpassword">forgot password</a>
+		      </label>
+		      <label>
 		        <input type="checkbox" value="remember-me"> Remember me
 		      </label>
 		    </div>

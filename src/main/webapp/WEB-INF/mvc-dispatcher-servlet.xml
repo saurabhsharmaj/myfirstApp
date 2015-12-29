@@ -87,4 +87,21 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.sprin
         </property>
         <property name="defaultErrorView" value="error"/>
     </bean> 
+    
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="saurabh.sharma@search-value.com" />
+		<property name="password" value="demodemo" />
+		 
+		<!-- The name of the property, following JavaBean naming conventions -->
+		<property name="javaMailProperties">
+		<props>
+		<prop key="mail.transport.protocol">smtp</prop>
+		<prop key="mail.smtp.auth">true</prop>
+		<prop key="mail.smtp.starttls.enable">true</prop>
+		<prop key="mail.debug">true</prop>
+		</props>
+	</property>
+</bean>
 </beans>

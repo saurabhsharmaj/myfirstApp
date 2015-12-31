@@ -9,7 +9,6 @@ import org.dom4j.DocumentException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,12 +24,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mahdi.myapp.exception.DocException;
+import com.mahdi.myapp.model.AppointmentSchedule;
 import com.mahdi.myapp.model.Bookings;
-import com.mahdi.myapp.model.DocResponse;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IBookingService;
 import com.mahdi.myapp.service.IBookingStatusService;
@@ -52,6 +50,7 @@ public class HomeController {
 	
 	@Autowired
 	IBookingService bookingService;
+	
 	@Autowired
 	IBookingStatusService bookingStatusService;
 	
@@ -80,6 +79,7 @@ public class HomeController {
 	@RequestMapping(value={"registerDoctor"}, method = RequestMethod.POST)
 	public String saveDoctor(@ModelAttribute UserProfile userProfile) throws DocException{		
 		userProfile.setUserRoles(userRoleService.getRowsByName("code",DocConstant.ROLE_DOCTOR));
+		userProfile.setAppointmentSchedule(new AppointmentSchedule());
 		userService.insertRow(userProfile);
 		return "redirect:/login";
 	}

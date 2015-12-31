@@ -4,6 +4,13 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
     
+    <definition name="default.definition" template="/WEB-INF/views/usertemplate/patientlayout.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/usertemplate/header.jsp" />
+        <put-attribute name="body" value="" />
+        <put-attribute name="footer" value="/WEB-INF/views/usertemplate/footer.jsp" />
+    </definition>
+    
     <definition name="admin.definition" template="/WEB-INF/views/usertemplate/adminlayout.jsp">
         <put-attribute name="title" value="" />
         <put-attribute name="header" value="/WEB-INF/views/usertemplate/adminheader.jsp" />
@@ -23,15 +30,7 @@
         <put-attribute name="header" value="/WEB-INF/views/usertemplate/patientheader.jsp" />
         <put-attribute name="body" value="" />
         <put-attribute name="footer" value="/WEB-INF/views/usertemplate/footer.jsp" />
-    </definition> 
-    
-    
-    <definition name="default.definition" template="/WEB-INF/views/usertemplate/patientlayout.jsp">
-        <put-attribute name="title" value="" />
-        <put-attribute name="header" value="/WEB-INF/views/usertemplate/header.jsp" />
-        <put-attribute name="body" value="" />
-        <put-attribute name="footer" value="/WEB-INF/views/usertemplate/footer.jsp" />
-    </definition>
+    </definition>   
     
     <definition name="default.customheader.definition" template="/WEB-INF/views/usertemplate/patientlayout.jsp">
         <put-attribute name="title" value="" />        

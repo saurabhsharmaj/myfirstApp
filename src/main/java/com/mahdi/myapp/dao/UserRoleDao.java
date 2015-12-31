@@ -15,7 +15,7 @@ import com.mahdi.myapp.model.UserRoles;
 import com.mahdi.myapp.util.DocConstant;
 
 @Repository
-public class UserRoleDao extends BaseDao<UserRoles> implements Dao<UserRoles> {
+public class UserRoleDao extends BaseDao<UserRoles>{
 	
 	public UserRoleDao() {
 		super(UserRoles.class);

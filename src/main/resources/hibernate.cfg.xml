@@ -5,10 +5,6 @@
 <hibernate-configuration>
     <session-factory>
         <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
-        <property name="hibernate.connection.driver_class">${database.driver}</property>
-        <property name="hibernate.connection.url">${database.url}</property>
-        <property name="hibernate.connection.username">${database.user}</property>
-        <property name="hibernate.connection.password">${database.password}</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.connection.pool_size">${connection.pool_size}</property>

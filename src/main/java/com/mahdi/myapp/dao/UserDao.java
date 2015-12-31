@@ -12,13 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import com.mahdi.myapp.exception.DocException;
-import com.mahdi.myapp.model.AppointmentSchedule;
 import com.mahdi.myapp.model.PasswordResetToken;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.util.DocConstant;
 
 @Repository
-public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
+public class UserDao extends BaseDao<UserProfile>{
 
 	public UserDao() {
 		super(UserProfile.class);
@@ -29,7 +28,13 @@ public class UserDao extends BaseDao<UserProfile> implements Dao<UserProfile> {
 	@Override
 	public int insertRow(UserProfile t) throws HibernateException {
 		Session session = getSession();
-		session.saveOrUpdate(t);
+		if(t.hasRole(DocConstant.ROLE_DOCTOR)){
+		t.getAppointmentSchedule().setUserProfile(t);
+		}
+		if(t.getId() != null)
+			session.merge(t);
+		else 
+			session.save(t);
 		Serializable id = session.getIdentifier(t);		
 		return Integer.valueOf(id.toString());		
 	}

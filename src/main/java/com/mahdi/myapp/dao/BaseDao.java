@@ -60,8 +60,8 @@ public abstract class BaseDao<T> implements Dao<T> {
 	public int insertRow(T t) throws HibernateException {
 		Session session = getSession();
 		session.saveOrUpdate(t);
-		Serializable id = session.getIdentifier(t);
-		return Integer.valueOf(id.toString());
+		Serializable id = session.getIdentifier(t);		
+		return Integer.valueOf(id.toString());	
 	}
 
 	

@@ -2,7 +2,7 @@ package com.mahdi.myapp.controller;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,7 +121,8 @@ public class DoctorController {
 		if(StringUtils.isNotEmpty(userprofile.getSummary())){
 			savedProfile.setSummary(userprofile.getSummary());
 		}
-		
+	
+		userprofile.getAppointmentSchedule().setId(savedProfile.getId());
 		userprofile.getAppointmentSchedule().setUserProfile(savedProfile);
 		savedProfile.setAppointmentSchedule(userprofile.getAppointmentSchedule());
 		

@@ -4,7 +4,7 @@
         	<h1>Opps, Error!!</h1>
         	${message} 
         	<br>OR <br>
-		  You don't have right to access this page. 
+			 ${error_message} 
 		  <input type="button" onclick="window.history.go(-1);" value="back"/> 
  		</div>
  	</div>

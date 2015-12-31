@@ -41,15 +41,16 @@ public class TestHibernate {
 		System.out.println();
 	}
 	session.getTransaction().begin();
-	session.evict(doctor.getAppointmentSchedule());
+	doctor = new UserProfile("baba", "demo");
 	AppointmentSchedule as = new AppointmentSchedule();
 	as.setId(doctor.getId());
 	as.setUserProfile(doctor);
-	as.setSlotSize(400);
+	as.setSlotSize(120);
 	doctor.setAppointmentSchedule(as);
 //	doctor.setFullname("doctor"+new Date().getTime());
 	
-		session.saveOrUpdate(doctor);
+		session.merge(doctor);
+		//session.saveOrUpdate(doctor);
 	
 	session.getTransaction().commit();	
 	

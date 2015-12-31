@@ -5,7 +5,7 @@
 
 <div class="container container-table">
     <div class="row vertical-center-row">
-        <div class="text-center col-md-4 col-md-offset-4 col-sm-1">
+        <div class="text-center col-md-4 col-md-offset-4 col-sm-1">        
        	 		<form:form id ="searchDoctorForm" action="searchDoctor">
        	 	<div class="input-group">
 	  				<input name="keyword" type="text" class="form-control input-lg" placeholder="Search your Doctor" aria-describedby="basic-addon2">

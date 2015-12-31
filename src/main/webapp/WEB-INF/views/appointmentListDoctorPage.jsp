@@ -14,6 +14,7 @@ function setAction(appId, status){
 <div class="container container-table">
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4 col-sm-1">
+        hhhh
         <table style="width:600px;">
         <thead>
         	<th>ID</th>
@@ -33,8 +34,11 @@ function setAction(appId, status){
 					        	<td>
 					        		<fmt:formatDate value="${appointment.datetimeStart}" pattern="dd/mm/yyyy hh:mm a" />
 					        	</td>
-					        	<td title="${appointment.bookingStatus.name}">${appointment.bookingStatus.name}
-					        		<form:select path="bookingStatus" cssClass="form-control" style="display:inline-block;" items="${bookingStatus}" itemValue="id" itemLabel="name" onchange="setAction('${appointment.id }',this.value);"/>
+					        	<td title="${appointment.bookingStatus.name}">${appointment.bookingStatus.id}-${appointment.bookingStatus.name}
+					        		<form:select path="bookingStatus" cssClass="form-control" items="${bookingStatus}" itemValue="id" itemLabel="name" onchange="setAction('${appointment.id }',this.value);">\
+										<form:option value="0"> --SELECT--</form:option>
+									</form:select>
+							
 					        		<a id="changeStatus-${appointment.id }" href="#" class="btn btn-primary" style="float:right;">Save Status</a>
 					        	</td>
 					        </tr>	

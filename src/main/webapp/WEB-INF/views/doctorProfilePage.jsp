@@ -28,6 +28,7 @@ function init(){
 <div class="container container-table" onload="init();">
     <div class="row vertical-center-row">
         <div class="text-center col-md-4 col-md-offset-4 col-sm-1">
+        
         <!-- form for Profile Picture -->
 		<form name="profilePicForm" id="profilePicForm" action="${pageContext.request.contextPath}/saveProfilePic" method="post" enctype="multipart/form-data">
 			<h4>Edit Profile: </h4>
@@ -83,11 +84,10 @@ function init(){
 					</td>
 					<td>
 						<div class="form-group">							
-							<%-- <form:select path="specialization" cssClass="form-control" items="${specializationList}" itemValue="id" itemLabel="name" /> --%>
-							<%-- <form:select path="specialization"  cssClass="form-control">
-			                    <form:option value="NONE"> --SELECT--</form:option>
-			                    <form:options items="${specializationList}" itemValue="id" itemLabel="name" />
-			                </form:select> --%>
+							<form:select path="Specialization.id" cssClass="form-control" items="${specializationList}" itemValue="id" itemLabel="name">\
+							<form:option value="0"> --SELECT--</form:option>
+							</form:select>
+							
 						</div>
 					</td>
 				</tr>	

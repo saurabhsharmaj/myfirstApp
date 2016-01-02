@@ -6,6 +6,8 @@
 
 <html>
 <head>
+<link rel="icon" type="image/png" href="https://s3.amazonaws.com/getdocprofilepic/favicon.png">
+
 <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet"> 
 <script src="${pageContext.request.contextPath}/resources/js/jquery-1.11.3.min.js"></script>

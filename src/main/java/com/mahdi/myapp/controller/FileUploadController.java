@@ -17,6 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.mahdi.myapp.exception.DocException;
 import com.mahdi.myapp.model.UserProfile;
 import com.mahdi.myapp.service.IUserRoleService;
@@ -80,14 +87,21 @@ public class FileUploadController implements ServletContextAware {
 		}
 	}
 	
+	//TODO: Replace with code here Amazon code here.
 
+	/**
+	 *
+	 * @param filename
+	 * @param image
+	 * @throws RuntimeException
+	 * @throws IOException
+	 */
 	private void saveImage(Integer filename, MultipartFile image)
 			throws RuntimeException, IOException {
 		try {
-			String uploadedPath = servletContext.getRealPath("/")
-					+ "resources/profilepic/" + filename + ".jpg";
-			File file = new File(uploadedPath);
+			File file = new File(filename.toString()+".jpg");
 			FileUtils.writeByteArrayToFile(file, image.getBytes());
+			uploadFileOnS3Bucket(file);
 			log.debug("Go to the location:  "
 							+ file.toString()
 							+ " on your computer and verify that the image has been stored.");
@@ -99,5 +113,20 @@ public class FileUploadController implements ServletContextAware {
 	public void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 		
-	}	
+	}
+	
+	public void uploadFileOnS3Bucket(File file){
+		
+		AWSCredentials credentials = new BasicAWSCredentials(
+				DocConstant.S3ACCESSKEY, 
+				DocConstant.S3SECREATKEY);			
+		AmazonS3 s3client = new AmazonS3Client(credentials);		
+		String bucketName =DocConstant.S3BUCKETNAME;
+		String fileName = file.getName();
+		
+		PutObjectResult result =s3client.putObject(new PutObjectRequest(bucketName, fileName, file).withCannedAcl(CannedAccessControlList.PublicRead));
+		
+		
+	
+	}
 }

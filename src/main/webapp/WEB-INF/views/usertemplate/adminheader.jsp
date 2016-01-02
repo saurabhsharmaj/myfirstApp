@@ -1,3 +1,4 @@
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <div class="blog-masthead">
    <div class="container">
      <nav class="blog-nav">
@@ -12,7 +13,7 @@
        <a class="blog-nav-item" href="${pageContext.request.contextPath}/admin/myprofile">my profile</a>
        <ul class="nav navbar-nav navbar-right">
        <img
-		src="${pageContext.request.contextPath}/resources/profilepic/${userprofile.profilePicUrl}"
+		src="<spring:message code="s3bucket.url" />${userprofile.profilePicUrl}"
 		class="profilePicImage img-circle" alt="profile"
 		style="border: 1px solid grey;" width="50" height="50" id="profilePicImage">
       Dear Admin[${userprofile.username}],<a class="blog-nav-item" href="${pageContext.request.contextPath}/logout">logout</a>

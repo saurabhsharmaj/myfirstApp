@@ -51,7 +51,7 @@ $(document).ready(function() {
 							<div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"
 								style="padding: 0px 5px 0px 5px;">
 								<a href="${pageContext.request.contextPath}/doctorDetail/${doctor.id }">						
-									  	<img src="${pageContext.request.contextPath}/resources/profilepic/${doctor.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
+									  	<img src="<spring:message code="s3bucket.url" />${doctor.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
 								</a>
 								
 							</div>
@@ -108,7 +108,7 @@ $(document).ready(function() {
 										  <div class="col-sm-6">
 										  		<div class="row">
 												  <div class="col-*-1">
-												  	<img src="${pageContext.request.contextPath}/resources/profilepic/${doctor.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
+												  	<img src="<spring:message code="s3bucket.url" />${doctor.profilePicUrl}" class="img-rounded text-center" width="50" height="50">
 												  </div>
 												  <div class="col-*-1">Dr.${doctor.username}</div>
 												</div>

@@ -32,7 +32,7 @@ function init(){
 		<form name="profilePicForm" id="profilePicForm" action="${pageContext.request.contextPath}/saveProfilePic" method="post" enctype="multipart/form-data">
 			
 				<img
-				src="${pageContext.request.contextPath}/resources/profilepic/${user.profilePicUrl}"
+				src="<spring:message code="s3bucket.url" />${user.profilePicUrl}"
 				class="profilePicImage img-circle" alt="profile"
 				style="border: 1px solid grey;" width="130" height="130" id="profilePicImage">
 			
